@@ -1,0 +1,127 @@
+define :main() {
+  %arr1 <- call :createArray1()
+  %arr2 <- call :createArray2()
+
+  %zipped <- call :zip(%arr1, %arr2)
+
+  call print(%zipped)
+
+  return 
+}
+
+define :createArray1() {
+  %len <- 13
+  %arr <- call allocate(%len, 1)
+
+  %newVar0 <- 0 * 8
+  %newVar1 <- %newVar0 + 8
+  %newVar2 <- %arr + %newVar1
+  store %newVar2 <- 3 
+
+  %newVar3 <- 1 * 8
+  %newVar4 <- %newVar3 + 8
+  %newVar5 <- %arr + %newVar4
+  store %newVar5 <- 7 
+
+  %newVar6 <- 2 * 8
+  %newVar7 <- %newVar6 + 8
+  %newVar8 <- %arr + %newVar7
+  store %newVar8 <- 5 
+
+  %newVar9 <- 3 * 8
+  %newVar10 <- %newVar9 + 8
+  %newVar11 <- %arr + %newVar10
+  store %newVar11 <- 5 
+
+  %newVar12 <- 4 * 8
+  %newVar13 <- %newVar12 + 8
+  %newVar14 <- %arr + %newVar13
+  store %newVar14 <- 5 
+
+  %newVar15 <- 5 * 8
+  %newVar16 <- %newVar15 + 8
+  %newVar17 <- %arr + %newVar16
+  store %newVar17 <- 5 
+
+  return %arr
+}
+
+define :createArray2() {
+  %len <- 13
+  %arr <- call allocate(%len, 1)
+
+  %newVar0 <- 0 * 8
+  %newVar1 <- %newVar0 + 8
+  %newVar2 <- %arr + %newVar1
+  store %newVar2 <- 9
+
+  %newVar3 <- 1 * 8
+  %newVar4 <- %newVar3 + 8
+  %newVar5 <- %arr + %newVar4
+  store %newVar5 <- 43 
+
+  %newVar6 <- 2 * 8
+  %newVar7 <- %newVar6 + 8
+  %newVar8 <- %arr + %newVar7
+  store %newVar8 <- 1 
+
+  %newVar9 <- 3 * 8
+  %newVar10 <- %newVar9 + 8
+  %newVar11 <- %arr + %newVar10
+  store %newVar11 <- 13 
+
+  %newVar12 <- 4 * 8
+  %newVar13 <- %newVar12 + 8
+  %newVar14 <- %arr + %newVar13
+  store %newVar14 <- 15 
+
+  %newVar15 <- 5 * 8
+  %newVar16 <- %newVar15 + 8
+  %newVar17 <- %arr + %newVar16
+  store %newVar17 <- 5 
+
+  return %arr
+}
+
+define :zip(%arr1, %arr2) {
+  %len1 <- load %arr1
+  %len2 <- load %arr2
+  %comp <- %len1 = %len2
+  br %comp :succeed
+  br :fail
+  :fail
+  return
+
+  :succeed
+  %encodedLen <- %len1 << 1
+  %encodedLen <- %encodedLen + 1
+  %newArr <- call allocate(%encodedLen, 1)
+  %count <- 0
+
+  :loop
+  %currOffsetMultiple <- %count + 1
+  %currOffsetMultiple <- %currOffsetMultiple * 8
+  %arr1Offset <- %arr1 + %currOffsetMultiple
+  %arr2Offset <- %arr2 + %currOffsetMultiple
+
+  %zipElem <- call allocate(5, 1)
+  %elemOffset <- %zipElem
+  %elemOffset <- %elemOffset + 8
+  %tempVar1 <- load %arr1Offset
+  store %elemOffset <- %tempVar1
+
+  %tempVar2 <- load %arr2Offset
+  %elemOffset <- %elemOffset + 8
+  store %elemOffset <- %tempVar2
+ 
+  %tempNewArr <- %newArr + %currOffsetMultiple
+  store %tempNewArr <- %zipElem
+ 
+  %count <- %count + 1
+  %cont <- %count < %len1
+  br %cont :loop
+  br :exit
+
+  :exit 
+  return %newArr
+}

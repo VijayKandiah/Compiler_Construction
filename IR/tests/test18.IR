@@ -1,0 +1,11 @@
+define void :main ( ){
+
+  :entry
+  int64 %v
+  %v <- 7
+  call print(%v)
+  %v <- 9
+  call print(%v)
+  return
+
+}

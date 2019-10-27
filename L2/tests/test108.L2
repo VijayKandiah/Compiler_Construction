@@ -1,0 +1,243 @@
+(:main
+  (:main
+    0 0
+    rdi <- 1
+    mem rsp -8 <- :call_label0
+    call :loopTransform 1
+    :call_label0
+    rdi <- -2
+    mem rsp -8 <- :call_label1
+    call :loopTransform 1
+    :call_label1
+    rdi <- 10
+    mem rsp -8 <- :call_label2
+    call :loopTransform 1
+    :call_label2
+    rdi <- -4
+    mem rsp -8 <- :call_label3
+    call :loopTransform 1
+    :call_label3
+    rdi <- 7
+    mem rsp -8 <- :call_label4
+    call :loopTransform 1
+    :call_label4
+    mem rsp -8 <- :call_label5
+    call :math 0
+    :call_label5
+    %v4 <- rax
+    rdi <- %v4
+    mem rsp -8 <- :call_label6
+    call :loopTransform 1
+    :call_label6
+    return
+  )
+  (:loopTransform
+    1 0
+    %hello <- rdi
+    %count <- 0
+    %v1 <- %hello
+    :call_label_ciao_7
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_9
+    call :transform 1
+    :call_label_ciao_9
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_10
+    call :transform 1
+    :call_label_ciao_10
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_11
+    call :transform 1
+    :call_label_ciao_11
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_12
+    call :transform 1
+    :call_label_ciao_12
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_13
+    call :transform 1
+    :call_label_ciao_13
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_14
+    call :transform 1
+    :call_label_ciao_14
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_15
+    call :transform 1
+    :call_label_ciao_15
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_16
+    call :transform 1
+    :call_label_ciao_16
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_17
+    call :transform 1
+    :call_label_ciao_17
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_18
+    call :transform 1
+    :call_label_ciao_18
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_19
+    call :transform 1
+    :call_label_ciao_19
+    %v1 <- rax
+    rdi <- %v1
+    mem rsp -8 <- :call_label_ciao_20
+    call :encode 1
+    :call_label_ciao_20
+    %v1 <- rax
+    rdi <- %v1
+    call print 1
+    %v1 <- %v1
+    %v1 += 4
+    %count <- %count
+    %count += 1
+    %isDone <- 7 <= %count
+    
+    cjump %isDone = 1 :call_label_ciao_8 :call_label_ciao_7
+    :call_label_ciao_8
+    return
+  )
+  (:math
+    0 0
+    %v1 <- 7
+    %v2 <- %v1
+    %v2 += 8
+    %v3 <- %v2
+    %v3 *= 3
+    %v4 <- %v3
+    %v4 -= 17
+    %v5 <- %v4
+    %v5 &= 7192369
+    %v6 <- %v5
+    %v6 <<= 2
+    %v7 <- %v6
+    %v7 += 1454
+    rax <- %v7
+    return
+  )
+  (:transform
+    1 0
+    %v1 <- rdi
+    cjump %v1 = 1 :call_label_ciao__ciao_21 :call_label_ciao__ciao_22
+    :call_label_ciao__ciao_21
+    %v1 <- %v1
+    %v1 += 12
+    %v1 <- %v1
+    %v1 += 234
+    %v1 <- %v1
+    %v1 += 35
+    %v1 <- %v1
+    %v1 += 4
+    %v1 <- %v1
+    %v1 += 5
+    %v1 <- %v1
+    %v1 += 64
+    %v1 <- %v1
+    %v1 += 1
+    %v1 <- %v1
+    %v1 += 2225
+    %v1 <- %v1
+    %v1 += 2
+    %v1 <- %v1
+    %v1 += 232
+    %v1 <- %v1
+    %v1 += 335
+    %v1 <- %v1
+    %v1 += 32
+    %v1 <- %v1
+    %v1 += 31
+    :call_label_ciao__ciao_22
+    cjump %v1 = 1 :call_label_ciao__ciao_23 :call_label_ciao__ciao_24
+    :call_label_ciao__ciao_23
+    %v1 <- %v1
+    %v1 -= 6
+    :call_label_ciao__ciao_24
+    cjump %v1 = 1 :call_label_ciao__ciao_25 :call_label_ciao__ciao_26
+    :call_label_ciao__ciao_25
+    %v1 <- %v1
+    %v1 *= 2
+    %v1 <- %v1
+    %v1 *= 1
+    %v1 <- %v1
+    %v1 *= 3
+    %v1 <- %v1
+    %v1 *= 4
+    %v1 <- %v1
+    %v1 *= 2
+    %v1 <- %v1
+    %v1 *= 2
+    %v1 <- %v1
+    %v1 *= -1
+    %v1 <- %v1
+    %v1 *= -12
+    %v1 <- %v1
+    %v1 *= -13
+    :call_label_ciao__ciao_26
+    cjump %v1 = 1 :call_label_ciao__ciao_27 :call_label_ciao__ciao_28
+    :call_label_ciao__ciao_27
+    %v1 <- %v1
+    %v1 &= 91823012
+    %v1 <- %v1
+    %v1 &= 283748234
+    %v1 <- %v1
+    %v1 &= 923492834
+    %v1 <- %v1
+    %v1 &= 837023412
+    %v1 <- %v1
+    %v1 &= 93498237
+    %v1 <- %v1
+    %v1 &= 987234922
+    %v1 <- %v1
+    %v1 &= 928374234
+    %v1 <- %v1
+    %v1 &= 98249234
+    %v1 <- %v1
+    %v1 &= 88888888
+    %v1 <- %v1
+    %v1 &= 88918239
+    %v1 <- %v1
+    %v1 &= 989891823
+    %v1 <- %v1
+    %v1 &= 98293849
+    :call_label_ciao__ciao_28
+    cjump %v1 = 1 :call_label_ciao__ciao_29 :call_label_ciao__ciao_30
+    :call_label_ciao__ciao_29
+    %v1 <- %v1
+    %v1 <<= 3
+    :call_label_ciao__ciao_30
+    cjump %v1 = 1 :call_label_ciao__ciao_31 :call_label_ciao__ciao_32
+    :call_label_ciao__ciao_31
+    %v1 <- %v1
+    %v1 >>= 2
+    :call_label_ciao__ciao_32
+    rax <- %v1
+    return
+  )
+  (:encode
+    1 0
+    %v1 <- rdi
+    %isEncoded <- %v1
+    %isEncoded &= 1
+    %isEncoded <- %isEncoded = 1
+    
+    cjump %isEncoded = 1 :call_label_ciao__ciao__ciao_34 :call_label_ciao__ciao__ciao_33
+    :call_label_ciao__ciao__ciao_33
+    %v1 <- %v1
+    %v1 += 1
+    :call_label_ciao__ciao__ciao_34
+    rax <- %v1
+    return
+  )
+)

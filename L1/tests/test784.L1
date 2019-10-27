@@ -1,0 +1,54 @@
+(:go
+(:go
+	0 0
+	rdi <- 7
+	rdi *= rdi
+	rsi <- 18 <= rdi
+	rdi <- rsi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	rdi <- 70
+	rdi++
+	cjump 64 < rdi :true :false
+	:true
+	rdi <- -9
+	rdi *= rdi
+	rdi--
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	rdi <- 13
+	rdi *= rdi
+	rsi <- -15
+	rsi *= rsi
+	rdi &= rsi
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	goto :done
+	:false
+	rdi <- 9 < 14
+	rdi += 9
+	rdi *= 8
+	rsi <- rdi = 81
+	rsi += 8432
+	rsi &= rdi
+	cjump rsi < 20 :print :done
+	:print
+	rsi -= 81
+	rdi <- rsi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	:done
+	return
+)
+
+)

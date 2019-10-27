@@ -1,0 +1,129 @@
+define :main () {
+ :entry
+ %v <- 21
+ %newVar1 <- 21 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 21 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar3 <- 21 >> 1
+ %newVar0 <- %newVar0 * %newVar3
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 8
+ %m <- call allocate (%newVar0, 1)
+ %newVar4 <- %m + 8
+ store %newVar4 <- 7
+ %newVar5 <- %m + 16
+ store %newVar5 <- 21
+ %newVar6 <- %m + 24
+ store %newVar6 <- 21
+ %newVar7 <- %m + 32
+ store %newVar7 <- 21
+ %r <- call :search (%m, %v)
+ call print (%r)
+ %newVar9 <- 0
+ %newVar10 <- %m + 24
+ %newVar11 <- load %newVar10
+ %newVar12 <- %newVar11 >> 1
+ %newVar13 <- %m + 32
+ %newVar14 <- load %newVar13
+ %newVar15 <- %newVar14 >> 1
+ %newVar16 <- 1
+ %newVar16 <- %newVar15 * %newVar16
+ %newVar17 <- 0 * %newVar16
+ %newVar9 <- %newVar17 + %newVar9
+ %newVar16 <- %newVar12 * %newVar16
+ %newVar18 <- 0 * %newVar16
+ %newVar9 <- %newVar18 + %newVar9
+ %newVar9 <- %newVar9 + 0
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 40
+ %newVar19 <- %m + %newVar8
+ store %newVar19 <- %v
+ %r <- call :search (%m, %v)
+ call print (%r)
+ return 
+}
+
+define :search (%m, %v) {
+ :entry
+ %newVar0 <- 0 * 8
+ %newVar1 <- %newVar0 + 16
+ %newVar2 <- %m + %newVar1
+ %encLen <- load %newVar2
+ call print (%encLen)
+ %length1 <- %encLen >> 1
+ %newVar3 <- 1 * 8
+ %newVar4 <- %newVar3 + 16
+ %newVar5 <- %m + %newVar4
+ %encLen <- load %newVar5
+ call print (%encLen)
+ %length2 <- %encLen >> 1
+ %newVar6 <- 2 * 8
+ %newVar7 <- %newVar6 + 16
+ %newVar8 <- %m + %newVar7
+ %encLen <- load %newVar8
+ call print (%encLen)
+ %length3 <- %encLen >> 1
+ br :init
+ :init
+ %found <- 1
+ %i <- 0
+ br :outerHeader
+ :outerHeader
+ %checki <- %i < %length1
+ br %checki :outerBody
+ br :return 
+ :outerBody
+ %j <- 0
+ br :middleHeader
+ :middleHeader
+ %checkj <- %j < %length2
+ br %checkj :middleBody
+ br :outerFooter 
+ :middleBody
+ %k <- 0
+ br :innerHeader
+ :innerHeader
+ %checkk <- %k < %length3
+ br %checkk :innerBody
+ br :middleFooter 
+ :innerBody
+ %newVar10 <- 0
+ %newVar11 <- %m + 24
+ %newVar12 <- load %newVar11
+ %newVar13 <- %newVar12 >> 1
+ %newVar14 <- %m + 32
+ %newVar15 <- load %newVar14
+ %newVar16 <- %newVar15 >> 1
+ %newVar17 <- 1
+ %newVar17 <- %newVar16 * %newVar17
+ %newVar18 <- %j * %newVar17
+ %newVar10 <- %newVar18 + %newVar10
+ %newVar17 <- %newVar13 * %newVar17
+ %newVar19 <- %i * %newVar17
+ %newVar10 <- %newVar19 + %newVar10
+ %newVar10 <- %newVar10 + %k
+ %newVar9 <- %newVar10 * 8
+ %newVar9 <- %newVar9 + 40
+ %newVar20 <- %m + %newVar9
+ %e <- load %newVar20
+ %same <- %e = %v
+ br %same :setFound
+ br :innerFooter 
+ :innerFooter
+ %k <- %k + 1
+ br :innerHeader
+ :middleFooter
+ %j <- %j + 1
+ br :middleHeader
+ :outerFooter
+ %i <- %i + 1
+ br :outerHeader
+ :setFound
+ %found <- 3
+ br :return
+ :return
+ return %found
+}
+

@@ -1,0 +1,53 @@
+(:main
+ (:main
+ 0 1
+ rdi <- 11
+ rsi <- 5
+ call allocate 2
+ mem rsp 0 <- rax
+ rdi <- rax
+ rdx <- rdi
+ rdi += 8
+ mem rdi 0 <- 3
+ rdi += 8
+ mem rdi 0 <- 5
+ rdi += 8
+ mem rdi 0 <- 7
+ rdi += 8
+ mem rdi 0 <- 9
+ rdi += 8
+ mem rdi 0 <- 11
+ rdi <- mem rsp 0
+ rdi <- rdx
+ rsi <- 0
+ mem rsp -8 <- :f_ret
+ call :sum_array 2
+ :f_ret
+ rdi <- rax
+ call print 1
+ return)
+
+ (:sum_array
+  2 1
+  rax <- mem rdi 0
+  cjump rax = rsi :finish :cont
+  
+  :cont
+  rax <- rsi
+  rax += 1
+  rax *= 8
+  rax += rdi
+  rax <- mem rax 0
+  mem rsp 0 <- rax
+  rsi += 1
+  mem rsp -8 <- :sum_return
+  call :sum_array 2
+  :sum_return
+  rdi <- mem rsp 0
+  rax += rdi
+  rax -= 1
+  return
+
+  :finish
+  rax <- 1
+  return))

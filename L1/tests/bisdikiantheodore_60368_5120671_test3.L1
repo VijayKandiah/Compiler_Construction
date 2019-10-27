@@ -1,0 +1,42 @@
+(:run
+    (:run
+        0 0
+        rdi <- 20
+        mem rsp -8 <- :fib_ret
+        call :fibonacci 1
+        :fib_ret
+        return
+    )
+    (:fibonacci
+        1 1
+        mem rsp 0 <- rdi 
+        r13 <- 2 // counter
+        r14 <- 0 // init prev fib num
+        r15 <- 1 // init curr fib num
+        cjump 1 <= rdi :print_zero :end
+        :print_zero
+        rdi <- 1
+        call print 1
+        rdx <- mem rsp 0
+        cjump 2 <= rdx :print_one :end
+        :print_one
+        rdi <- 3
+        call print 1
+        :cond
+        rdx <- mem rsp 0
+        cjump r13 < rdx :continue :end
+        :continue
+        rcx <- r14
+        rcx += r15
+        r14 <- r15
+        r15 <- rcx
+        rdi <- rcx
+        rdi <<= 1
+        rdi += 1
+        call print 1
+        r13 += 1
+        goto :cond
+        :end
+        return
+    )
+)

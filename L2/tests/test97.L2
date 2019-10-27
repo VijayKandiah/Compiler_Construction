@@ -1,0 +1,112 @@
+(:main
+  (:main
+    0 0
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    %array1 <- rax
+    %el1Address <- %array1
+    %el1Address += 8
+    mem %el1Address 0  <- 85
+    rdi <- %array1
+    call print 1
+    rdi <- %array1
+    mem rsp -8 <- :call_label0
+    call :printArray 1
+    :call_label0
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    %array2 <- rax
+    mem %el1Address 0  <- %array2
+    rdi <- %array1
+    call print 1
+    rdi <- %array1
+    mem rsp -8 <- :call_label1
+    call :printArray 1
+    :call_label1
+    return
+  )
+  (:printArray
+    1 0
+    %array <- rdi
+    %index <- 0
+    %arrayLength <- mem %array 0 
+    %tempArrayPointer <- %array
+    %tempArrayPointer &= 1
+    cjump %tempArrayPointer = 1 :call_label2 :call_label3
+    :call_label2
+    rax <- 0
+    return
+    :call_label3
+    :call_label4
+    %continueToExecute <- %index < %arrayLength
+    
+    cjump %continueToExecute = 1 :call_label5 :call_label6
+    :call_label5
+    %encodedIndex <- %index
+    %encodedIndex <<= 1
+    %encodedIndex <- %encodedIndex
+    %encodedIndex += 1
+    rdi <- %array
+    rsi <- %encodedIndex
+    mem rsp -8 <- :call_label7
+    call :printData 2
+    :call_label7
+    %index <- %index
+    %index += 1
+    goto :call_label4
+    :call_label6
+    rax <- 1
+    return
+  )
+  (:printData
+    2 0
+    %array <- rdi
+    %indexToPrintEncoded <- rsi
+    rdi <- %indexToPrintEncoded
+    call print 1
+    %arrayLength <- mem %array 0 
+    %arrayLengthEncoded <- %arrayLength
+    %arrayLengthEncoded <<= 1
+    %arrayLengthEncoded <- %arrayLengthEncoded
+    %arrayLengthEncoded += 1
+    %isArrayBigEnough <- %indexToPrintEncoded < %arrayLengthEncoded
+    
+    cjump %isArrayBigEnough = 1 :call_label9 :call_label8
+    :call_label8
+    rdi <- %array
+    rsi <- %indexToPrintEncoded
+    call array-error 2
+    :call_label9
+    %offset <- %indexToPrintEncoded
+    %offset >>= 1
+    %offset <- %offset
+    %offset *= 8
+    %offset <- %offset
+    %offset += 8
+    %offsetEncoded <- %offset
+    %offsetEncoded <<= 1
+    %offsetEncoded <- %offsetEncoded
+    %offsetEncoded += 1
+    rdi <- %offsetEncoded
+    call print 1
+    %arrayElementAddress <- %offset
+    %arrayElementAddress += %array
+    %arrayElement <- mem %arrayElementAddress 0 
+    %isArrayElementAnInt <- %arrayElement
+    %isArrayElementAnInt &= 1
+    cjump %isArrayElementAnInt = 1 :call_label10 :call_label11
+    :call_label10
+    rdi <- %arrayElement
+    call print 1
+    goto :call_label12
+    :call_label11
+    rdi <- %arrayElement
+    mem rsp -8 <- :call_label13
+    call :printArray 1
+    :call_label13
+    :call_label12
+    return
+  )
+)

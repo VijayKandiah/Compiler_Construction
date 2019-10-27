@@ -1,0 +1,180 @@
+(:main
+(:isPrime
+	1 3
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi -= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi >>= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi < 2
+	cjump rdi = 1 :call_label0 :call_label1
+	:call_label0
+	rax <- 1
+	return
+	:call_label1
+	rdi <- 2
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 1
+	mem rsp 0 <- rdi
+	:call_label2
+	rdi <- mem rsp 0
+	rsi <- mem rsp 8
+	rdi <- rsi < rdi
+	cjump rdi = 1 :call_label3 :call_label4
+	:call_label3
+	rdi <- mem rsp 8
+	rdx <- rdi
+	rdx <<= 1
+	rdx += 1
+	rdi <- mem rsp 16
+	rsi <- rdi
+	rsi <<= 1
+	rsi += 1
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	mem rsp -8 <- :call_label5
+	call :modulo 2
+	:call_label5
+	rdi <- rax
+	rdi <- rdi = 1
+	cjump rdi = 1 :call_label0 :call_label2
+	:call_label4
+	rax <- 3
+	return
+)
+
+(:modulo
+	2 0
+	rdx <- rdi
+	rcx <- rsi
+	rsi <- rdx
+	rdi <- rcx <= 1
+	cjump rdi = 1 :call_label_ciao_6 :call_label_ciao_7
+	:call_label_ciao_6
+	rax <- -1
+	return
+	:call_label_ciao_7
+	rdi <- rdx < rcx
+	cjump rdi = 1 :call_label_ciao_8 :call_label_ciao_9
+	:call_label_ciao_8
+	rax <- rsi
+	return
+	:call_label_ciao_9
+	rsi -= 1
+	rsi >>= 1
+	rcx -= 1
+	rcx >>= 1
+	rsi -= rcx
+	rsi <<= 1
+	rsi += 1
+	rcx <<= 1
+	rcx += 1
+	rdi <- rsi < rcx
+	cjump rdi = 1 :call_label_ciao_8 :call_label_ciao_9
+)
+
+(:main
+	0 0
+	rdi <- 25
+	rsi <- 11
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao__ciao_10
+	call :modulo 2
+	:call_label_ciao__ciao_10
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 25
+	rsi <- 9
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao__ciao_11
+	call :modulo 2
+	:call_label_ciao__ciao_11
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 25
+	rsi <- 1
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao__ciao_12
+	call :modulo 2
+	:call_label_ciao__ciao_12
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 125
+	rsi <- 35
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao__ciao_13
+	call :modulo 2
+	:call_label_ciao__ciao_13
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 1
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_14
+	call :isPrime 1
+	:call_label_ciao__ciao_14
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 3
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_15
+	call :isPrime 1
+	:call_label_ciao__ciao_15
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 51
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_16
+	call :isPrime 1
+	:call_label_ciao__ciao_16
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 21
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_17
+	call :isPrime 1
+	:call_label_ciao__ciao_17
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 35
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_18
+	call :isPrime 1
+	:call_label_ciao__ciao_18
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 135
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_19
+	call :isPrime 1
+	:call_label_ciao__ciao_19
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

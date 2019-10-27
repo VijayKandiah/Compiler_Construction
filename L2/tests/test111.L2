@@ -1,0 +1,397 @@
+(:main
+  (:getfreq
+    6 0
+    %var <- rdi
+    %c1 <- rsi
+    %c2 <- rdx
+    %c3 <- rcx
+    %c4 <- r8
+    %c5 <- r9
+    %ret <- %c1 = %var
+    
+    %ret2 <- %c2 = %var
+    
+    %ret <- %ret
+    %ret += %ret2
+    %ret3 <- %c3 = %var
+    
+    %ret <- %ret
+    %ret += %ret3
+    %ret4 <- %c4 = %var
+    
+    %ret <- %ret
+    %ret += %ret4
+    %ret5 <- %c5 = %var
+    
+    %ret <- %ret
+    %ret += %ret5
+    rax <- %ret
+    return
+  )
+  (:encode
+    1 0
+    %num_to_encode <- rdi
+    %num_to_encode <- %num_to_encode
+    %num_to_encode <<= 1
+    %num_to_encode <- %num_to_encode
+    %num_to_encode += 1
+    rax <- %num_to_encode
+    return
+  )
+  (:euclid
+    2 0
+    %i0 <- rdi
+    %i1 <- rsi
+    %foo <- %i0
+    %bar <- %i1
+    :call_label0
+    %flag3 <- %foo = %bar
+    
+    cjump %flag3 = 1 :call_label4 :call_label1
+    :call_label1
+    %flag <- %bar < %foo
+    
+    cjump %flag = 1 :call_label3 :call_label2
+    :call_label2
+    %foo <- %bar
+    %temp <- %foo
+    %bar <- %temp
+    :call_label3
+    %foo <- %bar
+    %temp <- %foo
+    %temp -= %bar
+    %bar <- %temp
+    %flag2 <- 1
+    cjump %flag2 = 1 :call_label0 :call_label4
+    :call_label4
+    rax <- %foo
+    return
+  )
+  (:main
+    0 0
+    %v1 <- 1
+    %v2 <- 2
+    %v3 <- 3
+    %v4 <- 4
+    %v5 <- 5
+    %v6 <- 1
+    %v7 <- 1
+    %v8 <- 3
+    %v9 <- 2
+    %v10 <- 5
+    %g <- 0
+    rdi <- %g
+    rsi <- %v1
+    mem rsp -8 <- :call_label_ciao_16
+    call :greater 2
+    :call_label_ciao_16
+    %g <- rax
+    rdi <- %g
+    rsi <- %v2
+    mem rsp -8 <- :call_label_ciao_17
+    call :greater 2
+    :call_label_ciao_17
+    %g <- rax
+    rdi <- %g
+    rsi <- %v3
+    mem rsp -8 <- :call_label_ciao_18
+    call :greater 2
+    :call_label_ciao_18
+    %g <- rax
+    rdi <- %g
+    rsi <- %v4
+    mem rsp -8 <- :call_label_ciao_19
+    call :greater 2
+    :call_label_ciao_19
+    %g <- rax
+    rdi <- %g
+    rsi <- %v5
+    mem rsp -8 <- :call_label_ciao_20
+    call :greater 2
+    :call_label_ciao_20
+    %g <- rax
+    rdi <- %g
+    rsi <- %v6
+    mem rsp -8 <- :call_label_ciao_21
+    call :greater 2
+    :call_label_ciao_21
+    %g <- rax
+    rdi <- %g
+    rsi <- %v7
+    mem rsp -8 <- :call_label_ciao_22
+    call :greater 2
+    :call_label_ciao_22
+    %g <- rax
+    rdi <- %g
+    rsi <- %v8
+    mem rsp -8 <- :call_label_ciao_23
+    call :greater 2
+    :call_label_ciao_23
+    %g <- rax
+    rdi <- %g
+    rsi <- %v9
+    mem rsp -8 <- :call_label_ciao_24
+    call :greater 2
+    :call_label_ciao_24
+    %g <- rax
+    rdi <- %g
+    rsi <- %v10
+    mem rsp -8 <- :call_label_ciao_25
+    call :greater 2
+    :call_label_ciao_25
+    %g <- rax
+    rdi <- %g
+    mem rsp -8 <- :call_label_ciao_26
+    call :encode 1
+    :call_label_ciao_26
+    %g <- rax
+    rdi <- %g
+    call print 1
+    rdi <- 1
+    rsi <- %v1
+    rdx <- %v2
+    rcx <- %v3
+    r8 <- %v4
+    r9 <- %v5
+    mem rsp -8 <- :call_label_ciao_27
+    call :getfreq 6
+    :call_label_ciao_27
+    %f1 <- rax
+    rdi <- 1
+    rsi <- %v6
+    rdx <- %v7
+    rcx <- %v8
+    r8 <- %v9
+    r9 <- %v10
+    mem rsp -8 <- :call_label_ciao_28
+    call :getfreq 6
+    :call_label_ciao_28
+    %temp <- rax
+    %f1 <- %f1
+    %f1 += %temp
+    rdi <- 2
+    rsi <- %v1
+    rdx <- %v2
+    rcx <- %v3
+    r8 <- %v4
+    r9 <- %v5
+    mem rsp -8 <- :call_label_ciao_29
+    call :getfreq 6
+    :call_label_ciao_29
+    %f2 <- rax
+    rdi <- 2
+    rsi <- %v6
+    rdx <- %v7
+    rcx <- %v8
+    r8 <- %v9
+    r9 <- %v10
+    mem rsp -8 <- :call_label_ciao_30
+    call :getfreq 6
+    :call_label_ciao_30
+    %temp <- rax
+    %f2 <- %f2
+    %f2 += %temp
+    rdi <- 3
+    rsi <- %v1
+    rdx <- %v2
+    rcx <- %v3
+    r8 <- %v4
+    r9 <- %v5
+    mem rsp -8 <- :call_label_ciao_31
+    call :getfreq 6
+    :call_label_ciao_31
+    %f3 <- rax
+    rdi <- 3
+    rsi <- %v6
+    rdx <- %v7
+    rcx <- %v8
+    r8 <- %v9
+    r9 <- %v10
+    mem rsp -8 <- :call_label_ciao_32
+    call :getfreq 6
+    :call_label_ciao_32
+    %temp <- rax
+    %f3 <- %f3
+    %f3 += %temp
+    rdi <- 4
+    rsi <- %v1
+    rdx <- %v2
+    rcx <- %v3
+    r8 <- %v4
+    r9 <- %v5
+    mem rsp -8 <- :call_label_ciao_33
+    call :getfreq 6
+    :call_label_ciao_33
+    %f4 <- rax
+    rdi <- 4
+    rsi <- %v6
+    rdx <- %v7
+    rcx <- %v8
+    r8 <- %v9
+    r9 <- %v10
+    mem rsp -8 <- :call_label_ciao_34
+    call :getfreq 6
+    :call_label_ciao_34
+    %temp <- rax
+    %f4 <- %f4
+    %f4 += %temp
+    rdi <- 5
+    rsi <- %v1
+    rdx <- %v2
+    rcx <- %v3
+    r8 <- %v4
+    r9 <- %v5
+    mem rsp -8 <- :call_label_ciao_35
+    call :getfreq 6
+    :call_label_ciao_35
+    %f5 <- rax
+    rdi <- 5
+    rsi <- %v6
+    rdx <- %v7
+    rcx <- %v8
+    r8 <- %v9
+    r9 <- %v10
+    mem rsp -8 <- :call_label_ciao_36
+    call :getfreq 6
+    :call_label_ciao_36
+    %temp <- rax
+    %f5 <- %f1
+    %f5 += %temp
+    %gt <- 0
+    rdi <- %f1
+    rsi <- %f2
+    mem rsp -8 <- :call_label_ciao_37
+    call :greater 2
+    :call_label_ciao_37
+    %f <- rax
+    %flag <- %f1 = %f
+    
+    cjump %flag = 1 :call_label_ciao_10 :call_label_ciao_5
+    :call_label_ciao_5
+    %flag <- %f2 = %f
+    
+    cjump %flag = 1 :call_label_ciao_11 :call_label_ciao_6
+    :call_label_ciao_6
+    rdi <- %f
+    rsi <- %f3
+    mem rsp -8 <- :call_label_ciao_38
+    call :greater 2
+    :call_label_ciao_38
+    %f <- rax
+    %flag <- %f3 = %f
+    
+    cjump %flag = 1 :call_label_ciao_12 :call_label_ciao_7
+    :call_label_ciao_7
+    rdi <- %f
+    rsi <- %f4
+    mem rsp -8 <- :call_label_ciao_39
+    call :greater 2
+    :call_label_ciao_39
+    %f <- rax
+    %flag <- %f4 = %f
+    
+    cjump %flag = 1 :call_label_ciao_13 :call_label_ciao_8
+    :call_label_ciao_8
+    rdi <- %f
+    rsi <- %f5
+    mem rsp -8 <- :call_label_ciao_40
+    call :greater 2
+    :call_label_ciao_40
+    %f <- rax
+    %flag <- %f5 = %f
+    
+    cjump %flag = 1 :call_label_ciao_14 :call_label_ciao_9
+    :call_label_ciao_9
+    :call_label_ciao_10
+    %pf <- 1
+    goto :call_label_ciao_15
+    :call_label_ciao_11
+    %pf <- 2
+    goto :call_label_ciao_15
+    :call_label_ciao_12
+    %pf <- 3
+    goto :call_label_ciao_15
+    :call_label_ciao_13
+    %pf <- 4
+    goto :call_label_ciao_15
+    :call_label_ciao_14
+    %pf <- 5
+    goto :call_label_ciao_15
+    :call_label_ciao_15
+    rdi <- %pf
+    mem rsp -8 <- :call_label_ciao_41
+    call :encode 1
+    :call_label_ciao_41
+    %pf <- rax
+    rdi <- %pf
+    call print 1
+    rdi <- %f
+    mem rsp -8 <- :call_label_ciao_42
+    call :encode 1
+    :call_label_ciao_42
+    %f <- rax
+    rdi <- %f
+    call print 1
+    %e1 <- 64
+    %e2 <- 72
+    %e3 <- 27
+    %e4 <- 54
+    %e5 <- 37
+    %e6 <- 53
+    rdi <- %e1
+    rsi <- %e2
+    mem rsp -8 <- :call_label_ciao_43
+    call :euclid 2
+    :call_label_ciao_43
+    %ep1 <- rax
+    rdi <- %ep1
+    mem rsp -8 <- :call_label_ciao_44
+    call :encode 1
+    :call_label_ciao_44
+    %ep1 <- rax
+    rdi <- %ep1
+    call print 1
+    rdi <- %e3
+    rsi <- %e4
+    mem rsp -8 <- :call_label_ciao_45
+    call :euclid 2
+    :call_label_ciao_45
+    %ep2 <- rax
+    rdi <- %ep2
+    mem rsp -8 <- :call_label_ciao_46
+    call :encode 1
+    :call_label_ciao_46
+    %ep2 <- rax
+    rdi <- %ep2
+    call print 1
+    rdi <- %e5
+    rsi <- %e6
+    mem rsp -8 <- :call_label_ciao_47
+    call :euclid 2
+    :call_label_ciao_47
+    %ep3 <- rax
+    rdi <- %ep3
+    mem rsp -8 <- :call_label_ciao_48
+    call :encode 1
+    :call_label_ciao_48
+    %ep3 <- rax
+    rdi <- %ep3
+    call print 1
+    rax <- 0
+    return
+  )
+  (:greater
+    2 0
+    %foo <- rdi
+    %bar <- rsi
+    %flag <- %bar <= %foo
+    
+    cjump %flag = 1 :call_label_ciao__ciao_50 :call_label_ciao__ciao_49
+    :call_label_ciao__ciao_49
+    rax <- %bar
+    return
+    :call_label_ciao__ciao_50
+    rax <- %foo
+    return
+  )
+)

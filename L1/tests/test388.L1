@@ -1,0 +1,67 @@
+(:go
+(:go
+	1 0
+	rdi <- 11
+	mem rsp -8 <- :populate_ree
+	call :populate 1
+	:populate_ree
+	return
+)
+
+(:populate
+	1 7
+	rsi <- rsp
+	mem rsp 48 <- rsi
+	rsi <- 0
+	:allocate_array
+	rsi <- rsi
+	mem rsp 40 <- rsi
+	rsi <- mem rsp 40
+	rsi <- rsi
+	rsi <<= 1
+	rsi += 1
+	rsi <- rsi
+	r14 <- rdi
+	call allocate 2
+	rdi <- mem rsp 48
+	r12 <- rdi
+	mem r12 0 <- rax
+	rdi <- r14
+	r14 >>= 1
+	rsi <- mem rsp 40
+	rsi <- rsi
+	rsi += 1
+	rdx <- mem rsp 48
+	rdx += 8
+	mem rsp 48 <- rdx
+	goto :bound_check
+	:bound_check
+	cjump rsi < r14 :allocate_array :wrap
+	:wrap
+	r12 <- rdi
+	call allocate 2
+	rdi <- r12
+	rdi >>= 1
+	rdx <- rax
+	rcx <- rax
+	:populate_outer_array
+	rsi <- mem rsp 48
+	rsi -= 8
+	mem rsp 48 <- rsi
+	rcx += 8
+	rsi <- mem rsp 48
+	r12 <- rsi
+	rsi <- mem r12 0
+	rax <- rcx
+	mem rax 0 <- rsi
+	rdi -= 1
+	goto :outer_bound_check
+	:outer_bound_check
+	cjump 0 <= rdi :populate_outer_array :print_array
+	:print_array
+	rdi <- rdx
+	call print 1
+	return
+)
+
+)

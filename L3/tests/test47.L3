@@ -1,0 +1,77 @@
+define :main () {
+ :entry
+ %t <- call :createMyClosure (3)
+ %v <- call :callMyClosure (%t, 4)
+ %x <- call :encodeValue (%v)
+ call print (%x)
+ return 
+}
+
+define :createMyClosure (%p1) {
+ :entry
+ %x2 <- 21
+ %p <- call allocate (9, 1)
+ %newVar1 <- 0 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %p + %newVar0
+ store %newVar2 <- :myF
+ %newVar4 <- 1 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %p + %newVar3
+ store %newVar5 <- 1
+ %newVar7 <- 2 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %p + %newVar6
+ store %newVar8 <- %p1
+ %newVar10 <- 3 * 8
+ %newVar9 <- %newVar10 + 8
+ %newVar11 <- %p + %newVar9
+ store %newVar11 <- %x2
+ return %p
+}
+
+define :callMyClosure (%c, %argClosure) {
+ :entry
+ %newVar1 <- 0 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %c + %newVar0
+ %fp <- load %newVar2
+ %newVar4 <- 1 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %c + %newVar3
+ %arityOfC <- load %newVar5
+ %checkArgs <- %arityOfC = 1
+ br %checkArgs :true 
+ br :false 
+ :true
+ %finalResult <- call %fp (%c, %argClosure)
+ %finalResultEncoded <- call :encodeValue (%finalResult)
+ call print (%finalResultEncoded)
+ return %finalResult
+ :false
+ return 0
+}
+
+define :myF (%c, %p1) {
+ :entry
+ %newVar1 <- 2 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %c + %newVar0
+ %x1 <- load %newVar2
+ %newVar4 <- 3 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %c + %newVar3
+ %x2 <- load %newVar5
+ %r1 <- %x1 + %x2
+ %r2 <- %r1 + %p1
+ return %r2
+}
+
+define :encodeValue (%v) {
+ :entry
+ %encodedV <- %v
+ %encodedV <- %encodedV << 1
+ %encodedV <- %encodedV + 1
+ return %encodedV
+}
+

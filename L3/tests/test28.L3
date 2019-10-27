@@ -1,0 +1,48 @@
+define :main () {
+ :entry
+ %newVar1 <- 7 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 7 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar3 <- 7 >> 1
+ %newVar0 <- %newVar0 * %newVar3
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 8
+ %a <- call allocate (%newVar0, 1)
+ %newVar4 <- %a + 8
+ store %newVar4 <- 7
+ %newVar5 <- %a + 16
+ store %newVar5 <- 7
+ %newVar6 <- %a + 24
+ store %newVar6 <- 7
+ %newVar7 <- %a + 32
+ store %newVar7 <- 7
+ call :storeV (%a, 1, 2, 3)
+ return 
+}
+
+define :storeV (%A, %k, %i, %j) {
+ :entry
+ %newVar1 <- 0
+ %newVar2 <- %A + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- %A + 32
+ %newVar6 <- load %newVar5
+ %newVar7 <- %newVar6 >> 1
+ %newVar8 <- 1
+ %newVar8 <- %newVar7 * %newVar8
+ %newVar9 <- %i * %newVar8
+ %newVar1 <- %newVar9 + %newVar1
+ %newVar8 <- %newVar4 * %newVar8
+ %newVar10 <- %k * %newVar8
+ %newVar1 <- %newVar10 + %newVar1
+ %newVar1 <- %newVar1 + %j
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 40
+ %newVar11 <- %A + %newVar0
+ store %newVar11 <- 5
+ return 
+}
+

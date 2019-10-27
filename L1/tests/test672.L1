@@ -1,0 +1,265 @@
+(:main
+(:main
+	0 0
+	rdi <- 1
+	mem rsp -8 <- :call_label0
+	call :myF2 1
+	:call_label0
+	rdi <- 2
+	mem rsp -8 <- :call_label1
+	call :myF2 1
+	:call_label1
+	rdi <- 3
+	mem rsp -8 <- :call_label2
+	call :myF2 1
+	:call_label2
+	rdi <- 4
+	mem rsp -8 <- :call_label3
+	call :myF2 1
+	:call_label3
+	rdi <- 5
+	mem rsp -8 <- :call_label4
+	call :myF2 1
+	:call_label4
+	rdi <- 6
+	mem rsp -8 <- :call_label5
+	call :myF2 1
+	:call_label5
+	rdi <- 7
+	mem rsp -8 <- :call_label6
+	call :myF2 1
+	:call_label6
+	rdi <- 8
+	mem rsp -8 <- :call_label7
+	call :myF2 1
+	:call_label7
+	rdi <- 9
+	mem rsp -8 <- :call_label8
+	call :myF2 1
+	:call_label8
+	rdi <- 10
+	mem rsp -8 <- :call_label9
+	call :myF2 1
+	:call_label9
+	rdi <- 11
+	mem rsp -8 <- :call_label10
+	call :myF2 1
+	:call_label10
+	rdi <- 12
+	mem rsp -8 <- :call_label11
+	call :myF2 1
+	:call_label11
+	rdi <- 13
+	mem rsp -8 <- :call_label12
+	call :myF2 1
+	:call_label12
+	rdi <- 14
+	mem rsp -8 <- :call_label13
+	call :myF2 1
+	:call_label13
+	rdi <- 15
+	mem rsp -8 <- :call_label14
+	call :myF2 1
+	:call_label14
+	rdi <- 16
+	mem rsp -8 <- :call_label15
+	call :myF2 1
+	:call_label15
+	rdi <- 17
+	mem rsp -8 <- :call_label16
+	call :myF2 1
+	:call_label16
+	rdi <- 18
+	mem rsp -8 <- :call_label17
+	call :myF2 1
+	:call_label17
+	rdi <- 19
+	mem rsp -8 <- :call_label18
+	call :myF2 1
+	:call_label18
+	rdi <- 20
+	mem rsp -8 <- :call_label19
+	call :myF2 1
+	:call_label19
+	return
+)
+
+(:myF2
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_20
+	call :myF4 1
+	:call_label_ciao_20
+	return
+)
+
+(:myF4
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_21
+	call :myF8 1
+	:call_label_ciao__ciao_21
+	return
+)
+
+(:myF8
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_22
+	call :myF16 1
+	:call_label_ciao__ciao__ciao_22
+	return
+)
+
+(:myF16
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_23
+	call :myF32 1
+	:call_label_ciao__ciao__ciao__ciao_23
+	return
+)
+
+(:myF32
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao_24
+	call :myF64 1
+	:call_label_ciao__ciao__ciao__ciao__ciao_24
+	return
+)
+
+(:myF64
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	call :myF128 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	return
+)
+
+(:myF128
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_26
+	call :myF256 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_26
+	return
+)
+
+(:myF256
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_27
+	call :myF512 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_27
+	return
+)
+
+(:myF512
+	1 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

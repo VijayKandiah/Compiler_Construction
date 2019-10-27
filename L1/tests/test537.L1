@@ -1,0 +1,114 @@
+(:main
+(:main
+	0 2
+	rdi <- 1900
+	mem rsp 8 <- rdi
+	rdi <- 2000
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :ca_ret
+	call :create_array 2
+	:ca_ret
+	rdi <- rax
+	rsi <- mem rsp 8
+	rsi <- rsi
+	rdx <- mem rsp 0
+	rdx <- rdx
+	mem rsp -8 <- :fa_ret
+	call :fill_array 3
+	:fa_ret
+	rdi <- rax
+	call print 1
+	return
+)
+
+(:create_array
+	2 0
+	rsi <- rsi
+	rsi -= rdi
+	rsi >>= 2
+	rsi++
+	rsi <<= 1
+	rsi++
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	return
+)
+
+(:fill_array
+	3 4
+	rsi <- rsi
+	mem rsp 16 <- rsi
+	rsi <- rdi
+	mem rsp 24 <- rsi
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rdx
+	mem rsp 0 <- rdi
+	:loop_start
+	rsi <- mem rsp 0
+	rdi <- mem rsp 16
+	cjump rdi <= rsi :calc :ret
+	:calc
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp -8 <- :ily_ret
+	call :is_leap_year 1
+	:ily_ret
+	cjump 1 = rax :leap :not_leap
+	:not_leap
+	goto :continue_loop
+	:leap
+	rdi <- mem rsp 16
+	rsi <- rdi
+	rsi <<= 1
+	rsi++
+	rdi <- mem rsp 24
+	rdi += 8
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	mem rdi 0 <- rsi
+	:continue_loop
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	goto :loop_start
+	:ret
+	rdi <- mem rsp 8
+	rax <- rdi
+	return
+)
+
+(:is_leap_year
+	1 0
+	rsi <- rdi
+	rdi <- rsi
+	rdi &= 15
+	cjump 0 = rdi :yes :may_not_leap
+	:may_not_leap
+	rdi <- rsi
+	rdi >>= 2
+	:loop_mod_25
+	cjump 25 = rdi :no :minus_25
+	:minus_25
+	cjump 25 < rdi :loop_minus_25 :may_leap
+	:loop_minus_25
+	rdi -= 25
+	goto :loop_mod_25
+	:may_leap
+	rdi <- rsi
+	rdi &= 3
+	cjump 0 = rdi :yes :no
+	:yes
+	rax <- 1
+	return
+	:no
+	rax <- 0
+	return
+)
+
+)

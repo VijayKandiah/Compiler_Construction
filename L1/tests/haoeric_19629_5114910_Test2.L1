@@ -1,0 +1,66 @@
+(:go
+	(:go 0 1
+		// Project Euler problem 2: https://projecteuler.net/problem=2
+		// By considering the terms in the Fibonacci sequence whose values 
+		// do not exceed four million, find the sum of the even-valued terms.
+		// In addition, count up how many numbers were considered and summed.
+		// count = 11 our of 33
+		// answer = 4613732
+
+		r15 <- 1 	// count considered
+		r11 <- 1 	// count summed
+		rbx <- 1 	// total (answer)
+
+		// initialize array of size 2 to store fibonacci a and b
+		rdi <- 5
+		rsi <- 1
+		mem rsp 0 <- r11
+		call allocate 2
+		r11 <- mem rsp 0
+		r12 <- rax
+		mem r12 16 <- 3
+
+		// print array[0]
+		rdi <- mem r12 8
+		mem rsp 0 <- r11
+		call print 1
+		r11 <- mem rsp 0
+
+		:loop 	// fibonacci step
+		r13 <- mem r12 16
+		r14 <- mem r12 8
+		r14 += -1
+		r14 += r13
+		mem r12 8 <- r13
+		mem r12 16 <- r14
+
+		// print array[0]
+		rdi <- mem r12 8
+		mem rsp 0 <- r11
+		call print 1
+		r11 <- mem rsp 0
+
+		// check divisible by 2
+		r13 &= 3
+		cjump r13 = 1 :add :dontadd
+
+		:add
+		rbx += -1
+		rbx += mem r12 8
+		r11 += 2
+
+		:dontadd
+		r15 += 2
+		cjump r14 <= 8000001 :loop :done 	// 4 million
+
+		:done
+		rdi <- r11
+		call print 1
+		rdi <- r15
+		call print 1
+		rdi <- rbx
+		call print 1
+
+		return
+	)
+)

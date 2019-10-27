@@ -1,0 +1,19 @@
+(:main
+ (:main
+ 0 0
+ rdi <- 127
+ //rsi <- 2
+ rdi <<= 1
+ rdi *= 2
+ rdi += 1
+ call print 1
+ rdi <- 127
+ rdi >>= 1
+ rdi *= 2
+ rdi += 1
+ call print 1
+ return))
+
+
+
+

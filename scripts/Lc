@@ -1,0 +1,47 @@
+#!/bin/bash
+
+if test $# -lt 5 ; then
+  echo "USAGE: `basename $0` EXTENSION_FILE COMPILER LOWER_COMPILER_DIR LOWER_COMPILER COMPILER_ARGUMENTS" ;
+  exit 1;
+fi
+extFile=$1 ;
+compiler=$2 ;
+lowerCompilerDir=$3 ;
+lowerCompiler=$4 ;
+
+# Fetch the program name and the optional arguments to pass to the compiler
+numberOfArguments=$(($#));
+arguments=( $@ ) ;
+programToCompile=${arguments[$numberOfArguments-1]} ;
+compilerArgs="" ;
+if test $numberOfArguments -gt 5 ; then
+  compilerArgs=${arguments[@]:4:$numberOfArguments-5};
+fi
+
+# Compile
+origDir=`pwd` ;
+topDirOfOrigDir=`basename "$origDir"` ;
+rm -f prog.${extFile} ;
+./bin/${compiler} ${compilerArgs} ${programToCompile}
+
+if test $? -ne 0 ; then
+  exit 1;
+fi
+
+if ! test -f prog.${extFile} ; then
+  exit 1;
+fi
+
+pushd ./ &> /dev/null ;
+cd ${lowerCompilerDir} ;
+./${lowerCompiler} ${compilerArgs} ../$topDirOfOrigDir/prog.${extFile} ;
+if test $? -ne 0 ; then
+  exit 1;
+fi
+if ! test -f a.out ; then
+  exit 1;
+fi
+mv a.out "${origDir}" ;
+popd &> /dev/null ;
+
+exit 0

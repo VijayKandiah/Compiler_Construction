@@ -1,0 +1,360 @@
+(:main
+(:main
+	0 15
+	:call_label0
+	rsi <- 1
+	mem rsp 96 <- rsi
+	rsi <- 2
+	mem rsp 104 <- rsi
+	rsi <- mem rsp 96
+	rdx <- mem rsp 104
+	rsi <- rsi = rdx
+	mem rsp 112 <- rsi
+	rsi <- mem rsp 104
+	rsi <- rcx < rsi
+	rsi <- mem rsp 96
+	rsi <- rsi
+	mem rsp 88 <- rsi
+	rdx <- mem rsp 88
+	rsi <- mem rsp 104
+	rdx += rsi
+	mem rsp 88 <- rdx
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rcx <- mem rsp 104
+	rdi <<= rcx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp -8 <- :call_label2
+	call :addOne 1
+	:call_label2
+	rdi <- rax
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 80
+	rsi <- rsi
+	mem rsp -8 <- :call_label3
+	call :sum2 2
+	:call_label3
+	rdi <- rax
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	rdi *= 3
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	rdi += 2
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	rsi <- mem rsp 72
+	rsi <- rsi
+	rdx <- mem rsp 64
+	rdx <- rdx
+	mem rsp -8 <- :call_label4
+	call :sum3 3
+	:call_label4
+	rdi <- rax
+	mem rsp 56 <- rdi
+	rdi <- 7
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi <<= 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi += 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rsi <- 3
+	call allocate 2
+	rdi <- rax
+	mem rdi 8 <- 5
+	rsi <- rdi
+	rsi += 16
+	mem rsi 0 <- 7
+	mem rdi 24 <- 9
+	rdi <- mem rsi 0
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rsi <- mem rsp 56
+	rdi <- rdi < rsi
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 64
+	rdi <- rdi
+	rsi <- mem rsp 56
+	rsi <- rsi
+	rdx <- mem rsp 48
+	rdx <- rdx
+	rcx <- mem rsp 40
+	rcx <- rcx
+	mem rsp -8 <- :call_label5
+	call :sum4 4
+	:call_label5
+	rdi <- rax
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	rsi <- mem rsp 32
+	rsi <- rsi
+	mem rsp -8 <- :call_label6
+	call :substract 2
+	:call_label6
+	rdx <- rax
+	rdi <- mem rsp 96
+	rdi <- rdi
+	rsi <- mem rsp 32
+	rsi <- rsi
+	rdx <- rdx
+	mem rsp -8 <- :call_label7
+	call :substract3 3
+	:call_label7
+	rdi <- mem rsp 48
+	rdi <- rdi
+	rsi <- mem rsp 40
+	rsi <- rsi
+	rdx <- mem rsp 32
+	rdx <- rdx
+	rcx <- mem rsp 64
+	rcx <- rcx
+	mem rsp -8 <- :call_label8
+	call :substract4 4
+	:call_label8
+	rdi <- mem rsp 64
+	rdi <- rdi
+	rsi <- mem rsp 56
+	rsi <- rsi
+	rdx <- mem rsp 48
+	rdx <- rdx
+	rcx <- mem rsp 40
+	rcx <- rcx
+	mem rsp -8 <- :call_label9
+	call :sum4 4
+	:call_label9
+	rdi <- mem rsp 104
+	rdi <- rdi
+	rsi <- mem rsp 32
+	rsi <- rsi
+	mem rsp -8 <- :call_label10
+	call :product 2
+	:call_label10
+	rdi <- mem rsp 96
+	rdi <- rdi
+	rsi <- mem rsp 104
+	rsi <- rsi
+	rdx <- mem rsp 80
+	rdx <- rdx
+	mem rsp -8 <- :call_label11
+	call :product3 3
+	:call_label11
+	rdi <- mem rsp 48
+	rdi <- rdi
+	rsi <- mem rsp 72
+	rsi <- rsi
+	rdx <- mem rsp 88
+	rdx <- rdx
+	rcx <- mem rsp 64
+	rcx <- rcx
+	mem rsp -8 <- :call_label12
+	call :product4 4
+	:call_label12
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 96
+	rsi <- rsi
+	mem rsp -8 <- :call_label13
+	call :left_shift 2
+	:call_label13
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 104
+	rsi <- rsi
+	mem rsp -8 <- :call_label14
+	call :right_shift 2
+	:call_label14
+	rdi <- :otherF
+	mem rsp 0 <- rdi
+	mem rsp -8 <- :call_label15
+	call :otherF 0
+	:call_label15
+	mem rsp -8 <- :call_label16
+	rdi <- mem rsp 0
+	call rdi 0
+	:call_label16
+	rsi <- :otherF2
+	rdi <- 2
+	mem rsp -8 <- :call_label17
+	call rsi 1
+	:call_label17
+	rdi <- mem rsp 112
+	rdi <- rdi
+	mem rsp -8 <- :call_label18
+	call :otherF2 1
+	:call_label18
+	rdi <- rax
+	rdi -= 1
+	rdi <- rdi
+	call print 1
+	:call_label1
+	return
+)
+
+(:addOne
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(:sum2
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(:sum3
+	3 0
+	rdi <- rdi
+	rsi <- rdx
+	rdi <- rdi
+	rdi += rcx
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(:sum4
+	4 0
+	rdi <- rdi
+	rdx <- rdx
+	rsi <- rcx
+	rdi <- rdi
+	rdi += r8
+	rdi <- rdi
+	rdi += rdx
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(:otherF
+	0 0
+	return
+)
+
+(:otherF2
+	1 0
+	rdi <- rdi
+	rdi *= rdi
+	rax <- rdi
+	return
+)
+
+(:substract
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi -= rsi
+	rax <- rdi
+	return
+)
+
+(:substract3
+	3 0
+	rdi <- rdi
+	rsi <- rdx
+	rdi <- rdi
+	rdi -= rcx
+	rdi <- rdi
+	rdi -= rsi
+	rax <- rdi
+	return
+)
+
+(:substract4
+	4 0
+	rdi <- rdi
+	rdx <- rdx
+	rsi <- rcx
+	rdi <- rdi
+	rdi -= r8
+	rdi <- rdi
+	rdi -= rdx
+	rdi <- rdi
+	rdi -= rsi
+	rax <- rdi
+	return
+)
+
+(:product
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(:product3
+	3 0
+	rdi <- rdi
+	rsi <- rdx
+	rdi <- rdi
+	rdi *= rcx
+	rdi <- rdi
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(:product4
+	4 0
+	rdi <- rdi
+	rdx <- rdx
+	rsi <- rcx
+	rdi <- rdi
+	rdi *= r8
+	rdi <- rdi
+	rdi *= rdx
+	rdi <- rdi
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(:left_shift
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= rcx
+	rax <- rdi
+	return
+)
+
+(:right_shift
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi >>= rcx
+	rax <- rdi
+	return
+)
+
+)

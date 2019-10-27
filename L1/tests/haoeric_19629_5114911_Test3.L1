@@ -1,0 +1,92 @@
+(:go
+	(:go 0 0
+		// store iterations of the Collatz Conjecture in an array
+		// 12, 19, 27, 871 give interesting results according to wikipedia
+
+		rdi <- 25 	// 12
+		rsi <- 21 	// 10
+		mem rsp -8 <- :collatz_ret1
+		call :collatz 2
+		:collatz_ret1
+		rdi <- rax
+		call print 1
+
+		rdi <- 39 	// 19
+		rsi <- 43 	// 21
+		mem rsp -8 <- :collatz_ret2
+		call :collatz 2
+		:collatz_ret2
+		rdi <- rax
+		call print 1
+
+		rdi <- 55 	// 27
+		rsi <- 225 	// 112
+		mem rsp -8 <- :collatz_ret3
+		call :collatz 2
+		:collatz_ret3
+		rdi <- rax
+		call print 1
+
+		rdi <- 1743 // 871, which has 178 steps
+		rsi <- 241 	// limit to 120 steps
+		mem rsp -8 <- :collatz_ret4
+		call :collatz 2
+		:collatz_ret4
+		rdi <- rax
+		call print 1
+
+		return
+	)
+
+	(:collatz 2 1 	// takes the starting integer and a max array size
+		r11 <- rdi
+		r14 <- rsi
+
+		// check if input is negative
+		r12 <- 1
+		cjump r11 <= 1 :done :next
+		:next
+		cjump r14 <= 1 :done :allocate
+
+		:allocate 	// allocate array
+		rdi <- r14
+		rsi <- 1
+		mem rsp 0 <- r11
+		call allocate 2
+		r11 <- mem rsp 0
+		r12 <- rax 	// array
+		r13 <- rax 
+		r13 += 8 	// pointer to current location
+		r14 *= 8
+		r14 += r12 	// last array location
+
+		:loop 		// fill array
+		mem r13 0 <- r11
+		r13 += 8
+		cjump r14 < r13 :done :check 	// out of bounds check
+
+		:check
+		cjump r11 <= 3 :done :continue
+
+		:continue
+		r10 <- r11
+		r10 &= 3
+		cjump r10 = 1 :even :odd
+
+		:even		// n/2
+		r11 >>= 2
+		r11 <<= 1
+		r11 += 1
+		goto :loop
+
+		:odd		// 3n+1
+		r11 += -1
+		r11 *= 3
+		r11 += 3
+		goto :loop
+
+		:done
+		rax <- r12
+		return
+	)
+)

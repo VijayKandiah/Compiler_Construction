@@ -1,0 +1,83 @@
+(:go
+(:go
+	0 0
+	mem rsp -8 <- :ret
+	call :myF 0
+	:ret
+	return
+)
+
+(:myF
+	0 12
+	rdi <- 1
+	mem rsp 48 <- rdi
+	rdi <- 1
+	mem rsp 88 <- rdi
+	rdi <- 1
+	mem rsp 80 <- rdi
+	rdi <- 1
+	mem rsp 72 <- rdi
+	rdi <- 1
+	mem rsp 64 <- rdi
+	rdi <- 1
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 48
+	rdi += 1
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 88
+	rdi += 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 80
+	rdi += 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 72
+	rdi += 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 64
+	rdi += 1
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 56
+	rdi += 1
+	mem rsp 56 <- rdi
+	mem rsp -8 <- :retMyF
+	call :myF2 0
+	:retMyF
+	rdi <- mem rsp 48
+	rdi += 1
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 88
+	rdi += 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 80
+	rdi += 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 72
+	rdi += 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 64
+	rdi += 1
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 56
+	rdi += 1
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 48
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 88
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 80
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 72
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 64
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 56
+	mem rsp 40 <- rdi
+	return
+)
+
+(:myF2
+	0 0
+	return
+)
+
+)

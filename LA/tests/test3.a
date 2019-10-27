@@ -1,0 +1,20 @@
+void main ( ){
+
+  int64 v1
+  int64 v2
+  v1 <- 1
+  v2 <- 2
+
+  int64 check
+  int64 v3
+  v3 <- v1 + v2
+  check <- v3 > 1
+  br check :true :false
+
+  :true
+   print(v3)
+
+  :false
+  return
+
+}

@@ -1,0 +1,92 @@
+(:main
+ (:main
+  0 2
+  mem rsp 0 <- r12
+  mem rsp 8 <- r13
+  r12 <- 8
+  r13 <- 9
+
+  rdi <- r12 < r13
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- r13 < r12
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- r12 <= r13
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- r12 = r13
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+
+  rdi <- r12 < 9
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- r13 < 8
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- r12 <= 9
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- r12 = 9
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- 8 < r13
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- 9 < r12
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- 8 <= r13
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- 8 = r13
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- 8 < 9
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- 9 < 8
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- 8 <= 9
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  rdi <- 8 = 9
+  rdi <<= 1
+  rdi += 1
+  call print 1
+
+  r12 <- mem rsp 0
+  r13 <- mem rsp 8
+  return))

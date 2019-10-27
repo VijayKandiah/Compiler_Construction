@@ -1,0 +1,47 @@
+(:go
+ (:go
+  0 0
+  %var1 <- 5
+  %var2 <- 7
+  rdi <- %var1
+  call print 1
+  rdi <- %var2
+  call print 1
+  rdi <- %var1
+  rsi <- %var2
+  mem rsp -8 <- :ret1
+  call :greaterThan 2
+  :ret1
+  rdi <- rax
+  call print 1
+  rdi <- %var1
+  rsi <- %var2
+  mem rsp -8 <- :ret2
+  call :greaterThanEq 2
+  :ret2
+  rdi <- rax
+  call print 1
+  return)
+  (:greaterThan
+    2 1
+    cjump rdi <= rsi :lessEq :greater
+    :lessEq
+    %retval <- 1
+    rax <- %retval
+    return
+    :greater
+    %retval <- 3
+    rax <- %retval
+    return)
+  (:greaterThanEq
+    2 1
+    cjump rdi < rsi :less :greaterEq
+    :less
+    %retval <- 1
+    rax <- %retval
+    return
+    :greaterEq
+    %retval <- 3
+    rax <- %retval
+    return)
+)

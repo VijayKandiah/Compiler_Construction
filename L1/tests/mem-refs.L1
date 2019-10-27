@@ -1,0 +1,17 @@
+(:main
+  (:main
+    0 1
+    rdi <- 11
+    rsi <- 3
+    call allocate 2
+    rdi <- mem rax 8
+    mem rsp 0 <- rax
+    call print 1
+    rax <- mem rsp 0
+    mem rax 16 <- 5
+    mem rax 24 <- 7
+    mem rax 32 <- 9
+    mem rax 40 <- 11
+    rdi <- rax
+    call print 1
+    return))

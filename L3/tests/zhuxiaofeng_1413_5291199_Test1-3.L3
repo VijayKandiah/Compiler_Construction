@@ -1,0 +1,114 @@
+define :main () {
+	:entry
+	%var1 <- 1
+	%var2 <- 2
+	%var3 <- %var1 = %var2
+	%var4 <- %var1 < %var2
+	%var5 <- %var1 + %var2
+	%var6 <- %var << %var2
+	%var7 <- call :addOne(%var6)
+	%var8 <- call :sum2(%var6, %var7)
+	%var9 <- %var8 * 3
+	%var9 <- %var9 + 2
+	%var10 <- call :sum3(%var7, %var8, %var9)
+	%encoded <- 7	
+	%encoded <- %encoded << 1
+	%encoded <- %encoded + 1
+	call print(%encoded)
+	%array <- call allocate(%encoded, 3)
+	%newVar <- %array + 8
+	store %newVar <- 5
+	%newVar2 <- %array + 16
+	store %newVar2 <- 7
+	%newVar3 <- %array + 24
+	store %newVar3 <- 9
+	%var11 <- load %newVar2
+	%var12 <- %var10 > %var11
+	%var13 <- call :sum4(%var9, %var10, %var11, %var12)
+	%var14 <- call :substract(%var12, %var13)
+	%var15 <- call :substract3(%var1, %var13, %var14)
+	%var16 <- call :substract4(%var11, %var12, %var13, %var9)
+	%var17 <- call :sum4(%var9, %var10, %var11, %var12)
+	%var18 <- call :product(%var2, %var13)
+	%var19 <- call :product3(%var1, %var2, %var7)
+	%var20 <- call :product4(%var11, %var8, %var5, %var9)
+	%var21 <- call :left_shift(%var20, %var1)	
+	%var22 <- call :right_shift(%var20, %var2)
+	%newVar3 <- %array + 32
+	%var13 <- %var13 + 8
+	%callFL <- :otherF
+	call :otherF ()
+	call %callFL ()
+	%callerFP <- :otherF2
+	%res1 <- call %callerFP (2)
+	%res2 <- call :otherF2 (%var3)
+	%res2 <- %res2 - 1
+	call print(%res2)
+	:end
+	return
+}
+define :addOne (%p1){
+	%p2 <- %p1 + 1
+	return %p2
+}
+define :sum2 (%p1, %p2){
+	%p3 <- %p1 + %p2
+	return %p3
+}
+define :sum3 (%p1, %p2, %p3){
+	%p4 <- %p1 + %p2
+	%p5 <- %p4 + %p3
+	return %p5
+}
+define :sum4 (%p1, %p2, %p3, %p4){
+	%p5 <- %p1 + %p2
+	%p6 <- %p5 + %p3
+	%p7 <- %p6 + %p4
+	return %p7
+}
+define :otherF () {
+	%p1 <- 11
+	return
+}
+define :otherF2 (%var) {
+	%var <- %var * %var
+	return %var
+}
+define :substract (%p1, %p2){
+	%p3 <- %p1 - %p2
+	return %p3
+}
+define :substract3 (%p1, %p2, %p3){
+	%p4 <- %p1 - %p2
+	%p5 <- %p4 - %p3
+	return %p5
+}
+define :substract4 (%p1, %p2, %p3, %p4){
+	%p5 <- %p1 - %p2
+	%p6 <- %p5 - %p3
+	%p7 <- %p6 - %p4
+	return %p7
+}
+define :product (%p1, %p2){
+	%p3 <- %p1 * %p2
+	return %p3
+}
+define :product3 (%p1, %p2, %p3){
+	%p4 <- %p1 * %p2
+	%p5 <- %p4 * %p3
+	return %p5
+}
+define :product4 (%p1, %p2, %p3, %p4){
+	%p5 <- %p1 * %p2
+	%p6 <- %p5 * %p3
+	%p7 <- %p6 * %p4
+	return %p7
+}
+define :left_shift (%p1, %p2){
+	%p3 <- %p1 << %p2
+	return %p3
+}
+define :right_shift (%p1, %p2){
+	%p3 <- %p1 >> %p2
+	return %p3
+}

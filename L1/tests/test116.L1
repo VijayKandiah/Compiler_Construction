@@ -1,0 +1,8 @@
+(:main
+(:main
+	0 0
+	rax <- 0
+	return
+)
+
+)

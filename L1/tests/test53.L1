@@ -1,0 +1,35 @@
+(:go
+
+  (:go
+    0 0
+
+    // Set a callee-save register
+    r12 <- 5
+
+    // Call a function
+    mem rsp -8 <- :myF_ret
+    call :myF 0
+    :myF_ret
+
+    // Print
+    rdi <- r12
+    call print 1
+
+    return
+  )
+
+  (:myF
+    0 1
+
+    // Save callee-save registers we are going to use
+    mem rsp 0 <- r12
+
+    // Use a callee-save register
+    r12 <- 3
+
+    // Restore callee-save registers we previously saved
+    r12 <- mem rsp 0
+
+    return
+  )
+)

@@ -1,0 +1,15 @@
+(:func_arg
+ (:func_arg
+  0 0
+  rdi <- 5
+  mem rsp -8 <- :func_ret
+  call :func 1
+  :func_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:func
+  1 0
+  rax <- rdi
+  rax *= 3
+  return))

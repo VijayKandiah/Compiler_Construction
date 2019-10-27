@@ -1,0 +1,7 @@
+(:myGo
+  (:myGo
+    0 0
+    rdi <- +5
+    return
+  )
+)

@@ -1,0 +1,48 @@
+(:main
+  (:main
+    0 6
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+    mem rsp 16 <- r14
+    mem rsp 24 <- r15
+    mem rsp 32 <- rbp
+    mem rsp 40 <- rbx
+    rdi <- 1
+    rsi <- 2
+    rdx <- 3
+    rcx <- 4
+    r8 <- 5
+    r9 <- 6
+    rax <- 7
+    rbx <- 8
+    rbp <- 9
+    r10 <- 10
+    r11 <- 11
+    r12 <- 12
+    r13 <- 13
+    r14 <- 14
+    r15 <- 15
+    rsi += rdi
+    rdx += rsi
+    rcx += rdx
+    r8 += rcx
+    r9 += r8
+    rax += r9
+    rbx += rax
+    rbp += rbx
+    r10 += rbp
+    r11 += r10
+    r12 += r11
+    r13 += r12
+    r14 += r13
+    r15 += r14
+    rdi <- r15
+    rdi += 1
+    call print 1
+    rbx <- mem rsp 40
+    rbp <- mem rsp 32
+    r15 <- mem rsp 24
+    r14 <- mem rsp 16
+    r13 <- mem rsp 8
+    r12 <- mem rsp 0
+    return))

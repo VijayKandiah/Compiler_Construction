@@ -1,0 +1,20 @@
+define :main () {
+ :entry
+ %callerFP <- call :myF ()
+ %v <- call %callerFP (2)
+ call print (%v)
+ return 
+}
+
+define :myF () {
+ :entry
+ %fp <- :myOtherF
+ return %fp
+}
+
+define :myOtherF (%p) {
+ :entry
+ %r <- %p + 1
+ return %r
+}
+

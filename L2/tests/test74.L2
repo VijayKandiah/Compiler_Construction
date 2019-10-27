@@ -1,0 +1,46 @@
+(:main
+  (:main
+    0 0
+    %v1 <- 1
+    %v2 <- 2
+    rdi <- %v1
+    rsi <- %v2
+    rdx <- 3
+    mem rsp -8 <- :call_label0
+    call :myF 3
+    :call_label0
+    %v4 <- rax
+    %v4Encoded <- %v4
+    %v4Encoded <<= 1
+    %v4Encoded <- %v4Encoded
+    %v4Encoded += 1
+    rdi <- %v4Encoded
+    call print 1
+    rdi <- %v4Encoded
+    rsi <- 1
+    call allocate 2
+    %myAr <- rax
+    %el1Address <- %myAr
+    %el1Address += 8
+    mem %el1Address 0  <- 7
+    %el1 <- mem %el1Address 0 
+    rdi <- %el1
+    call print 1
+    rdi <- %myAr
+    call print 1
+    rax <- 0
+    return
+  )
+  (:myF
+    3 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- rdx
+    %tempV <- %p1
+    %tempV += %p2
+    %tempV <- %tempV
+    %tempV += %p3
+    rax <- %tempV
+    return
+  )
+)

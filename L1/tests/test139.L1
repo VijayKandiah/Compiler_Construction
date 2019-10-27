@@ -1,0 +1,120 @@
+(:go
+(:go
+	0 1
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	mem rsp 0 <- rax
+	rdi <- mem rsp 0
+	mem rdi 8 <- 85
+	rdi <- mem rsp 0
+	call print 1
+	rdi <- mem rsp 0
+	mem rsp -8 <- :printArray_ret
+	call :printArray 1
+	:printArray_ret
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rsi <- rax
+	rdi <- mem rsp 0
+	mem rdi 8 <- rsi
+	rdi <- mem rsp 0
+	call print 1
+	rdi <- mem rsp 0
+	mem rsp -8 <- :printArray_ret2
+	call :printArray 1
+	:printArray_ret2
+	return
+)
+
+(:printArray
+	1 3
+	mem rsp 0 <- rdi
+	mem rsp 16 <- 0
+	rdi <- mem rsp 0
+	rdi <- mem rdi 0
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi &= 1
+	cjump rdi = 0 :isAnArray :isAnInt
+	:isAnInt
+	rax <- 0
+	return
+	:isAnArray
+	:check
+	rsi <- mem rsp 8
+	rdi <- mem rsp 16
+	cjump rdi < rsi :true :false
+	:true
+	rsi <- mem rsp 16
+	rsi <<= 1
+	rsi++
+	rdi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :printData_ret
+	call :printData 2
+	:printData_ret
+	rdi <- mem rsp 16
+	rdi++
+	mem rsp 16 <- rdi
+	goto :check
+	:false
+	rax <- 1
+	return
+)
+
+(:printData
+	2 3
+	mem rsp 16 <- rdi
+	mem rsp 8 <- rsi
+	rdi <- mem rsp 8
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- mem rdi 0
+	rsi <- rdi
+	rsi <<= 1
+	rsi += 1
+	rdi <- mem rsp 8
+	cjump rdi < rsi :correct :wrong
+	:wrong
+	rdi <- mem rsp 16
+	rsi <- mem rsp 8
+	call array-error 2
+	:correct
+	rdi <- mem rsp 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi *= 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rsi <- mem rsp 0
+	rdi <- mem rsp 16
+	rsi += rdi
+	rsi <- mem rsi 0
+	rdi <- rsi
+	rdi &= 1
+	cjump rdi = 0 :isAnArray2 :isAnInt2
+	:isAnInt2
+	rdi <- rsi
+	call print 1
+	goto :exitFunction
+	:isAnArray2
+	mem rsp -8 <- :exitFunction
+	rdi <- rsi
+	call :printArray 1
+	:exitFunction
+	return
+)
+
+)

@@ -1,0 +1,152 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    mem rsp -8 <- :call_label1
+    rdi <- 3
+    call :createMyClosure 1
+    :call_label1
+    %t <- rax
+    return
+  )
+  (:createMyClosure
+    1 0
+    %p1 <- rdi
+    :call_label2
+    %x2 <- 21
+    rdi <- 9
+    rsi <- 1
+    call allocate 2
+    %p <- rax
+    %newVar1 <- 0
+    %newVar1 *= 8
+    %newVar0 <- %newVar1
+    %newVar0 += 8
+    %newVar2 <- %p
+    %newVar2 += %newVar0
+    mem %newVar2 0  <- 0
+    %newVar4 <- 1
+    %newVar4 *= 8
+    %newVar3 <- %newVar4
+    %newVar3 += 8
+    %newVar5 <- %p
+    %newVar5 += %newVar3
+    mem %newVar5 0  <- 1
+    %newVar7 <- 2
+    %newVar7 *= 8
+    %newVar6 <- %newVar7
+    %newVar6 += 8
+    %newVar8 <- %p
+    %newVar8 += %newVar6
+    mem %newVar8 0  <- %p1
+    %newVar10 <- 3
+    %newVar10 *= 8
+    %newVar9 <- %newVar10
+    %newVar9 += 8
+    %newVar11 <- %p
+    %newVar11 += %newVar9
+    mem %newVar11 0  <- %x2
+    rax <- %p
+    return
+  )
+  (:myF
+    2 0
+    %c <- rdi
+    %p1 <- rsi
+    :call_label3
+    %newVar1 <- 0
+    %newVar2 <- %x1
+    %newVar2 += 24
+    %newVar3 <- mem %newVar2 0 
+    %newVar4 <- %newVar3
+    %newVar4 >>= 1
+    %newVar5 <- %x1
+    %newVar5 += 32
+    %newVar6 <- mem %newVar5 0 
+    %newVar7 <- %newVar6
+    %newVar7 >>= 1
+    %newVar8 <- %x1
+    %newVar8 += 40
+    %newVar9 <- mem %newVar8 0 
+    %newVar10 <- %newVar9
+    %newVar10 >>= 1
+    %newVar11 <- 1
+    %newVar11 <- %newVar11
+    %newVar11 *= %newVar10
+    %newVar12 <- %c
+    %newVar12 *= %newVar11
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar12
+    %newVar11 <- %newVar11
+    %newVar11 *= %newVar7
+    %newVar13 <- %x1
+    %newVar13 *= %newVar11
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar13
+    %newVar11 <- %newVar11
+    %newVar11 *= %newVar4
+    %newVar14 <- %x1
+    %newVar14 *= %newVar11
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar14
+    %newVar1 <- %newVar1
+    %newVar1 += 2
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 48
+    %newVar15 <- %x1
+    %newVar15 += %newVar0
+    %x1 <- mem %newVar15 0 
+    %newVar17 <- 0
+    %newVar18 <- %x2
+    %newVar18 += 24
+    %newVar19 <- mem %newVar18 0 
+    %newVar20 <- %newVar19
+    %newVar20 >>= 1
+    %newVar21 <- %x2
+    %newVar21 += 32
+    %newVar22 <- mem %newVar21 0 
+    %newVar23 <- %newVar22
+    %newVar23 >>= 1
+    %newVar24 <- %x2
+    %newVar24 += 40
+    %newVar25 <- mem %newVar24 0 
+    %newVar26 <- %newVar25
+    %newVar26 >>= 1
+    %newVar27 <- 1
+    %newVar27 <- %newVar27
+    %newVar27 *= %newVar26
+    %newVar28 <- %c
+    %newVar28 *= %newVar27
+    %newVar17 <- %newVar17
+    %newVar17 += %newVar28
+    %newVar27 <- %newVar27
+    %newVar27 *= %newVar23
+    %newVar29 <- %x2
+    %newVar29 *= %newVar27
+    %newVar17 <- %newVar17
+    %newVar17 += %newVar29
+    %newVar27 <- %newVar27
+    %newVar27 *= %newVar20
+    %newVar30 <- %x2
+    %newVar30 *= %newVar27
+    %newVar17 <- %newVar17
+    %newVar17 += %newVar30
+    %newVar17 <- %newVar17
+    %newVar17 += 3
+    %newVar16 <- %newVar17
+    %newVar16 *= 8
+    %newVar16 <- %newVar16
+    %newVar16 += 48
+    %newVar31 <- %x2
+    %newVar31 += %newVar16
+    %x2 <- mem %newVar31 0 
+    %r1 <- %x1
+    %r1 += %x2
+    %r2 <- %r1
+    %r2 += %p1
+    rax <- %r2
+    return
+  )
+)

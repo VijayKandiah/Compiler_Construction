@@ -1,0 +1,216 @@
+void main ( ) {
+ int64[][] newVar0m3
+ int64[][] newVar0m2
+ int64[][] newVar0m1
+ int64 newVar0dim
+ newVar0dim <- 300
+ newVar0m1 <- new Array (newVar0dim, newVar0dim)
+ newVar0m2 <- new Array (newVar0dim, newVar0dim)
+ newVar0m3 <- new Array (newVar0dim, newVar0dim)
+ int64 newVar1max2
+ int64 newVar1max1
+ int64 newVar1index2
+ int64 newVar1index1
+ newVar1max1 <- 4
+ newVar1max2 <- 4
+ newVar1index1 <- 0
+ :new_label0
+ int64 newVar_ciao_0
+ newVar_ciao_0 <- newVar1index1 < newVar1max1
+ br newVar_ciao_0 :body1 :leave 
+ :body1
+ newVar1index2 <- 0
+ :new_label1
+ int64 newVar_ciao_1
+ newVar_ciao_1 <- newVar1index2 < newVar1max2
+ br newVar_ciao_1 :body2 :endBody1 
+ :body2
+  computeAndPrint (newVar0m1, newVar0m2, newVar0m3, newVar1index1, newVar1index2)
+ newVar1index2 <- newVar1index2 + 1
+ br :new_label1
+ :endBody1
+ newVar1index1 <- newVar1index1 + 1
+ br :new_label0
+ :leave
+ return 
+}
+
+void computeAndPrint ( int64[][] m1, int64[][] m2, int64[][] m3, int64 v1, int64 v2) {
+  initMatrix (m1, v1)
+  initMatrix (m2, v2)
+  matrixMultiplication (m1, m2, m3)
+ int64 newVar0t
+ newVar0t <-  totalSum (m1)
+  print (newVar0t)
+ newVar0t <-  totalSum (m2)
+  print (newVar0t)
+ newVar0t <-  totalSum (m3)
+  print (newVar0t)
+ return 
+}
+
+void initMatrix ( int64[][] m, int64 initValue) {
+ int64 newVar0index1
+ int64 newVar0l2
+ int64 newVar0l1
+ newVar0l1 <- length m 0
+ newVar0l2 <- length m 1
+ newVar0index1 <- 0
+ :new_label0
+ int64 newVar_ciao_0
+ newVar_ciao_0 <- newVar0index1 < newVar0l1
+ br newVar_ciao_0 :outerBody :leave 
+ :outerBody
+ int64 newVar1index2
+ newVar1index2 <- 0
+ :new_label1
+ int64 newVar_ciao_1
+ newVar_ciao_1 <- newVar1index2 < newVar0l2
+ br newVar_ciao_1 :innerBody :endOuterBody 
+ :innerBody
+ int64 newVar2valueToStore
+ newVar2valueToStore <- initValue + newVar0index1
+ newVar2valueToStore <- newVar2valueToStore + newVar1index2
+ m[newVar0index1][newVar1index2] <- newVar2valueToStore
+ newVar1index2 <- newVar1index2 + 1
+ br :new_label1
+ :endOuterBody
+ newVar0index1 <- newVar0index1 + 1
+ br :new_label0
+ :leave
+ return 
+}
+
+void matrixMultiplication ( int64[][] m1, int64[][] m2, int64[][] m3) {
+ int64 newVar0m3_l2
+ int64 newVar0m3_l1
+ int64 newVar0m2_l2
+ int64 newVar0m2_l1
+ int64 newVar0m1_l2
+ int64 newVar0m1_l1
+ newVar0m1_l1 <- length m1 0
+ newVar0m1_l2 <- length m1 1
+ newVar0m2_l1 <- length m2 0
+ newVar0m2_l2 <- length m2 1
+ newVar0m3_l1 <- length m3 0
+ newVar0m3_l2 <- length m3 1
+ int64 newVar_ciao_0
+ newVar_ciao_0 <- newVar0m1_l2 = newVar0m2_l1
+ br newVar_ciao_0 :go1 :leave 
+ :go1
+ int64 newVar_ciao_1
+ newVar_ciao_1 <- newVar0m3_l1 = newVar0m1_l1
+ br newVar_ciao_1 :go2 :leave 
+ :go2
+ int64 newVar_ciao_2
+ newVar_ciao_2 <- newVar0m3_l2 = newVar0m2_l2
+ br newVar_ciao_2 :go :leave 
+ :go
+ int64 newVar1k
+ int64 newVar1j
+ int64 newVar1i
+ newVar1i <- 0
+ :new_label0
+ int64 newVar_ciao_3
+ newVar_ciao_3 <- newVar1i < newVar0m1_l1
+ br newVar_ciao_3 :body1_init :done_init 
+ :body1_init
+ newVar1j <- 0
+ :new_label1
+ int64 newVar_ciao_4
+ newVar_ciao_4 <- newVar1j < newVar0m2_l2
+ br newVar_ciao_4 :body2_init :endBody1_init 
+ :body2_init
+ newVar1k <- 0
+ :new_label2
+ int64 newVar_ciao_5
+ newVar_ciao_5 <- newVar1k < newVar0m1_l2
+ br newVar_ciao_5 :body3_init :endBody2_init 
+ :body3_init
+ m3[newVar1i][newVar1j] <- 0
+ newVar1k <- newVar1k + 1
+ br :new_label2
+ :endBody2_init
+ newVar1j <- newVar1j + 1
+ br :new_label1
+ :endBody1_init
+ newVar1i <- newVar1i + 1
+ br :new_label0
+ :done_init
+ int64 newVar0k
+ int64 newVar0j
+ int64 newVar0i
+ newVar0i <- 0
+ :new_label3
+ int64 newVar_ciao_6
+ newVar_ciao_6 <- newVar0i < newVar0m1_l1
+ br newVar_ciao_6 :body1 :leave 
+ :body1
+ newVar0j <- 0
+ :new_label4
+ int64 newVar_ciao_7
+ newVar_ciao_7 <- newVar0j < newVar0m2_l2
+ br newVar_ciao_7 :body2 :endBody1 
+ :body2
+ newVar0k <- 0
+ :new_label5
+ int64 newVar_ciao_8
+ newVar_ciao_8 <- newVar0k < newVar0m1_l2
+ br newVar_ciao_8 :body3 :endBody2 
+ :body3
+ int64 newVar3D
+ int64 newVar3C
+ int64 newVar3B
+ int64 newVar3A
+ newVar3A <- m1[newVar0i][newVar0k]
+ newVar3B <- m2[newVar0k][newVar0j]
+ newVar3C <- newVar3A * newVar3B
+ newVar3D <- m3[newVar0i][newVar0j]
+ newVar3D <- newVar3D * 4
+ newVar3D <- newVar3D + newVar3C
+ m3[newVar0i][newVar0j] <- newVar3D
+ newVar0k <- newVar0k + 1
+ br :new_label5
+ :endBody2
+ newVar0j <- newVar0j + 1
+ br :new_label4
+ :endBody1
+ newVar0i <- newVar0i + 1
+ br :new_label3
+ :leave
+ return 
+}
+
+int64 totalSum ( int64[][] m) {
+ int64 newVar0sum
+ int64 newVar0index1
+ int64 newVar0l2
+ int64 newVar0l1
+ newVar0l1 <- length m 0
+ newVar0l2 <- length m 1
+ newVar0index1 <- 0
+ newVar0sum <- 0
+ :new_label0
+ int64 newVar_ciao_0
+ newVar_ciao_0 <- newVar0index1 < newVar0l1
+ br newVar_ciao_0 :outerBody :leave 
+ :outerBody
+ int64 newVar1index2
+ newVar1index2 <- 0
+ :new_label1
+ int64 newVar_ciao_1
+ newVar_ciao_1 <- newVar1index2 < newVar0l2
+ br newVar_ciao_1 :innerBody :endOuterBody 
+ :innerBody
+ int64 newVar2temp
+ newVar2temp <- m[newVar0index1][newVar1index2]
+ newVar0sum <- newVar0sum + newVar2temp
+ newVar1index2 <- newVar1index2 + 1
+ br :new_label1
+ :endOuterBody
+ newVar0index1 <- newVar0index1 + 1
+ br :new_label0
+ :leave
+ return newVar0sum
+}
+

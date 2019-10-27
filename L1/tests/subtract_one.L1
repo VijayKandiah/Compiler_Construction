@@ -1,0 +1,8 @@
+(:subtract_one
+ (:subtract_one
+  0 0
+  rdi <- 11
+  rdi -= 2
+  call print 1
+  return))
+  

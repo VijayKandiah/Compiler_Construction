@@ -1,0 +1,13 @@
+(:less_eq
+ (:less_eq
+  0 0
+  rsi <- 7
+  cjump rsi <= 5 :yes :no
+  :yes
+  rdi <- 21
+  goto :finish
+  :no
+  rdi <- 43
+  :finish
+  call print 1
+  return))

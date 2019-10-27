@@ -1,0 +1,97 @@
+void main () {
+	:entry
+	int64[][][] m
+	int64 r
+	int64 v
+
+	v <- 10
+	m <- new Array(10, 10, 10)
+
+	r <-  search(m, v)
+	 print(r)
+
+	m[0][0][0] <- v
+
+	r <-  search(m, v)
+	 print(r)
+
+	return
+}
+
+int64 search(int64[][][] m, int64 v) {
+	:entry
+	int64 length1
+	int64 length2
+	int64 length3
+	int64 encLen
+
+	length1 <- length m 0
+	 print(length1)
+
+	length2 <- length m 1
+	 print(length2)
+	
+	length3 <- length m 2
+	 print(length3)
+	br :init
+
+	:init
+	int64 i
+	int64 j
+	int64 k
+	int64 found
+	int64 checki
+	int64 checkj
+	int64 checkk
+	int64 e
+	int64 same
+
+	found <- 0
+	i <- 0
+
+	br :outerHeader
+
+	:outerHeader
+	checki <- i < length1
+	br checki :outerBody :return
+
+	:outerBody
+	j <- 0
+	br :middleHeader
+
+	:middleHeader
+	checkj <- j < length2
+	br checkj :middleBody :outerFooter
+
+	:middleBody
+	k <- 0
+	br :innerHeader
+
+	:innerHeader
+	checkk <- k < length3
+	br checkk :innerBody :middleFooter
+
+	:innerBody
+	e <- m[i][j][k]
+	same <- e = v
+	br same :setFound :innerFooter
+
+	:innerFooter
+	k <- k + 1
+	br :innerHeader
+
+	:middleFooter
+	j <- j + 1
+	br :middleHeader
+
+	:outerFooter
+	i <- i + 1
+	br :outerHeader
+
+	:setFound
+	found <- 1
+	br :return
+
+	:return
+	return found
+}

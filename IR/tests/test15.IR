@@ -1,0 +1,39 @@
+define void :main ( ){
+
+  :entry
+  tuple %t
+  int64 %v
+  %t <- call :createMyClosure(3)
+  return 
+
+}
+
+define tuple :createMyClosure (int64 %p1){
+
+  :entry
+  int64 %x2
+  tuple %p
+  %x2 <- 21
+  %p <- new Tuple(9)
+  %p[0] <- 0
+  %p[1] <- 1
+  %p[2] <- %p1
+  %p[3] <- %x2
+  return %p
+
+}
+
+define int64 :myF (tuple %c, int64 %p1){
+
+  :entry
+  int64 %x1
+  int64 %x2
+  %x1 <- %c[2]
+  %x2 <- %c[3]
+  int64 %r1
+  int64 %r2
+  %r1 <- %x1 + %x2
+  %r2 <- %r1 + %p1
+  return %r2
+
+}

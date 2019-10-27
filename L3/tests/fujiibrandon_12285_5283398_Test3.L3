@@ -1,0 +1,107 @@
+// Insertion Sort
+
+define :insertionSort(%array) {
+    %arrayPointer <- %array
+    %arrayLength <- load %arrayPointer
+
+    %i <- 2
+
+    :outer_loop
+        %shouldOuterLoopTerminate <- %arrayLength < %i
+        br %shouldOuterLoopTerminate :terminate
+        br :outer_step
+
+        :outer_step
+            %j <- %i
+
+            :inner_loop
+                %iteratorHasExhaustedAllPairs <- %j <= 1
+                br %iteratorHasExhaustedAllPairs :pass
+                br :inner_step
+
+                :inner_step
+                    %prevValueAddress <- %j
+                    %prevValueAddress <- %prevValueAddress - 1
+                    %prevValueAddress <- %prevValueAddress << 3
+                    %prevValueAddress <- %prevValueAddress + %arrayPointer
+
+                    %currValueAddress <- %j
+                    %currValueAddress <- %currValueAddress << 3
+                    %currValueAddress <- %currValueAddress + %arrayPointer
+
+                    %currValue <- load %currValueAddress
+                    %prevValue <- load %prevValueAddress
+
+                    %isCurrValueLessThanPrevValue <- %currValue < %prevValue
+                    br %isCurrValueLessThanPrevValue :swap
+                    br :pass
+
+                :swap
+                    store %currValueAddress <- %prevValue
+                    store %prevValueAddress <- %currValue
+
+                    %j <- %j - 1
+                    br :inner_loop
+
+                :pass
+                    %i <- %i + 1
+
+        br :outer_loop
+
+    :terminate
+        return %arrayPointer
+}
+
+define :main() {
+    %size <- 41 // %size = 20
+    %array <- call allocate(%size, 1)
+
+    %element1Address <- %array + 8
+    %element2Address <- %array + 16
+    %element3Address <- %array + 24
+    %element4Address <- %array + 32
+    %element5Address <- %array + 40
+    %element6Address <- %array + 48
+    %element7Address <- %array + 56
+    %element8Address <- %array + 64
+    %element9Address <- %array + 72
+    %element10Address <- %array + 80
+    %element11Address <- %array + 88
+    %element12Address <- %array + 96
+    %element13Address <- %array + 104
+    %element14Address <- %array + 112
+    %element15Address <- %array + 120
+    %element16Address <- %array + 128
+    %element17Address <- %array + 136
+    %element18Address <- %array + 144
+    %element19Address <- %array + 152
+    %element20Address <- %array + 160
+
+    store %element1Address <- 35
+    store %element2Address <- 15
+    store %element3Address <- 13
+    store %element4Address <- 19
+    store %element5Address <- 51
+    store %element6Address <- 27
+    store %element7Address <- 49
+    store %element8Address <- 57
+    store %element9Address <- 9
+    store %element10Address <- 63
+    store %element11Address <- 81
+    store %element12Address <- 97
+    store %element13Address <- 11
+    store %element14Address <- 11
+    store %element15Address <- 13
+    store %element16Address <- 7
+    store %element17Address <- 33
+    store %element18Address <- 37
+    store %element19Address <- 27
+    store %element20Address <- 51
+
+    call print(%array) // unsorted %array
+
+    %sortedArray <- call :insertionSort(%array)
+    call print(%sortedArray)
+
+    return
+}

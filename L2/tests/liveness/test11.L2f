@@ -1,0 +1,9 @@
+(:myF
+  0 0
+
+  call :myF2 0
+
+  call :myF2 0
+
+  return
+)

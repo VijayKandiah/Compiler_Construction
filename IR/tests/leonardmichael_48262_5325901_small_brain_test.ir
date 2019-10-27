@@ -1,0 +1,530 @@
+// Args:    val     : int
+//
+// Return:  encoded : int
+define int64 :encode(int64 %val) {
+  :entry
+  int64 %almost_encoded
+  int64 %encoded
+  %almost_encoded <- %val << 1
+  %encoded <- %almost_encoded + 1
+  return %encoded
+}
+
+// Args:    val     : int
+//
+// Return:  decoded : int
+define int64 :decode(int64 %val) {
+  :entry
+  int64 %decoded
+  %decoded <- %val >> 1
+  return %decoded
+}
+
+// Return:  queue_ptr : ptr
+define int64[] :new_stack_or_queue() {
+  // This allocates an empty queue, where the "elements" are all 0's
+  :entry
+  int64 %size
+  int64 %encoded_size
+  int64 %default
+  int64[] %queue_ptr
+
+  %size <- 0
+  %encoded_size <- call :encode(%size)
+  %queue_ptr <- new Array(%encoded_size)
+  return %queue_ptr
+}
+
+// Args:    old_queue_ptr : ptr
+//          val           : int
+//
+// Return:  new_queue_ptr : ptr
+define int64[] :enqueue(int64[] %old_queue_ptr, int64 %val) {
+  :entry
+  int64 %old_size
+  int64 %new_size
+  int64 %encoded_new_size
+  int64[] %new_queue_ptr
+  int64[] %final_queue_ptr
+  int64 %encoded_val
+  int64 %offset
+  int64 %curr_idx
+
+  // First, allocate a new array that's one element bigger than the old one
+  %old_size <- length %old_queue_ptr 0
+  %old_size <- call :decode(%old_size)
+  %new_size <- %old_size + 1
+  %encoded_new_size <- call :encode(%new_size)
+  %new_queue_ptr <- new Array(%encoded_new_size)
+
+  // Call a recursive helper function to fill the rest of the array
+  %final_queue_ptr <- call :refill_queue(%new_queue_ptr, %old_queue_ptr, %old_size)
+
+  // Finally, write the new value into the last idx of the new array
+  %encoded_val <- call :encode(%val)
+  %curr_idx <- %new_size - 1
+  %final_queue_ptr[%curr_idx] <- %encoded_val
+
+  return %final_queue_ptr
+}
+
+// Args:    new_queue_ptr   : ptr
+//          old_queue_ptr   : ptr
+//          num_remaining   : int
+//
+// Return:  new_queue_ptr   : ptr
+
+// Args:    old_stack_ptr : ptr
+//          val           : int
+//
+// Return:  new_stack_ptr : ptr
+define int64[] :push(int64[] %old_stack_ptr, int64 %val) {
+  :entry
+  int64 %old_size
+  int64 %new_size
+  int64 %encoded_new_size
+  int64[] %new_stack_ptr
+  int64 %encoded_val
+  int64 %curr_idx
+  int64[] %final_stack_ptr
+
+  // First, allocate a new array that's one element bigger than the old one
+  %old_size <- length %old_stack_ptr 0 // This should load the size
+  %old_size <- call :decode(%old_size)
+  %new_size <- %old_size + 1
+  %encoded_new_size <- call :encode(%new_size)
+  %new_stack_ptr <- new Array(%encoded_new_size)
+
+  // Next, write the new value into the first idx of the new array
+  %encoded_val <- call :encode(%val)
+  %new_stack_ptr[0] <- %encoded_val
+
+  // Finally, call a recursive helper function to fill the rest of the array
+  %final_stack_ptr <- call :refill_stack(%new_stack_ptr, %old_stack_ptr, %old_size)
+  return %final_stack_ptr
+}
+
+// Args:    new_stack_ptr   : ptr
+//          old_stack_ptr   : ptr
+//          num_remaining   : int
+//
+// Return:  new_stack_ptr   : ptr
+define int64[] :refill_stack(int64[] %new_stack_ptr, int64[] %old_stack_ptr, int64 %num_remaining) {
+  :entry
+  int64 %more_to_write
+  int64 %old_size
+  int64 %num_elem_offset
+  int64 %val_to_write
+  int64 %new_stack_offset
+  int64 %new_num_remaining
+
+  // First, check if we're done
+  %more_to_write <- %num_remaining > 0
+  br %more_to_write :write_another :base_case
+
+// Base case: stack has been fully reconstructed. Return the pointer
+:base_case
+  return %new_stack_ptr
+
+// Other case: we need to write more into the stack
+:write_another
+  // First, get the element that we need to write
+  %old_size <- length %old_stack_ptr 0
+  %old_size <- call :decode(%old_size)
+  %num_elem_offset <- %old_size - %num_remaining
+  // %num_elem_offset <- %num_elem_offset - 1
+  %val_to_write <- %old_stack_ptr[%num_elem_offset]
+
+  %new_stack_offset <- %num_elem_offset + 1
+  %new_stack_ptr[%new_stack_offset] <- %val_to_write
+
+  // And finally, recur
+  %new_num_remaining <- %num_remaining - 1
+  %new_stack_ptr <- call :refill_stack(%new_stack_ptr, %old_stack_ptr, %new_num_remaining)
+  return %new_stack_ptr
+}
+
+
+// Args:    new_queue_ptr   : ptr
+//          old_queue_ptr   : ptr
+//          num_remaining   : int
+//
+// Return:  new_queue_ptr   : ptr
+define int64[] :refill_queue(int64[] %new_queue_ptr, int64[] %old_queue_ptr, int64 %num_remaining) {
+  :entry
+  int64 %more_to_write
+  int64 %old_size
+  int64 %num_elem_offset
+  int64 %val_to_write
+  int64 %new_num_remaining
+
+  // First, check if we're done
+  %more_to_write <- %num_remaining > 0
+  br %more_to_write :write_another :base_case
+
+// Base case: queue has been fully reconstructed. Return the pointer
+:base_case
+  return %new_queue_ptr
+
+// Other case: we need to write more into the queue
+:write_another
+  // First, get the element that we need to write
+  %old_size <- length %old_queue_ptr 0
+  %old_size <- call :decode(%old_size)
+  %num_elem_offset <- %old_size - %num_remaining
+  // %num_elem_offset <- %num_elem_offset - 1
+  %val_to_write <- %old_queue_ptr[%num_elem_offset]
+
+  %new_queue_ptr[%num_elem_offset] <- %val_to_write
+
+  // And finally, recur
+  %new_num_remaining <- %num_remaining - 1
+  %new_queue_ptr <- call :refill_queue(%new_queue_ptr, %old_queue_ptr, %new_num_remaining)
+  return %new_queue_ptr
+}
+
+// Args:    queue_ptr : ptr
+//
+// Return:  pop_type_ptr : ptr 
+//
+//          Returns a two element array,
+//          Where the first is the element we've popped
+//          And the second is a pointer to the array without the element that has been popped
+define int64[] :dequeue(int64[] %queue_ptr) {
+  :entry
+  int64 %old_size
+  int64 %not_empty
+  int64 %val
+  int64 %ret_size
+  int64 %encoded_ret_size
+  int64 %encoded_val
+  int64 %end_of_queue
+  int64[] %ret
+
+  // In C, this would be (assert queue.size > 0)
+  // But this is the best we can do in this language
+  %old_size <- length %queue_ptr 0 // This should load the size
+  %old_size <- call :decode(%old_size)
+  %not_empty <- %old_size > 0
+  br %not_empty :do_dequeue :abort
+
+:abort
+  call array-error(%queue_ptr, 0)
+  return %queue_ptr
+
+:do_dequeue
+  %end_of_queue <- %old_size - 1
+  %val <- %queue_ptr[%end_of_queue]
+
+  // Write the rest of the values into a new array
+  %queue_ptr <- call :shrink_queue(%queue_ptr)
+
+  // Package the return array
+  // First, allocate a 2 element array where both elements are the popped value
+  %ret_size <- 2
+  %encoded_ret_size <- call :encode(%ret_size)
+  %ret <- new Array(%encoded_ret_size)
+  %ret[0] <- %val
+  %ret[1] <- %queue_ptr
+  return %ret
+}
+
+// Args:    old_queue_ptr   : ptr
+//          num_remaining   : int
+//
+// Return:  new_queue_ptr   : ptr
+define int64[] :shrink_queue(int64[] %old_queue_ptr) {
+  :entry
+  int64 %old_size
+  int64 %new_size
+  int64 %encoded_new_size
+  int64 %new_queue_ptr
+
+  // Allocate a new array that's one element smaller than the old one
+  %old_size <- length %old_queue_ptr 0 // This should load the size
+  %old_size <- call :decode(%old_size)
+  %new_size <- %old_size - 1
+  %encoded_new_size <- call :encode(%new_size)
+  %new_queue_ptr <- new Array(%encoded_new_size)
+
+  // Then, populate it
+  %new_queue_ptr <- call :do_shrink_queue(%new_queue_ptr, %old_queue_ptr, %new_size)
+  return %new_queue_ptr 
+}
+
+// Args:    old_queue_ptr   : ptr
+//          num_remaining   : int
+//
+// Return:  new_queue_ptr   : ptr
+define int64[] :do_shrink_queue(int64[] %new_queue_ptr, int64[] %old_queue_ptr, int64 %num_remaining) {
+  :entry
+  int64 %more_to_write
+  int64 %old_size
+  int64 %num_elem_offset
+  int64 %val_to_write
+  int64 %new_num_remaining
+  int64 %num_remaining_encoded
+
+  // First, check if we're done
+  %num_remaining_encoded <- call :encode(%num_remaining)
+  // call print(%num_remaining_encoded)
+  %more_to_write <- %num_remaining > 0
+  br %more_to_write :write_another :base_case
+
+// Base case: queue has been fully reconstructed. Return the pointer
+:base_case
+  return %new_queue_ptr
+
+// Other case: we need to write more into the queue
+:write_another
+  %old_size <- length %new_queue_ptr 0
+  %old_size <- call :decode(%old_size)
+  %num_elem_offset <- %old_size - %num_remaining
+  %val_to_write <- %old_queue_ptr[%num_elem_offset]
+
+  %new_queue_ptr[%num_elem_offset] <- %val_to_write
+
+  // And finally, recur
+  %new_num_remaining <- %num_remaining - 1
+  %new_queue_ptr <- call :do_shrink_queue(%new_queue_ptr, %old_queue_ptr, %new_num_remaining)
+  return %new_queue_ptr
+}
+
+
+// Args:    stack_ptr : ptr
+//
+// Return:  pop_type_ptr : ptr 
+//
+//          Returns a two element array,
+//          Where the first is the element we've popped
+//          And the second is a pointer to the array without the element that has been popped
+define int64[] :pop(int64[] %stack_ptr) {
+  :entry
+  int64 %old_size
+  int64 %not_empty
+  int64 %val
+  int64 %ret_size
+  int64 %encoded_ret_size
+  int64[] %ret
+
+  // In C, this would be (assert stack.size > 0
+  // But this is the best we can do in this language
+  %old_size <- length %stack_ptr 0 // This should load the size
+  %old_size <- call :decode(%old_size)
+  %not_empty <- %old_size > 0
+  br %not_empty :do_pop :abort
+
+:abort
+  call array-error(%stack_ptr, 0)
+  return %stack_ptr
+
+:do_pop
+  // Read out the first value from the input stack
+  %val <- %stack_ptr[0]
+
+  // Write the rest of the values into a new array
+  %stack_ptr <- call :shrink_stack(%stack_ptr)
+
+  // Package the return array
+  // First, allocate a 2 element array where both elements are the popped value
+  %ret_size <- 2
+  %encoded_ret_size <- call :encode(%ret_size)
+  %ret <- new Array(%encoded_ret_size)
+  %ret[0] <- %val
+  %ret[1] <- %stack_ptr
+  return %ret
+}
+
+// Args:    old_stack_ptr   : ptr
+//          num_remaining   : int
+//
+// Return:  new_stack_ptr   : ptr
+define int64[] :shrink_stack(int64[] %old_stack_ptr) {
+  :entry
+  int64 %old_size
+  int64 %new_size
+  int64 %encoded_new_size
+  int64[] %new_stack_ptr
+
+  // Allocate a new array that's one element smaller than the old one
+  %old_size <- length %old_stack_ptr 0 // This should load the size
+  %old_size <- call :decode(%old_size)
+  %new_size <- %old_size - 1
+  %encoded_new_size <- call :encode(%new_size)
+  %new_stack_ptr <- new Array(%encoded_new_size)
+
+  // Then, populate it
+  %new_stack_ptr <- call :do_shrink_stack(%new_stack_ptr, %old_stack_ptr, %new_size)
+  return %new_stack_ptr 
+}
+
+// Args:    old_stack_ptr   : ptr
+//          num_remaining   : int
+//
+// Return:  new_stack_ptr   : ptr
+define int64[] :do_shrink_stack(int64[] %new_stack_ptr, int64[] %old_stack_ptr, int64 %num_remaining) {
+  :entry
+  int64 %more_to_write
+  int64 %old_size
+  int64 %num_elem_offset
+  int64 %val_to_write
+  int64 %new_num_remaining
+
+  // First, check if we're done
+  %more_to_write <- %num_remaining > 0
+  br %more_to_write :write_another :base_case
+
+// Base case: stack has been fully reconstructed. Return the pointer
+:base_case
+  return %new_stack_ptr
+
+// Other case: we need to write more into the stack
+:write_another
+  %old_size <- length %old_stack_ptr 0
+  %old_size <- call :decode(%old_size)
+  %num_elem_offset <- %old_size - %num_remaining
+  %val_to_write <- %old_stack_ptr[%num_elem_offset]
+
+  %num_elem_offset <- %num_elem_offset - 1
+  %new_stack_ptr[%num_elem_offset] <- %val_to_write
+
+  // And finally, recur
+  %new_num_remaining <- %num_remaining - 1
+  %new_stack_ptr <- call :do_shrink_stack(%new_stack_ptr, %old_stack_ptr, %new_num_remaining)
+  return %new_stack_ptr
+}
+
+
+define int64 :get_next_fib(int64 %two_prev, int64 %prev) {
+  :entry
+  int64 %fib
+  %fib <- %two_prev + %prev
+  return %fib
+}
+
+define int64 :square(int64 %n) {
+  :entry
+  int64 %ret
+  %ret <- %n * %n
+  return %ret
+}
+
+define void :main() {
+  :entry
+  int64[] %queue_ptr
+  int64[] %stack_ptr
+  int64[] %squares_queue_ptr
+  int64[] %squares_stack_ptr
+  int64 %fib_0
+  int64 %fib_1
+  int64 %count
+  int64 %temp
+  int64 %more_to_fib
+  int64[] %dequeue_package
+  int64[] %stack_pop_package
+  int64 %dequeueped_val
+  int64 %popped_val
+  int64 %queue_size
+  int64 %more_to_dequeue
+  int64 %next_sum
+  int64[] %squares_dequeue_package
+  int64[] %squares_stack_pop_package
+  int64 %squares_dequeueped_val
+  int64 %squares_popped_val
+  int64 %squares_queue_size
+  int64 %squares_more_to_dequeue
+
+  
+  %queue_ptr <- call :new_stack_or_queue()
+  %stack_ptr <- call :new_stack_or_queue()
+  %squares_queue_ptr <- call :new_stack_or_queue()
+  %squares_stack_ptr <- call :new_stack_or_queue()
+
+  %fib_0 <- 0
+  %fib_1 <- 1
+
+  %queue_ptr <- call :enqueue(%queue_ptr, %fib_0)
+  %queue_ptr <- call :enqueue(%queue_ptr, %fib_1)
+  %stack_ptr <- call :push(%stack_ptr, %fib_0)
+  %stack_ptr <- call :push(%stack_ptr, %fib_1)
+
+
+  %count <- 10
+  br :keep_fibbing
+
+:keep_fibbing
+  %temp <- %fib_1
+  %fib_1 <- call :get_next_fib(%fib_0, %fib_1)
+  %fib_0 <- %temp
+  %queue_ptr <- call :enqueue(%queue_ptr, %fib_1)
+  %stack_ptr <- call :push(%stack_ptr, %fib_1)
+
+  %next_sum <- call :square(%count)
+  %squares_queue_ptr <- call :enqueue(%squares_queue_ptr, %next_sum)
+  %squares_stack_ptr <- call :push(%squares_stack_ptr, %next_sum)
+
+  %count <- %count - 1
+  %more_to_fib <- %count > 0
+  br %more_to_fib :keep_fibbing :print_arrays
+
+:print_arrays
+  call print(%queue_ptr)
+  call print(%stack_ptr)
+  br :do_printing
+
+:do_printing
+  %dequeue_package <- call :dequeue(%queue_ptr)
+  %stack_pop_package <- call :pop(%stack_ptr)
+
+  // Print the dequeueped value and update the queue ptr
+  %dequeueped_val <- %dequeue_package[0]
+  %queue_ptr <- %dequeue_package[1]
+  call print(%dequeueped_val)
+  call print(%queue_ptr)
+
+  // Print the stack-popped value and update the stack ptr
+  %popped_val <- %stack_pop_package[0]
+  %stack_ptr <- %stack_pop_package[1]
+  call print(%popped_val)
+  call print(%stack_ptr)
+
+  // Loop until the queue is empty
+  %queue_size <- length %queue_ptr 0
+  %queue_size <- call :decode(%queue_size)
+  %more_to_dequeue <- %queue_size > 0
+  br %more_to_dequeue :do_printing :print_squares
+
+:print_squares
+  call print(7)
+  call print(5)
+  call print(3)
+  call print(%squares_queue_ptr)
+  call print(%squares_stack_ptr)
+  br :do_printing_for_squares
+
+:do_printing_for_squares
+  %squares_dequeue_package <- call :dequeue(%squares_queue_ptr)
+  %squares_stack_pop_package <- call :pop(%squares_stack_ptr)
+
+  // Print the dequeueped value and update the queue ptr
+  %squares_dequeueped_val <- %squares_dequeue_package[0]
+  %squares_queue_ptr <- %squares_dequeue_package[1]
+  call print(%squares_dequeueped_val)
+  call print(%squares_queue_ptr)
+
+  // Print the stack-popped value and update the stack ptr
+  %squares_popped_val <- %squares_stack_pop_package[0]
+  %squares_stack_ptr <- %squares_stack_pop_package[1]
+  call print(%squares_popped_val)
+  call print(%squares_stack_ptr)
+
+  // Loop until the queue is empty
+  %squares_queue_size <- length %squares_queue_ptr 0
+  %squares_queue_size <- call :decode(%squares_queue_size)
+  %squares_more_to_dequeue <- %squares_queue_size > 0
+  br %squares_more_to_dequeue :do_printing_for_squares :out
+
+
+:out
+  return
+}

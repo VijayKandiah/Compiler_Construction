@@ -1,0 +1,10 @@
+//// makes an 2-array of 1’s
+(:go
+    (:go
+    0 0
+    rdi <- 5
+    rsi <- 3
+    call allocate 2
+    rdi <- rax
+    call print 1
+    return))

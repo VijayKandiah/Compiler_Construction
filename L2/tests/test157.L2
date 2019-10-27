@@ -1,0 +1,140 @@
+(:main
+  (:main
+    0 0
+    %x1 <- 100
+    %x2 <- 1
+    %y1 <- 12
+    %y2 <- 92
+    rdi <- %x1
+    rsi <- %x2
+    rdx <- %y1
+    rcx <- %y2
+    mem rsp -8 <- :call_label0
+    call :findDist 4
+    :call_label0
+    %distSq <- rax
+    %distSq <- %distSq
+    %distSq <<= 2
+    %distSq <- %distSq
+    %distSq += 1
+    rdi <- %distSq
+    call print 1
+    %distSq <- %distSq
+    %distSq -= 1
+    %distSq <- %distSq
+    %distSq >>= 2
+    rdi <- %distSq
+    mem rsp -8 <- :call_label1
+    call :randomize 1
+    :call_label1
+    %ans <- rax
+    %ans <- %ans
+    %ans <<= 2
+    %ans <- %ans
+    %ans += 1
+    rdi <- %ans
+    call print 1
+    %ans <- %ans
+    %ans -= 1
+    %ans <- %ans
+    %ans >>= 2
+    rdi <- %ans
+    mem rsp -8 <- :call_label2
+    call :myF 1
+    :call_label2
+    %isEven <- rax
+    %isEven <- %isEven
+    %isEven <<= 1
+    %isEven <- %isEven
+    %isEven += 1
+    rdi <- %isEven
+    call print 1
+    return
+  )
+  (:myF
+    1 0
+    %x <- rdi
+    %pos <- 0 < %x
+    
+    cjump %pos = 1 :call_label_ciao_4 :call_label_ciao_3
+    :call_label_ciao_3
+    %x <- %x
+    %x *= -1
+    :call_label_ciao_4
+    %divBy2 <- %x
+    %divBy2 &= 1
+    %e <- %divBy2 = 0
+    
+    cjump %e = 1 :call_label_ciao_5 :call_label_ciao_6
+    :call_label_ciao_5
+    rax <- 1
+    return
+    :call_label_ciao_6
+    rax <- 0
+    return
+  )
+  (:findDist
+    4 0
+    %x1 <- rdi
+    %x2 <- rsi
+    %y1 <- rdx
+    %y2 <- rcx
+    %yDist <- %y2
+    %yDist -= %y1
+    %sqY <- %yDist
+    %sqY *= %yDist
+    %xDist <- %x2
+    %xDist -= %x1
+    %sqX <- %xDist
+    %sqX *= %xDist
+    %sqDist <- %sqX
+    %sqDist += %sqY
+    rax <- %sqDist
+    return
+  )
+  (:randomize
+    1 0
+    %x <- rdi
+    %x <- %x
+    %x += 5
+    %x <- %x
+    %x *= 2
+    %x <- %x
+    %x -= 10
+    %x <- %x
+    %x >>= 2
+    %greater10 <- 10 < %x
+    
+    cjump %greater10 = 1 :call_label_ciao__ciao_7 :call_label_ciao__ciao_8
+    :call_label_ciao__ciao_7
+    %x <- %x
+    %x *= 2
+    %x <- %x
+    %x <<= 2
+    %x <- %x
+    %x += 1
+    rdi <- %x
+    call print 1
+    %x <- %x
+    %x -= 1
+    %x <- %x
+    %x >>= 2
+    rax <- %x
+    return
+    :call_label_ciao__ciao_8
+    %x <- %x
+    %x *= 3
+    %x <- %x
+    %x <<= 2
+    %x <- %x
+    %x += 1
+    rdi <- %x
+    call print 1
+    %x <- %x
+    %x -= 1
+    %x <- %x
+    %x >>= 2
+    rax <- %x
+    return
+  )
+)

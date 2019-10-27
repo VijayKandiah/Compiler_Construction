@@ -1,0 +1,67 @@
+(:go
+(:go
+	0 1
+	rdi <- 11
+	rsi <- 5
+	call allocate 2
+	mem rsp 0 <- rax
+	rdi <- rax
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi += 8
+	mem rdi 0 <- 5
+	rdi += 8
+	mem rdi 0 <- 7
+	rdi += 8
+	mem rdi 0 <- 9
+	rdi += 8
+	mem rdi 0 <- 11
+	rdi <- mem rsp 0
+	mem rsp -8 <- :f_ret
+	call :print_array 1
+	:f_ret
+	rdi <- mem rsp 0
+	call print 1
+	return
+)
+
+(:print_array
+	1 2
+	rsi <- mem rdi 0
+	mem rsp 8 <- rsi
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp -8 <- :encode_ret
+	call :encode 1
+	:encode_ret
+	rdi <- rax
+	call print 1
+	:loop
+	rdi <- mem rsp 0
+	rdi += 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	cjump rdi = 0 :finish :cont
+	:cont
+	rdi <- mem rsp 0
+	rdi <- mem rdi 0
+	call print 1
+	rdi <- mem rsp 8
+	rdi -= 1
+	mem rsp 8 <- rdi
+	goto :loop
+	:finish
+	return
+)
+
+(:encode
+	1 0
+	rax <- rdi
+	rax <<= 1
+	rax += 1
+	return
+)
+
+)

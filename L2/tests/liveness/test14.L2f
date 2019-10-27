@@ -1,0 +1,9 @@
+(:myF
+  0 0
+
+  mem rsp 0 <- rbx
+
+
+  rbx <- mem rsp 0
+  return
+)

@@ -1,0 +1,38 @@
+	(:go
+	 (:go
+	  0 1
+	  mem rsp 0 <- 1
+	  rbx <- 3
+	  r12 <- 3
+	  r13 <- 1
+	  :loop
+	  rdi <- rbx 
+	  call print 1
+	  mem rsp -8 <- :ret1
+	  rdi <- rbx
+  	  rsi <- r12
+          call :fib_add 2
+	  :ret1
+ 	  r13 += 2
+	  rbx <- rdi
+	  r12 <- rsi
+	  cjump r13 < 31 :loop :end
+	  :end
+	  return)
+	  (:fib_add
+	   2 0
+	   r10 <- rsi
+	   rsi >>= 1
+	   rdi >>= 1
+	   rsi += rdi
+	   rsi <<= 1
+	   rsi += 1
+	   rdi <- r10
+	   return)
+)
+
+
+
+
+
+  

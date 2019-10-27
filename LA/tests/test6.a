@@ -1,0 +1,11 @@
+void main ( ){
+
+  int64[][] ar
+  int64 arElement
+  ar <- new Array(3, 3)
+  ar[1][2] <- 5
+  arElement <- ar[1][2]
+   print(arElement)
+  return
+
+}

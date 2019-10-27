@@ -1,0 +1,18 @@
+define :main ( ){
+  %v1 <- 1
+  %v2 <- 2
+
+  %v4 <- call :myF(%v1, %v2, 3)
+
+  call print(%v4)
+
+  return %v4
+}
+
+define :myF (%p1, %p2, %p3){
+  %tempV <- %p1 + %p2
+  %tempV <- %tempV + %p3
+  %tempV <- %tempV + 1
+
+  return %tempV
+}

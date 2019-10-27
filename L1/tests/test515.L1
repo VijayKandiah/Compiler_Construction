@@ -1,0 +1,35 @@
+(:go
+(:go
+	0 0
+	mem rsp -8 <- :ret
+	call :myF 0
+	:ret
+	return
+)
+
+(:myF
+	0 10
+	r9 <- 1
+	rdi <- 1
+	mem rsp 72 <- rdi
+	r8 <- 1
+	r11 <- 1
+	rcx <- 1
+	rdx <- 1
+	rdi <- 1
+	rsi <- 1
+	r10 <- 1
+	mem rsp 0 <- r9
+	r9 <- mem rsp 72
+	mem rsp 8 <- r9
+	mem rsp 16 <- r8
+	mem rsp 24 <- r11
+	mem rsp 32 <- rcx
+	mem rsp 40 <- rdx
+	mem rsp 48 <- rdi
+	mem rsp 56 <- rsi
+	mem rsp 64 <- r10
+	return
+)
+
+)

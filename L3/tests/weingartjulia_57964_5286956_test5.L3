@@ -1,0 +1,102 @@
+// Take an array and flip 
+// Use pointers to an array to fill and flip
+
+// Fill array with incrementing values 0, 1, 2 ...
+define :initialize_array(%a, %m){
+	%count <- %a
+	%index <- 0
+	%val <- 0
+
+	:loop
+	// Encode value
+	%val <- %val << 1
+	%val <- %val +1
+	
+	store %count <- %val
+	%val <- %val -1
+	%val <- %val >> 1
+	%val <- %val + 1
+	
+	// increment values
+	%count <- %count + 8
+	%check <- %index < %m
+	%index <- %index + 1
+	
+	// branch if reach end of array given by %m
+	br %check :loop
+  br :finish
+	:finish
+	return	
+}
+
+// flip the values of %p1, filling %p2 
+define :flip_array(%p1, %p2, %max){
+
+	// %c1 and %c2 keep track of current locations in %p1 and %p2
+	%c1 <- %p1
+	%c2 <- %p2
+	%index <- 0
+
+	// decode size of the array to use
+	%max <- %max - 1
+	%max <- %max >> 1
+
+	// move %c2 to the last %index in new array
+	%ind <- %max - 1 
+	%ind <- %ind*8
+	%c2 <- %c2 + %ind
+
+	// define %a pointer to the original array for printing
+	%tmp <- %p2 - 8
+	
+	// Loop through and transfer values
+	:loop
+
+	// move %val from %c1 into %c2
+	%val <- load %c1
+	store %c2 <- %val
+
+	// adjust %c1 and %c2 accordingly
+	// %c2 is moving backwards through the array
+	%c1 <- %c1 + 8
+	%c2 <- %c2 - 8
+
+	// break when finished with array
+	%check <- %index < %max
+	%index <- %index + 1
+
+	// %check if done
+	br %check :loop
+  br :finish
+	:finish
+	return
+}
+
+// Define both arrays in main
+// Call modifying functions on arrays
+define :main(){
+	// Arrays predefined to be length 20
+	%filler <- 1
+	%max <- 20
+	%max <- %max << 1
+	%max <- %max + 1
+	// First array is the one to flip
+	%arr <- call allocate(%max, %filler)
+
+	%p <- %arr + 8
+	call :initialize_array(%p, %max)
+
+	// another array with flipped elements
+	%arr2 <- call allocate(%max, %filler)
+
+	%p2 <- %arr2 + 8
+
+	// Send in pointers to both arrays and the size
+	// Arrays need to be same length
+	call :flip_array(%p, %p2, %max)
+
+	// Print both
+	call print(%arr)
+	call print(%arr2)
+	return
+}

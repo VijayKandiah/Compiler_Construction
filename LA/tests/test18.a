@@ -1,0 +1,8 @@
+void main ( ){
+
+  int64 arLen
+  tuple t
+  t[0] <- 0
+  return
+
+}

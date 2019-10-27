@@ -1,0 +1,11 @@
+(:myF
+  0 1
+
+  mem rsp 0 <- rbx
+
+  rbx <- 5
+  %myVar1 <- rbx
+
+  rbx <- mem rsp 0
+  return
+)

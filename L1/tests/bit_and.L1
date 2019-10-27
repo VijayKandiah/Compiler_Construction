@@ -1,0 +1,7 @@
+(:bit_and
+  (:bit_and
+  0 0
+  rdi <- 21
+  rdi &= 7
+  call print 1
+  return))

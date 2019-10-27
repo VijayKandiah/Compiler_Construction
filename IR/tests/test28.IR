@@ -1,0 +1,123 @@
+define void :main ( ){
+
+  :entry
+  int64[] %ar
+  int64 %l
+  int64 %encodedL
+
+  // Allocate the array
+  %l <- 5
+  %ar <- new Array(%l)
+
+  // Print the array length
+  %encodedL <- call :encodedValue(%l)
+  call print(%encodedL)
+
+  // Print the array
+  call :printArrayGT(%ar)
+  call :printArrayGE(%ar)
+  call :printArrayE(%ar)
+
+  return
+
+}
+
+define void :printArrayGT (int64[] %p){
+
+  :entry
+  int64 %l
+  int64 %i
+  int64 %keepExecuting
+
+  // Pre-header
+  %i <- 6
+  br :begin_loop
+
+  :begin_loop
+  %keepExecuting <- 0 < %i
+  br %keepExecuting :body :exit
+
+  :body
+  int64 %encodedI
+  %encodedI <- call :encodedValue(%i)
+  call print(%encodedI)
+  br :latch
+
+  :latch
+  %i <- %i - 1
+  br :begin_loop
+
+  :exit
+  return 
+
+}
+
+define void :printArrayGE (int64[] %p){
+
+  :entry
+  int64 %l
+  int64 %i
+  int64 %keepExecuting
+
+  // Pre-header
+  %i <- 5
+  br :begin_loop
+
+  :begin_loop
+  %keepExecuting <- 0 <= %i
+  br %keepExecuting :body :exit
+
+  :body
+  int64 %encodedI
+  %encodedI <- call :encodedValue(%i)
+  call print(%encodedI)
+  br :latch
+
+  :latch
+  %i <- %i - 1
+  br :begin_loop
+
+  :exit
+  return 
+
+}
+
+define void :printArrayE (int64[] %p){
+
+  :entry
+  int64 %l
+  int64 %i
+  int64 %keepExecuting
+
+  // Pre-header
+  %i <- 5
+  br :begin_loop
+
+  :begin_loop
+  %keepExecuting <- 5 = %i
+  br %keepExecuting :body :exit
+
+  :body
+  int64 %encodedI
+  %encodedI <- call :encodedValue(%i)
+  call print(%encodedI)
+  br :latch
+
+  :latch
+  %i <- %i - 1
+  br :begin_loop
+
+  :exit
+  return 
+
+}
+
+
+define int64 :encodedValue (int64 %v){
+
+  :entry
+  %v <- %v << 1
+  %v <- %v + 1
+  return %v
+
+}

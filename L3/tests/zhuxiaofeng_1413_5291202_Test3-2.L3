@@ -1,0 +1,140 @@
+define :main () {
+	:entry
+	%var1 <- 1
+	%var2 <- 2
+	%var3 <- %var1 = %var2
+	%var4 <- %var1 < %var2
+	%var5 <- %var1 + %var2
+	%var6 <- %var << %var2
+	%var7 <- call :isNumber(%var6)
+	%var8 <- call :isAddress(%var5)
+	br %var8 :isAddress
+  br :isNotAddress
+	:isNotAddress	
+	%var9 <- %var8 * 3
+	%var9 <- %var9 + 2
+	%var10 <- call :lea(%var7)
+	%encoded <- %var10	
+	%encoded <- %encoded << 1
+	%encoded <- %encoded + 1	
+	call print(%encoded)
+	%array <- call allocate(%encoded, 3)
+	%newVar <- %array + 8
+	store %newVar <- 5
+	%newVar2 <- %array + 16
+	store %newVar2 <- 7
+	%newVar3 <- %array + 24
+	store %newVar3 <- 9
+	%var11 <- load %newVar2
+	%var12 <- %var10 > %var11
+	%var13 <- call :decreaseOne(%var9)
+	%var14 <- call :aop_plus(%var12, %var13)
+	%var15 <- call :aop_minus(%var1, %var13)
+	%var16 <- call :aop_and(%var11, %var12)
+	%var <- call :isAddress(%var16)
+	br %var :isVarAddress
+  br :isVarNotAddress
+	:isVarNotAddress	
+	%var17 <- call :increaseOne(%var9)
+	%var18 <- call :aop_product(%var2, %var13)
+	%var20 <- call :isEqual(%var11, %var8)
+	%var21 <- call :isSmallerAndEqual(%var20, %var1)	
+	%var22 <- call :isSmaller(%var20, %var2)
+	:isVarAddress
+	%newVar3 <- %array + 32
+	%var13 <- %var13 + 8
+	%callFL <- :otherF
+	call :otherF ()
+	call %callFL ()
+	%callerFP <- :otherF2
+	%res1 <- call %callerFP (2)
+	%res2 <- call :otherF2 (%var3)
+	%res2 <- %res2 - 1
+	call print(%res2)
+	:isAddress
+	return
+}
+define :isNumber (%p1){
+	%p2 <- %p1 & 1
+	%p2 <- %p2 = 0
+	br %p2 :isAddress
+  br :isNumber
+	:isAddress
+	return 0
+	:isNumber
+	return 1
+}
+define :isAddress (%p1){
+	%p2 <- %p1 & 1
+	%p2 <- %p2 = 0
+	br %p2 :isAddress
+  br :isNumber
+	:isAddress
+	return 1
+	:isNumber
+	return 0
+}
+define :lea (%p1){
+	%p2 <- %p1 * 4
+	%p3 <- %p1 + %p2
+	return %p3
+}
+define :decreaseOne (%p1){
+	%res <- %p1 - 1
+	return %res
+}
+define :increaseOne (%p1){
+	%p5 <- %p1 + 1
+	return %p5
+}
+define :otherF () {
+	%p1 <- 11
+	return
+}
+define :otherF2 (%var) {
+	%var <- %var * %var
+	return %var
+}
+define :aop_minus (%p1, %p2){
+	%p3 <- %p1 - %p2
+	return %p3
+}
+define :aop_plus (%p1, %p2){
+	%p4 <- %p1 + %p2
+	return %p4
+}
+define :aop_and (%p1, %p2){
+	%p5 <- %p1 & %p2
+	return %p5
+}
+define :aop_product (%p1, %p2){
+	%p3 <- %p1 * %p2
+	return %p3
+}
+define :isSmaller (%p1, %p2){
+	%p3 <- %p1 < 1
+	br %p3 :smaller
+  br :larger
+	:smaller
+	return 1
+	:larger
+	return 0
+}
+define :isSmallerAndEqual (%p1, %p2){
+	%p3 <- %p1 <= 1
+	br %p3 :smaller
+  br :larger
+	:smaller
+	return 1
+	:larger
+	return 0
+}
+define :isEqual (%p1, %p2){
+	%p3 <- %p1 = %p2
+	br %p3 :smaller
+  br :larger
+	:smaller
+	return 1
+	:larger
+	return 0
+}

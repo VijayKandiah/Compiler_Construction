@@ -1,0 +1,517 @@
+(:main
+(:getfreq
+	6 0
+	rax <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	rdx <- rcx
+	r8 <- r8
+	rcx <- r9
+	rdi <- rdi = rax
+	rsi <- rsi = rax
+	rdi <- rdi
+	rdi += rsi
+	rsi <- rdx = rax
+	rdi <- rdi
+	rdi += rsi
+	rsi <- r8 = rax
+	rdi <- rdi
+	rdi += rsi
+	rsi <- rcx = rax
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(:encode
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(:euclid
+	2 0
+	rdx <- rdi
+	rdi <- rsi
+	rdx <- rdx
+	rsi <- rdi
+	:call_label0
+	rdi <- rdx = rsi
+	cjump rdi = 1 :call_label4 :call_label1
+	:call_label1
+	rdi <- rsi < rdx
+	cjump rdi = 1 :call_label3 :call_label2
+	:call_label2
+	rdx <- rsi
+	rdi <- rdx
+	rsi <- rdi
+	:call_label3
+	rdx <- rsi
+	rdi <- rdx
+	rdi -= rsi
+	rsi <- rdi
+	rdi <- 1
+	cjump rdi = 1 :call_label0 :call_label4
+	:call_label4
+	rax <- rdx
+	return
+)
+
+(:main
+	0 20
+	rdi <- 1
+	mem rsp 64 <- rdi
+	rdi <- 2
+	mem rsp 120 <- rdi
+	rdi <- 3
+	mem rsp 48 <- rdi
+	rdi <- 4
+	mem rsp 56 <- rdi
+	rdi <- 5
+	mem rsp 72 <- rdi
+	rdi <- 1
+	mem rsp 80 <- rdi
+	rdi <- 1
+	mem rsp 88 <- rdi
+	rdi <- 3
+	mem rsp 96 <- rdi
+	rdi <- 2
+	mem rsp 104 <- rdi
+	rdi <- 5
+	mem rsp 112 <- rdi
+	rdi <- 0
+	rdi <- rdi
+	rsi <- mem rsp 64
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_16
+	call :greater 2
+	:call_label_ciao_16
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 120
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_17
+	call :greater 2
+	:call_label_ciao_17
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 48
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_18
+	call :greater 2
+	:call_label_ciao_18
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 56
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_19
+	call :greater 2
+	:call_label_ciao_19
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 72
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_20
+	call :greater 2
+	:call_label_ciao_20
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 80
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_21
+	call :greater 2
+	:call_label_ciao_21
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 88
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_22
+	call :greater 2
+	:call_label_ciao_22
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 96
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_23
+	call :greater 2
+	:call_label_ciao_23
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 104
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_24
+	call :greater 2
+	:call_label_ciao_24
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 112
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_25
+	call :greater 2
+	:call_label_ciao_25
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_26
+	call :encode 1
+	:call_label_ciao_26
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 1
+	rsi <- mem rsp 64
+	rsi <- rsi
+	rdx <- mem rsp 120
+	rdx <- rdx
+	rcx <- mem rsp 48
+	rcx <- rcx
+	r8 <- mem rsp 56
+	r8 <- r8
+	r9 <- mem rsp 72
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_27
+	call :getfreq 6
+	:call_label_ciao_27
+	rdi <- rax
+	mem rsp 128 <- rdi
+	rdi <- 1
+	rsi <- mem rsp 80
+	rsi <- rsi
+	rdx <- mem rsp 88
+	rdx <- rdx
+	rcx <- mem rsp 96
+	rcx <- rcx
+	r8 <- mem rsp 104
+	r8 <- r8
+	r9 <- mem rsp 112
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_28
+	call :getfreq 6
+	:call_label_ciao_28
+	rdi <- rax
+	rsi <- mem rsp 128
+	rsi <- rsi
+	mem rsp 128 <- rsi
+	rsi <- mem rsp 128
+	rsi += rdi
+	mem rsp 128 <- rsi
+	rdi <- 2
+	rsi <- mem rsp 64
+	rsi <- rsi
+	rdx <- mem rsp 120
+	rdx <- rdx
+	rcx <- mem rsp 48
+	rcx <- rcx
+	r8 <- mem rsp 56
+	r8 <- r8
+	r9 <- mem rsp 72
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_29
+	call :getfreq 6
+	:call_label_ciao_29
+	rdi <- rax
+	mem rsp 136 <- rdi
+	rdi <- 2
+	rsi <- mem rsp 80
+	rsi <- rsi
+	rdx <- mem rsp 88
+	rdx <- rdx
+	rcx <- mem rsp 96
+	rcx <- rcx
+	r8 <- mem rsp 104
+	r8 <- r8
+	r9 <- mem rsp 112
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_30
+	call :getfreq 6
+	:call_label_ciao_30
+	rdi <- rax
+	rsi <- mem rsp 136
+	rsi <- rsi
+	mem rsp 136 <- rsi
+	rsi <- mem rsp 136
+	rsi += rdi
+	mem rsp 136 <- rsi
+	rdi <- 3
+	rsi <- mem rsp 64
+	rsi <- rsi
+	rdx <- mem rsp 120
+	rdx <- rdx
+	rcx <- mem rsp 48
+	rcx <- rcx
+	r8 <- mem rsp 56
+	r8 <- r8
+	r9 <- mem rsp 72
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_31
+	call :getfreq 6
+	:call_label_ciao_31
+	rdi <- rax
+	mem rsp 144 <- rdi
+	rdi <- 3
+	rsi <- mem rsp 80
+	rsi <- rsi
+	rdx <- mem rsp 88
+	rdx <- rdx
+	rcx <- mem rsp 96
+	rcx <- rcx
+	r8 <- mem rsp 104
+	r8 <- r8
+	r9 <- mem rsp 112
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_32
+	call :getfreq 6
+	:call_label_ciao_32
+	rdi <- rax
+	rsi <- mem rsp 144
+	rsi <- rsi
+	mem rsp 144 <- rsi
+	rsi <- mem rsp 144
+	rsi += rdi
+	mem rsp 144 <- rsi
+	rdi <- 4
+	rsi <- mem rsp 64
+	rsi <- rsi
+	rdx <- mem rsp 120
+	rdx <- rdx
+	rcx <- mem rsp 48
+	rcx <- rcx
+	r8 <- mem rsp 56
+	r8 <- r8
+	r9 <- mem rsp 72
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_33
+	call :getfreq 6
+	:call_label_ciao_33
+	rdi <- rax
+	mem rsp 152 <- rdi
+	rdi <- 4
+	rsi <- mem rsp 80
+	rsi <- rsi
+	rdx <- mem rsp 88
+	rdx <- rdx
+	rcx <- mem rsp 96
+	rcx <- rcx
+	r8 <- mem rsp 104
+	r8 <- r8
+	r9 <- mem rsp 112
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_34
+	call :getfreq 6
+	:call_label_ciao_34
+	rdi <- rax
+	rsi <- mem rsp 152
+	rsi <- rsi
+	mem rsp 152 <- rsi
+	rsi <- mem rsp 152
+	rsi += rdi
+	mem rsp 152 <- rsi
+	rdi <- 5
+	rsi <- mem rsp 64
+	rsi <- rsi
+	rdx <- mem rsp 120
+	rdx <- rdx
+	rcx <- mem rsp 48
+	rcx <- rcx
+	r8 <- mem rsp 56
+	r8 <- r8
+	r9 <- mem rsp 72
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_35
+	call :getfreq 6
+	:call_label_ciao_35
+	rdi <- rax
+	mem rsp 40 <- rdi
+	rdi <- 5
+	rsi <- mem rsp 80
+	rsi <- rsi
+	rdx <- mem rsp 88
+	rdx <- rdx
+	rcx <- mem rsp 96
+	rcx <- rcx
+	r8 <- mem rsp 104
+	r8 <- r8
+	r9 <- mem rsp 112
+	r9 <- r9
+	mem rsp -8 <- :call_label_ciao_36
+	call :getfreq 6
+	:call_label_ciao_36
+	rdi <- rax
+	rsi <- mem rsp 128
+	rsi <- rsi
+	mem rsp 40 <- rsi
+	rsi <- mem rsp 40
+	rsi += rdi
+	mem rsp 40 <- rsi
+	rdi <- 0
+	rdi <- mem rsp 128
+	rdi <- rdi
+	rsi <- mem rsp 136
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_37
+	call :greater 2
+	:call_label_ciao_37
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rsi <- mem rsp 16
+	rdi <- mem rsp 128
+	rdi <- rdi = rsi
+	cjump rdi = 1 :call_label_ciao_10 :call_label_ciao_5
+	:call_label_ciao_5
+	rdi <- mem rsp 16
+	rsi <- mem rsp 136
+	rdi <- rsi = rdi
+	cjump rdi = 1 :call_label_ciao_11 :call_label_ciao_6
+	:call_label_ciao_6
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 144
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_38
+	call :greater 2
+	:call_label_ciao_38
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rsi <- mem rsp 144
+	rdi <- rsi = rdi
+	cjump rdi = 1 :call_label_ciao_12 :call_label_ciao_7
+	:call_label_ciao_7
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 152
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_39
+	call :greater 2
+	:call_label_ciao_39
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rsi <- mem rsp 152
+	rdi <- rsi = rdi
+	cjump rdi = 1 :call_label_ciao_13 :call_label_ciao_8
+	:call_label_ciao_8
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 40
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_40
+	call :greater 2
+	:call_label_ciao_40
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rsi <- mem rsp 40
+	rdi <- rsi = rdi
+	cjump rdi = 1 :call_label_ciao_14 :call_label_ciao_9
+	:call_label_ciao_9
+	:call_label_ciao_10
+	rdi <- 1
+	goto :call_label_ciao_15
+	:call_label_ciao_11
+	rdi <- 2
+	goto :call_label_ciao_15
+	:call_label_ciao_12
+	rdi <- 3
+	goto :call_label_ciao_15
+	:call_label_ciao_13
+	rdi <- 4
+	goto :call_label_ciao_15
+	:call_label_ciao_14
+	rdi <- 5
+	goto :call_label_ciao_15
+	:call_label_ciao_15
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_41
+	call :encode 1
+	:call_label_ciao_41
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_42
+	call :encode 1
+	:call_label_ciao_42
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	call print 1
+	rsi <- 64
+	rdx <- 72
+	rdi <- 27
+	mem rsp 0 <- rdi
+	rdi <- 54
+	mem rsp 8 <- rdi
+	rdi <- 37
+	mem rsp 24 <- rdi
+	rdi <- 53
+	mem rsp 32 <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	mem rsp -8 <- :call_label_ciao_43
+	call :euclid 2
+	:call_label_ciao_43
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_44
+	call :encode 1
+	:call_label_ciao_44
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_45
+	call :euclid 2
+	:call_label_ciao_45
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_46
+	call :encode 1
+	:call_label_ciao_46
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rsi <- mem rsp 32
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_47
+	call :euclid 2
+	:call_label_ciao_47
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_48
+	call :encode 1
+	:call_label_ciao_48
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rax <- 0
+	return
+)
+
+(:greater
+	2 0
+	rdx <- rdi
+	rsi <- rsi
+	rdi <- rsi <= rdx
+	cjump rdi = 1 :call_label_ciao__ciao_50 :call_label_ciao__ciao_49
+	:call_label_ciao__ciao_49
+	rax <- rsi
+	return
+	:call_label_ciao__ciao_50
+	rax <- rdx
+	return
+)
+
+)

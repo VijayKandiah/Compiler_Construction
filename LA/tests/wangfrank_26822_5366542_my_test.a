@@ -1,0 +1,209 @@
+void main ( ){
+
+    int64[][][] m
+    int64[] r
+    int64 v
+    int64 l1
+    int64 l2
+    int64 l3
+    int64 e_l1
+    int64 e_l2
+    int64 e_l3
+    v <- 10 
+    l1 <- 10
+    l2 <- 9
+    l3 <- 8
+    m <- new Array(l1, l2, l3)
+    r <-  find(m, v)
+     print(r)
+     print_find_res(r)
+    
+    
+    int64 sum
+    m[0][0][0] <- v
+    r <-  find(m, v)
+    m[0][0][0] <-5 
+    sum <-  compute_sum(m)
+     print(sum)
+     print(r)
+     print_find_res(r)
+
+    m[1][0][4] <- v
+    r <-  find(m, v)
+    m[1][0][4] <- 5
+    sum <-  compute_sum(m)
+     print(sum)
+     print(r)
+     print_find_res(r)
+
+    return
+
+}
+
+int64 compute_sum(int64[][][] m){
+
+    int64 l1
+    int64 l2
+    int64 l3
+    l1 <- length m 0
+    l2 <- length m 1
+    l3 <- length m 2
+     print(l1)
+     print(l2)
+     print(l3)
+
+    int64 index
+    int64 sum
+    sum <- 0
+    index <- 0
+    br :header
+
+    :header
+    int64 check
+    check <- index < l1
+    br check :outerBody :leave
+
+    :outerBody
+    int64 index2
+    index2 <- 0
+    br :header2
+
+    :header2
+    int64 check2
+    check2 <- index2 < l2
+    br check2 :innerBody :endOuterBody
+
+    :innerBody
+    int64 index3
+    index3 <- 0
+    br :header3  
+
+    :header3
+    int64 check3
+    check3 <- index3 < l3
+    br check3 :Body3 :endInnerBody
+
+    :Body3
+    int64 d
+    d <- m[index][index2][index3]
+    sum <- sum + d
+    br :endBody3
+
+    :endBody3
+    index3 <- index3 + 1
+    br :header3
+
+    :endInnerBody
+    index2 <- index2 + 1
+    br :header2
+
+    :endOuterBody
+    index <- index + 1
+    br :header
+
+    :leave
+    return sum
+
+}
+
+
+
+void print_find_res (int64[] res) {
+    int64 l
+    l <- length res 0
+
+    int64 index
+    index <- 0
+    br :Header
+
+    :Header
+    int64 check
+    check <- index < l
+    br check :Body :End
+
+    :Body
+    int64 pos
+    pos <- res[index]
+     print(pos)
+    index <- index + 1
+    br :Header
+
+    :End
+    return
+}
+
+int64[] find (int64[][][] m, int64 v){
+
+    int64 l1
+    int64 l2
+    int64 l3
+    l1 <- length m 0
+    l2 <- length m 1
+    l3 <- length m 2
+    br :init
+
+    :init
+    int64 index
+    int64[] res
+    res <- new Array(3)
+    res[0] <- -1
+    res[1] <- -1
+    res[2] <- -1
+    index <- 0
+    br :header
+
+    :header
+    int64 check
+    check <- index < l1
+    br check :outerBody :leave
+
+    :outerBody
+    int64 index2
+    index2 <- 0
+    br :header2
+
+    :header2
+    int64 check2
+    check2 <- index2 < l2
+    br check2 :innerBody :endOuterBody
+
+    :innerBody
+    int64 index3
+    index3 <- 0
+    br :header3  
+
+    :header3
+    int64 check3
+    check3 <- index3 < l3
+    br check3 :Body3 :endInnerBody
+
+    :Body3
+    int64 e
+    int64 sameE
+    e <- m[index][index2][index3]
+    sameE <- e = v
+    br sameE :setAndLeave :endBody3
+
+    :endBody3
+    index3 <- index3 + 1
+    br :header3
+
+    :endInnerBody
+    index2 <- index2 + 1
+    br :header2
+
+    :endOuterBody
+    index <- index + 1
+    br :header
+
+    :setAndLeave
+    res[0] <- index
+    res[1] <- index2
+    res[2] <- index3
+    br :leave
+
+    :leave
+    return res
+
+}
+

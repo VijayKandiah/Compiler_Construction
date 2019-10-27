@@ -1,0 +1,82 @@
+(:go
+  //// This is the main function that runs
+  //// the {s:2, 42, 2} example
+  (:go
+    0 0
+  	rdi <- 5
+  	rsi <- 5
+  	call allocate 2
+  	rbx <- 85
+  	mem rax 8 <- rbx
+  	r10 <- rax
+  	rdi <- r10
+  	mem rsp -8 <- :ret
+  	call :printArray 1
+  	:ret
+  	return
+  )
+  (:printArray
+    1 2
+  	mem rsp 0 <- rdi
+  	r11 <- mem rsp 0
+  	r11 &= 1
+  	cjump r11 = 1 :retFalse :continue
+  	:continue
+  	mem rsp 8 <- 0
+  	goto :loopCheck
+  	:loop
+  	rdi <- mem rsp 0
+  	rsi <- mem rsp 8
+  	mem rsp -8 <- :printArRet
+  	call :printArrayElement 2
+  	:printArRet
+  	rdi <- mem rsp 0
+  	mem rsp 8 += 1
+  	:loopCheck
+  	rax <- mem rdi 0
+  	rax >>= 1
+  	rbx <- mem rsp 8
+  	cjump rax < rbx :retTrue :loop
+  	:retFalse
+  	rax <- 0
+  	return
+  	:retTrue
+  	rax <- 1
+  	return
+  )
+  (:printArrayElement
+  2 2
+  	mem rsp 0 <- rdi
+  	mem rsp 8 <- rsi
+  	rsi <<= 1
+  	rsi++
+  	rdi <- rsi
+  	call print 1
+  	r10 <- mem rsp 8
+  	r10 <<= 3
+  	r10 += 8
+  	r10 <<= 1
+  	r10 += 1
+  	rdi <- r10
+  	call print 1
+  	rax <- mem rsp 8
+  	rax++
+  	rax <<= 3
+  	r10 <- mem rsp 0
+  	r10 += rax
+  	rax <- r10
+  	r10 <- mem rax 0
+  	r10 &= 1
+  	cjump r10 = 1 :notArray :array
+  	:notArray
+  	rdi <- mem rax 0
+  	call print 1
+  	goto :r
+  	:array
+  	rdi <- mem rax 0
+  	mem rsp -8 <- :r
+  	call :printArray 1
+  	:r
+  	return
+  )
+)

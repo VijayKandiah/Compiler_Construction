@@ -1,0 +1,103 @@
+//This basically populates an array with numbers containing 8675309
+define :main () {
+    %jennysNumber <- call allocate(7,1)
+    %tempJenny <- %jennysNumber
+    %retVal <- call :Jenny (8)
+    store %tempJenny <- %retVal
+    %tempJenny <- %tempJenny + 8
+    %retVal <- call :Jenny (6)
+    store %tempJenny <- %retVal
+    %tempJenny <- %tempJenny + 8
+    %retVal <- call :whoCanI (7)
+    store %tempJenny <- %retVal
+    %tempJenny <- %tempJenny + 8
+    %retVal <- call :TurnTo (5)
+    store %tempJenny <- %retVal
+    %tempJenny <- %tempJenny + 8
+    %retVal <- call :youGiveMeSomething (3)
+    store %tempJenny <- %retVal
+    %tempJenny <- %tempJenny + 8
+    %retVal <- call :iCanHold (0)
+    store %tempJenny <- %retVal
+    %tempJenny <- %tempJenny + 8
+    %retVal <- call :onTo (9)
+    store %tempJenny <- %retVal
+    %tempJenny <- %tempJenny + 8
+    call :gimmeACall (%jennysNumber)
+    return
+}
+define :Jenny (%number) {
+    %tempSpot <- call allocate(3,1)
+    store %tempSpot <- %number
+    %number <- %number < 1
+    %number <- call allocate (5,1)
+    %number <- %number * 200000
+    %number <- load %tempSpot
+    return %number    
+}
+define :whoCanI (%number) {
+    %tempSpot <- call allocate(3,1)
+    store %tempSpot <- %number
+    %number <- %number < 1
+    %number <- 33
+    %number <- %number + 200000
+    %number <- load %tempSpot
+    return %number    
+}
+define :TurnTo (%number) {
+    %tempSpot <- call allocate(3,1)
+    store %tempSpot <- %number
+    %number1 <- %number < 1
+    %number1 <- 33
+    %number1 <- %number + 200000
+    %number1 <- load %tempSpot
+    return %number    
+}
+define :youGiveMeSomething (%number) {
+    %tempSpot <- call allocate(3,1)
+    store %tempSpot <- %number
+    %nnumber <- %number < 1
+    %nnumber <- 33
+    %nnumber <- %number + 200000
+    %nnumber <- load %tempSpot
+    return %number        
+}
+define :iCanHold (%number) {
+    %tempSpot <- call allocate(3,1)
+    store %tempSpot <- %number
+    %number <- %number < 1
+    %number <- 33
+    %number <- 34
+    %number <- 35
+    %number <- 36
+    %number <- 37
+    %number <- %number + 200000
+    %number <- load %tempSpot
+    return %number        
+}
+define :onTo (%number) {
+    %tempSpot <- call allocate(3,1)
+    store %tempSpot <- %number
+    %numbr <- %number < 1
+    %numbr <- 33
+    %numbr <- %number + 200000
+    %numbr <- load %tempSpot
+    return %number        
+}
+define :gimmeACall (%jennysNumber) {
+    %count <- 0
+    :top
+    %compVal <- %count = 7 
+    br %compVal :donezo
+    br :printANum 
+    :printANum
+    %number <- load %jennysNumber
+    %number <- %number << 1
+    %number <- %number + 1 
+    call print (%number)
+    %count <- %count + 1
+    %jennysNumber <- %jennysNumber + 8
+    br :top
+    :donezo
+    return
+}

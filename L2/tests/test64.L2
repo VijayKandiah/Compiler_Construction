@@ -1,0 +1,189 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %newVar1 <- 5
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- 5
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 6
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %a <- rax
+    %newVar3 <- %a
+    %newVar3 += 8
+    mem %newVar3 0  <- 5
+    %newVar4 <- %a
+    %newVar4 += 16
+    mem %newVar4 0  <- 5
+    %newVar5 <- %a
+    %newVar5 += 24
+    mem %newVar5 0  <- 5
+    mem rsp -8 <- :call_label1
+    rdi <- %a
+    call :initArray 1
+    :call_label1
+    rdi <- %a
+    call print 1
+    mem rsp -8 <- :call_label2
+    rdi <- %a
+    rsi <- 0
+    rdx <- 0
+    call :printE 3
+    :call_label2
+    mem rsp -8 <- :call_label3
+    rdi <- %a
+    rsi <- 0
+    rdx <- 1
+    call :printE 3
+    :call_label3
+    mem rsp -8 <- :call_label4
+    rdi <- %a
+    rsi <- 1
+    rdx <- 0
+    call :printE 3
+    :call_label4
+    mem rsp -8 <- :call_label5
+    rdi <- %a
+    rsi <- 1
+    rdx <- 1
+    call :printE 3
+    :call_label5
+    return
+  )
+  (:initArray
+    1 0
+    %A <- rdi
+    :call_label6
+    %newVar1 <- 0
+    %newVar2 <- %A
+    %newVar2 += 24
+    %newVar3 <- mem %newVar2 0 
+    %newVar4 <- %newVar3
+    %newVar4 >>= 1
+    %newVar5 <- 1
+    %newVar5 <- %newVar5
+    %newVar5 *= %newVar4
+    %newVar6 <- 0
+    %newVar6 *= %newVar5
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar6
+    %newVar1 <- %newVar1
+    %newVar1 += 0
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 32
+    %newVar7 <- %A
+    %newVar7 += %newVar0
+    mem %newVar7 0  <- 1
+    %newVar9 <- 0
+    %newVar10 <- %A
+    %newVar10 += 24
+    %newVar11 <- mem %newVar10 0 
+    %newVar12 <- %newVar11
+    %newVar12 >>= 1
+    %newVar13 <- 1
+    %newVar13 <- %newVar13
+    %newVar13 *= %newVar12
+    %newVar14 <- 0
+    %newVar14 *= %newVar13
+    %newVar9 <- %newVar9
+    %newVar9 += %newVar14
+    %newVar9 <- %newVar9
+    %newVar9 += 1
+    %newVar8 <- %newVar9
+    %newVar8 *= 8
+    %newVar8 <- %newVar8
+    %newVar8 += 32
+    %newVar15 <- %A
+    %newVar15 += %newVar8
+    mem %newVar15 0  <- 3
+    %newVar17 <- 0
+    %newVar18 <- %A
+    %newVar18 += 24
+    %newVar19 <- mem %newVar18 0 
+    %newVar20 <- %newVar19
+    %newVar20 >>= 1
+    %newVar21 <- 1
+    %newVar21 <- %newVar21
+    %newVar21 *= %newVar20
+    %newVar22 <- 1
+    %newVar22 *= %newVar21
+    %newVar17 <- %newVar17
+    %newVar17 += %newVar22
+    %newVar17 <- %newVar17
+    %newVar17 += 0
+    %newVar16 <- %newVar17
+    %newVar16 *= 8
+    %newVar16 <- %newVar16
+    %newVar16 += 32
+    %newVar23 <- %A
+    %newVar23 += %newVar16
+    mem %newVar23 0  <- 5
+    %newVar25 <- 0
+    %newVar26 <- %A
+    %newVar26 += 24
+    %newVar27 <- mem %newVar26 0 
+    %newVar28 <- %newVar27
+    %newVar28 >>= 1
+    %newVar29 <- 1
+    %newVar29 <- %newVar29
+    %newVar29 *= %newVar28
+    %newVar30 <- 1
+    %newVar30 *= %newVar29
+    %newVar25 <- %newVar25
+    %newVar25 += %newVar30
+    %newVar25 <- %newVar25
+    %newVar25 += 1
+    %newVar24 <- %newVar25
+    %newVar24 *= 8
+    %newVar24 <- %newVar24
+    %newVar24 += 32
+    %newVar31 <- %A
+    %newVar31 += %newVar24
+    mem %newVar31 0  <- 7
+    return
+  )
+  (:printE
+    3 0
+    %A <- rdi
+    %i <- rsi
+    %j <- rdx
+    :call_label7
+    %newVar1 <- 0
+    %newVar2 <- %A
+    %newVar2 += 24
+    %newVar3 <- mem %newVar2 0 
+    %newVar4 <- %newVar3
+    %newVar4 >>= 1
+    %newVar5 <- 1
+    %newVar5 <- %newVar5
+    %newVar5 *= %newVar4
+    %newVar6 <- %i
+    %newVar6 *= %newVar5
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar6
+    %newVar1 <- %newVar1
+    %newVar1 += %j
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 32
+    %newVar7 <- %A
+    %newVar7 += %newVar0
+    %e <- mem %newVar7 0 
+    rdi <- %e
+    call print 1
+    return
+  )
+)

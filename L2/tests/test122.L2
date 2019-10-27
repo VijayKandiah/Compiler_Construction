@@ -1,0 +1,52 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    rdi <- 3
+    mem rsp -8 <- :call_label1
+    call :createTuple 1
+    :call_label1
+    %t <- rax
+    return
+  )
+  (:createTuple
+    1 0
+    %p1 <- rdi
+    :call_label_ciao_2
+    rdi <- 5
+    rsi <- 1
+    call allocate 2
+    %p <- rax
+    %newVar1 <- 0
+    %newVar1 *= 8
+    %newVar0 <- %newVar1
+    %newVar0 += 8
+    %newVar2 <- %p
+    %newVar2 += %newVar0
+    mem %newVar2 0  <- 0
+    %newVar4 <- 1
+    %newVar4 *= 8
+    %newVar3 <- %newVar4
+    %newVar3 += 8
+    %newVar5 <- %p
+    %newVar5 += %newVar3
+    mem %newVar5 0  <- 1
+    %newVar7 <- 2
+    %newVar7 *= 8
+    %newVar6 <- %newVar7
+    %newVar6 += 8
+    %newVar8 <- %p
+    %newVar8 += %newVar6
+    mem %newVar8 0  <- %p1
+    %x2 <- 21
+    %newVar10 <- 3
+    %newVar10 *= 8
+    %newVar9 <- %newVar10
+    %newVar9 += 8
+    %newVar11 <- %p
+    %newVar11 += %newVar9
+    mem %newVar11 0  <- %x2
+    rax <- %p
+    return
+  )
+)

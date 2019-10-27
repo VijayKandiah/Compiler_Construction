@@ -1,0 +1,18 @@
+(:main
+ (:main
+ 0 0
+ rdi <- -15
+ cjump rdi < 0 :yes :no
+ :yes
+ rsi <- 0
+ rsi -= rdi
+ rdi <- rsi
+ rdi *= 2
+ rdi += 1
+ call print 1
+ return
+ :no
+ rdi *= 2
+ rdi += 1
+ call print 1
+ return))

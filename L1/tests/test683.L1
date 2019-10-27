@@ -1,0 +1,241 @@
+(:main
+(:main
+	0 2
+	rdi <- 100
+	rsi <- 1
+	rdx <- 12
+	rcx <- 92
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	mem rsp -8 <- :call_label0
+	call :findDist 4
+	:call_label0
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <<= 2
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi -= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 2
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp -8 <- :call_label1
+	call :randomize 1
+	:call_label1
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label2
+	call :myF 1
+	:call_label2
+	rdi <- rax
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(:myF
+	1 0
+	rdi <- rdi
+	rsi <- 0 < rdi
+	cjump rsi = 1 :call_label_ciao_4 :call_label_ciao_3
+	:call_label_ciao_3
+	rdi <- rdi
+	rdi *= -1
+	:call_label_ciao_4
+	rdi <- rdi
+	rdi &= 1
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao_5 :call_label_ciao_6
+	:call_label_ciao_5
+	rax <- 1
+	return
+	:call_label_ciao_6
+	rax <- 0
+	return
+)
+
+(:findDist
+	4 0
+	rdi <- rdi
+	r8 <- rsi
+	rdx <- rdx
+	rsi <- rcx
+	rsi <- rsi
+	rsi -= rdx
+	rdx <- rsi
+	rdx *= rsi
+	rsi <- r8
+	rsi -= rdi
+	rdi <- rsi
+	rdi *= rsi
+	rdi <- rdi
+	rdi += rdx
+	rax <- rdi
+	return
+)
+
+(:randomize
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 5
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi *= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 10
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- 10 < rdi
+	cjump rdi = 1 :call_label_ciao__ciao_7 :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_7
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi *= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rax <- rdi
+	return
+	:call_label_ciao__ciao_8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi *= 3
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rax <- rdi
+	return
+)
+
+)

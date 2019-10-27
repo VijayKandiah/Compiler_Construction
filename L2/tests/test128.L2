@@ -1,0 +1,48 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %newVar1 <- 3
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- 5
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 6
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %ar <- rax
+    mem %ar 8 <- 5
+    mem %ar 16 <- 3
+    mem %ar 24 <- 5
+    rdi <- %ar
+    mem rsp -8 <- :call_label1
+    call :myF 1
+    :call_label1
+    %l <- rax
+    rdi <- %l
+    call print 1
+    return
+  )
+  (:myF
+    1 0
+    %a <- rdi
+    :call_label_ciao_2
+    %newVar0 <- 1
+    %newVar0 *= 8
+    %newVar1 <- %newVar0
+    %newVar1 += 16
+    %newVar2 <- %a
+    %newVar2 += %newVar1
+    %l <- mem %newVar2 0 
+    rax <- %l
+    return
+  )
+)

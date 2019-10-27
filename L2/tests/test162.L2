@@ -1,0 +1,288 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %var1 <- 1
+    %var2 <- 2
+    %var3 <- %var1 = %var2
+    
+    %var4 <- %va1 < %var2
+    
+    %var5 <- %var1
+    %var5 += %var2
+    %var6 <- %var
+    %var6 <<= %var2
+    rdi <- %var6
+    mem rsp -8 <- :call_label5
+    call :isNumber 1
+    :call_label5
+    %var7 <- rax
+    rdi <- %var5
+    mem rsp -8 <- :call_label6
+    call :isAddress 1
+    :call_label6
+    %var8 <- rax
+    cjump %var8 = 1 :call_label4 :call_label1
+    :call_label1
+    %var9 <- %var8
+    %var9 *= 3
+    %var9 <- %var9
+    %var9 += 2
+    rdi <- %var7
+    mem rsp -8 <- :call_label7
+    call :lea 1
+    :call_label7
+    %var10 <- rax
+    %encoded <- %var10
+    %encoded <- %encoded
+    %encoded <<= 1
+    %encoded <- %encoded
+    %encoded += 1
+    rdi <- %encoded
+    call print 1
+    rdi <- %encoded
+    rsi <- 3
+    call allocate 2
+    %array <- rax
+    mem %array 8 <- 5
+    %newVar2 <- %array
+    %newVar2 += 16
+    mem %newVar2 0  <- 7
+    mem %array 24 <- 9
+    %var11 <- mem %newVar2 0 
+    %var12 <- %var11 < %var10
+    
+    rdi <- %var9
+    mem rsp -8 <- :call_label8
+    call :decreaseOne 1
+    :call_label8
+    %var13 <- rax
+    rdi <- %var12
+    rsi <- %var13
+    mem rsp -8 <- :call_label9
+    call :aop_plus 2
+    :call_label9
+    %var14 <- rax
+    rdi <- %var1
+    rsi <- %var13
+    mem rsp -8 <- :call_label10
+    call :aop_minus 2
+    :call_label10
+    %var15 <- rax
+    rdi <- %var11
+    rsi <- %var12
+    mem rsp -8 <- :call_label11
+    call :aop_and 2
+    :call_label11
+    %var16 <- rax
+    rdi <- %var16
+    mem rsp -8 <- :call_label12
+    call :isAddress 1
+    :call_label12
+    %var <- rax
+    cjump %var = 1 :call_label3 :call_label2
+    :call_label2
+    rdi <- %var9
+    mem rsp -8 <- :call_label13
+    call :increaseOne 1
+    :call_label13
+    %var17 <- rax
+    rdi <- %var2
+    rsi <- %var13
+    mem rsp -8 <- :call_label14
+    call :aop_product 2
+    :call_label14
+    %var18 <- rax
+    rdi <- %var11
+    rsi <- %var8
+    mem rsp -8 <- :call_label15
+    call :isEqual 2
+    :call_label15
+    %var20 <- rax
+    rdi <- %var20
+    rsi <- %var1
+    mem rsp -8 <- :call_label16
+    call :isSmallerAndEqual 2
+    :call_label16
+    %var21 <- rax
+    rdi <- %var20
+    rsi <- %var2
+    mem rsp -8 <- :call_label17
+    call :isSmaller 2
+    :call_label17
+    %var22 <- rax
+    :call_label3
+    %newVar3 <- %array
+    %newVar3 += 32
+    %var13 <- %var13
+    %var13 += 8
+    %callFL <- :otherF
+    mem rsp -8 <- :call_label18
+    call :otherF 0
+    :call_label18
+    mem rsp -8 <- :call_label19
+    call %callFL 0
+    :call_label19
+    %callerFP <- :otherF2
+    rdi <- 2
+    mem rsp -8 <- :call_label20
+    call %callerFP 1
+    :call_label20
+    %res1 <- rax
+    rdi <- %var3
+    mem rsp -8 <- :call_label21
+    call :otherF2 1
+    :call_label21
+    %res2 <- rax
+    %res2 <- %res2
+    %res2 -= 1
+    rdi <- %res2
+    call print 1
+    :call_label4
+    return
+  )
+  (:isNumber
+    1 0
+    %p1 <- rdi
+    %p2 <- %p1
+    %p2 &= 1
+    %p2 <- %p2 = 0
+    
+    cjump %p2 = 1 :call_label_ciao_22 :call_label_ciao_23
+    :call_label_ciao_22
+    rax <- 0
+    return
+    :call_label_ciao_23
+    rax <- 1
+    return
+  )
+  (:isAddress
+    1 0
+    %p1 <- rdi
+    %p2 <- %p1
+    %p2 &= 1
+    %p2 <- %p2 = 0
+    
+    cjump %p2 = 1 :call_label_ciao__ciao_24 :call_label_ciao__ciao_25
+    :call_label_ciao__ciao_24
+    rax <- 1
+    return
+    :call_label_ciao__ciao_25
+    rax <- 0
+    return
+  )
+  (:lea
+    1 0
+    %p1 <- rdi
+    %p3 @ %p1 %p1 4
+    rax <- %p3
+    return
+  )
+  (:decreaseOne
+    1 0
+    %p1 <- rdi
+    %res <- %p1
+    %res -= 1
+    rax <- %res
+    return
+  )
+  (:increaseOne
+    1 0
+    %p1 <- rdi
+    %p5 <- %p1
+    %p5 += 1
+    rax <- %p5
+    return
+  )
+  (:otherF
+    0 0
+    %p1 <- 11
+    return
+  )
+  (:otherF2
+    1 0
+    %var <- rdi
+    %var <- %var
+    %var *= %var
+    rax <- %var
+    return
+  )
+  (:aop_minus
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1
+    %p3 -= %P2
+    rax <- %p3
+    return
+  )
+  (:aop_plus
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p4 <- %p1
+    %p4 += %P2
+    rax <- %p4
+    return
+  )
+  (:aop_and
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p5 <- %p1
+    %p5 &= %P2
+    rax <- %p5
+    return
+  )
+  (:aop_product
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1
+    %p3 *= %P2
+    rax <- %p3
+    return
+  )
+  (:isSmaller
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1 < 1
+    
+    cjump %p3 = 1 :call_label_ciao__ciao__ciao_26 :call_label_ciao__ciao__ciao_27
+    :call_label_ciao__ciao__ciao_26
+    rax <- 1
+    return
+    :call_label_ciao__ciao__ciao_27
+    rax <- 0
+    return
+  )
+  (:isSmallerAndEqual
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1 <= 1
+    
+    cjump %p3 = 1 :call_label_ciao__ciao__ciao__ciao_28 :call_label_ciao__ciao__ciao__ciao_29
+    :call_label_ciao__ciao__ciao__ciao_28
+    rax <- 1
+    return
+    :call_label_ciao__ciao__ciao__ciao_29
+    rax <- 0
+    return
+  )
+  (:isEqual
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1 = %P2
+    
+    cjump %p3 = 1 :call_label_ciao__ciao__ciao__ciao__ciao_30 :call_label_ciao__ciao__ciao__ciao__ciao_31
+    :call_label_ciao__ciao__ciao__ciao__ciao_30
+    rax <- 1
+    return
+    :call_label_ciao__ciao__ciao__ciao__ciao_31
+    rax <- 0
+    return
+  )
+)

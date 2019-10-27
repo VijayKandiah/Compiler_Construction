@@ -1,0 +1,14 @@
+(:myF
+  0 0
+
+  %myVar <- 0
+
+  rdi <- %myVar
+  call :myF2 0
+
+  return
+)
+
+%myVar
+
+%S

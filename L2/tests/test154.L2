@@ -1,0 +1,204 @@
+(:main
+  (:main
+    0 0
+    rdi <- 7
+    rsi <- 1
+    call allocate 2
+    %jennysNumber <- rax
+    %tempJenny <- %jennysNumber
+    rdi <- 8
+    mem rsp -8 <- :call_label0
+    call :Jenny 1
+    :call_label0
+    %retVal <- rax
+    mem %tempJenny 0  <- %retVal
+    %tempJenny <- %tempJenny
+    %tempJenny += 8
+    rdi <- 6
+    mem rsp -8 <- :call_label1
+    call :Jenny 1
+    :call_label1
+    %retVal <- rax
+    mem %tempJenny 0  <- %retVal
+    %tempJenny <- %tempJenny
+    %tempJenny += 8
+    rdi <- 7
+    mem rsp -8 <- :call_label2
+    call :whoCanI 1
+    :call_label2
+    %retVal <- rax
+    mem %tempJenny 0  <- %retVal
+    %tempJenny <- %tempJenny
+    %tempJenny += 8
+    rdi <- 5
+    mem rsp -8 <- :call_label3
+    call :TurnTo 1
+    :call_label3
+    %retVal <- rax
+    mem %tempJenny 0  <- %retVal
+    %tempJenny <- %tempJenny
+    %tempJenny += 8
+    rdi <- 3
+    mem rsp -8 <- :call_label4
+    call :youGiveMeSomething 1
+    :call_label4
+    %retVal <- rax
+    mem %tempJenny 0  <- %retVal
+    %tempJenny <- %tempJenny
+    %tempJenny += 8
+    rdi <- 0
+    mem rsp -8 <- :call_label5
+    call :iCanHold 1
+    :call_label5
+    %retVal <- rax
+    mem %tempJenny 0  <- %retVal
+    %tempJenny <- %tempJenny
+    %tempJenny += 8
+    rdi <- 9
+    mem rsp -8 <- :call_label6
+    call :onTo 1
+    :call_label6
+    %retVal <- rax
+    mem %tempJenny 0  <- %retVal
+    %tempJenny <- %tempJenny
+    %tempJenny += 8
+    rdi <- %jennysNumber
+    mem rsp -8 <- :call_label7
+    call :gimmeACall 1
+    :call_label7
+    return
+  )
+  (:Jenny
+    1 0
+    %number <- rdi
+    rdi <- 3
+    rsi <- 1
+    call allocate 2
+    %tempSpot <- rax
+    mem %tempSpot 0  <- %number
+    %number <- %number < 1
+    
+    rdi <- 5
+    rsi <- 1
+    call allocate 2
+    %number <- rax
+    %number <- %number
+    %number *= 200000
+    %number <- mem %tempSpot 0 
+    rax <- %number
+    return
+  )
+  (:whoCanI
+    1 0
+    %number <- rdi
+    rdi <- 3
+    rsi <- 1
+    call allocate 2
+    %tempSpot <- rax
+    mem %tempSpot 0  <- %number
+    %number <- %number < 1
+    
+    %number <- 33
+    %number <- %number
+    %number += 200000
+    %number <- mem %tempSpot 0 
+    rax <- %number
+    return
+  )
+  (:TurnTo
+    1 0
+    %number <- rdi
+    rdi <- 3
+    rsi <- 1
+    call allocate 2
+    %tempSpot <- rax
+    mem %tempSpot 0  <- %number
+    %number1 <- %number < 1
+    
+    %number1 <- 33
+    %number1 <- %number
+    %number1 += 200000
+    %number1 <- mem %tempSpot 0 
+    rax <- %number
+    return
+  )
+  (:youGiveMeSomething
+    1 0
+    %number <- rdi
+    rdi <- 3
+    rsi <- 1
+    call allocate 2
+    %tempSpot <- rax
+    mem %tempSpot 0  <- %number
+    %nnumber <- %number < 1
+    
+    %nnumber <- 33
+    %nnumber <- %number
+    %nnumber += 200000
+    %nnumber <- mem %tempSpot 0 
+    rax <- %number
+    return
+  )
+  (:iCanHold
+    1 0
+    %number <- rdi
+    rdi <- 3
+    rsi <- 1
+    call allocate 2
+    %tempSpot <- rax
+    mem %tempSpot 0  <- %number
+    %number <- %number < 1
+    
+    %number <- 33
+    %number <- 34
+    %number <- 35
+    %number <- 36
+    %number <- 37
+    %number <- %number
+    %number += 200000
+    %number <- mem %tempSpot 0 
+    rax <- %number
+    return
+  )
+  (:onTo
+    1 0
+    %number <- rdi
+    rdi <- 3
+    rsi <- 1
+    call allocate 2
+    %tempSpot <- rax
+    mem %tempSpot 0  <- %number
+    %numbr <- %number < 1
+    
+    %numbr <- 33
+    %numbr <- %number
+    %numbr += 200000
+    %numbr <- mem %tempSpot 0 
+    rax <- %number
+    return
+  )
+  (:gimmeACall
+    1 0
+    %jennysNumber <- rdi
+    %count <- 0
+    :call_label_ciao_8
+    %compVal <- %count = 7
+    
+    cjump %compVal = 1 :call_label_ciao_10 :call_label_ciao_9
+    :call_label_ciao_9
+    %number <- mem %jennysNumber 0 
+    %number <- %number
+    %number <<= 1
+    %number <- %number
+    %number += 1
+    rdi <- %number
+    call print 1
+    %count <- %count
+    %count += 1
+    %jennysNumber <- %jennysNumber
+    %jennysNumber += 8
+    goto :call_label_ciao_8
+    :call_label_ciao_10
+    return
+  )
+)

@@ -1,0 +1,28 @@
+(:main
+  (:main
+    0 2
+    rsi <- -5
+    rdx <- 3
+    rdi <- rsi = rdx
+    rdi <<= 1
+    rdi += 1
+    mem rsp 0 <- rsi
+    mem rsp 8 <- rdx
+    call print 1
+    rsi <- mem rsp 0
+    rdx <- mem rsp 8
+    rdi <- rsi = -5
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rsi <- mem rsp 0
+    rdx <- mem rsp 8
+    rdi <- 4 = rdx
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- 2 = 3
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    return))

@@ -1,0 +1,22 @@
+(:go
+  (:go
+	0 0
+	mem rsp -8 <- :add_ret
+	rdi <- 3
+	rsi <- 5
+	rdx <- 7
+	rcx <- 9
+	call :add 4
+	:add_ret
+	rdi <- rax
+	call print 1
+	return)
+  (:add
+	4 0
+	rax <- 1
+	rax += rdi
+	rax += rsi
+	rax += rdx
+	rax += rcx
+	rax -= 4
+	return))

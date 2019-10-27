@@ -1,0 +1,97 @@
+(:go
+(:go
+	0 0
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rbx <- 85
+	mem rax 8 <- rbx
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :ret
+	call :printArray 1
+	:ret
+	return
+)
+
+(:printArray
+	1 2
+	rsi <- rdi
+	mem rsp 8 <- rsi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	rsi &= 1
+	cjump rsi = 1 :retFalse :continue
+	:continue
+	rsi <- 0
+	mem rsp 0 <- rsi
+	goto :loopCheck
+	:loop
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :printArRet
+	call :printArrayElement 2
+	:printArRet
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi += 1
+	mem rsp 0 <- rsi
+	:loopCheck
+	rax <- mem rdi 0
+	rax >>= 1
+	rdi <- mem rsp 0
+	rbx <- rdi
+	cjump rax < rbx :retTrue :loop
+	:retFalse
+	rax <- 0
+	return
+	:retTrue
+	rax <- 1
+	return
+)
+
+(:printArrayElement
+	2 2
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	rsi <<= 1
+	rsi++
+	rdi <- rsi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <<= 3
+	rdi += 8
+	rdi <<= 1
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rax <- rdi
+	rax++
+	rax <<= 3
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi += rax
+	rax <- rdi
+	rdi <- mem rax 0
+	rdi &= 1
+	cjump rdi = 1 :notArray :array
+	:notArray
+	rdi <- mem rax 0
+	call print 1
+	goto :r
+	:array
+	rdi <- mem rax 0
+	mem rsp -8 <- :r
+	call :printArray 1
+	:r
+	return
+)
+
+)

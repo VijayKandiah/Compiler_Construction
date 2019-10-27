@@ -1,0 +1,25 @@
+
+(:main
+ (:main
+  0 0
+  rdi <- 5
+  rsi <- 7
+  mem rsp -8 <- :add1_ret
+  call :add 2
+  :add1_ret
+  rdi <- rax
+  call print 1
+  rsi <- 5
+  rdi <- 7
+  mem rsp -8 <- :add2_ret
+  call :add 2
+  :add2_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:add
+  2 0
+  rax <- rdi
+  rax += rsi
+  rax -= 1
+  return))

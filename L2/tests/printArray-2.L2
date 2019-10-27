@@ -1,0 +1,153 @@
+(:go
+  (:go
+    0 0
+
+    // {s:2, 42, 2}
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    mem rax 8 <- 85
+    rdi <- rax
+
+    // {s:3, {s:2, 3, 3}, {s:2, 3, 3}, {s:2, 3, 3}}
+    // rdi <- 5
+    // rsi <- 7
+    // call allocate 2
+    // rdi <- 7
+    // rsi <- rax
+    // call allocate 2
+    // rdi <- rax
+
+    mem rsp -8 <- :printArray_ret
+    call :printArray 1
+    :printArray_ret
+
+    return
+  )
+  (:printArray
+    1 0
+
+    // Save the original %a[] value
+    %a <- rdi
+
+    // Value encoding: x & 1 = 0, x is %a memory address. x & 1 = 1, x >> 1 is %a 63 bit two’s complement integer.
+
+    // Put %a[] in %a register to test value
+    %check_array <- %a
+
+    // x & 1 to check least significant bit of x
+    %check_array &= 1
+
+    // Check if x is memory address 0 or encoded two's complement integer 1
+    cjump %check_array = 1 :not_array :array
+
+    :array
+    // Initalize the counter to 0
+    %c <- 0
+
+    // Get the number of elements in the array
+    %array_length <- mem rdi 0
+
+    // Check the loop counter
+    :startLoop
+    cjump %c < %array_length :loopBody :return
+
+    :loopBody
+
+    // printArrayElementa, %c//
+    rdi <- %a
+    rsi <- %c
+    mem rsp -8 <- :printArrayElement_ret
+    call :printArrayElement 2
+    :printArrayElement_ret
+
+    // Increment the counter
+    %c++
+
+    // Repeat the loop
+    goto :startLoop
+
+    // return true
+    :return
+    rax <- 1
+    return
+
+    // if %a is not an array return false
+    :not_array
+    rax <- 0
+    return
+  )
+  (:printArrayElement
+    2 0
+
+    // Save the original %a[] value
+    %a <- rdi
+    // Save the original %i value
+    %i <- rsi
+
+    rdi <- %i
+
+    // Encode the index
+    rdi <<= 1
+    rdi += 1
+
+    // Print the index
+    call print 1
+
+    // Get the original index value
+    rdi <- %i
+
+    // Calculate %i*8 + 8
+    rdi <<= 3
+    rdi += 8
+
+    // Save the original %offset value
+    %offset <- rdi
+
+    // Encode the %offset
+    rdi <<= 1
+    rdi += 1
+
+    // Print the %offset of the array element in the L1 data layout
+    call print 1
+
+    // Get the value of %a[%i]
+    
+    // Add the %offset to %a[] to move pointer to point at %a[%i]
+    %a += %offset
+
+    // Get the value of %a[%i]
+    %a_i <- mem %a 0
+
+    // Value encoding: x & 1 = 0, x is %a memory address. x & 1 = 1, x >> 1 is %a 63 bit two’s complement integer.
+
+    // Put %a[%i] in %a register to test value
+    %check_val <- %a_i
+
+    // x & 1 to check least significant bit of x
+    %check_val &= 1
+
+    // Check if x is memory address 0 or encoded two's complement integer 1
+    cjump %check_val = 1 :not_an_array :else
+
+    // if %a[%i] is not an array, print %a[%i]
+    :not_an_array
+
+    // Get value of %a[%i]
+    rdi <- %a_i
+
+    // Print %a[%i]
+    call print 1
+    return
+
+    :else
+
+    // printArraya[%i]//
+    rdi <- %a_i
+    mem rsp -8 <- :printArray_return
+    call :printArray 1
+    :printArray_return
+
+    return
+  )
+)

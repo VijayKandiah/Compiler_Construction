@@ -1,0 +1,69 @@
+(:main
+(:main
+	0 2
+	rdi <- 1900
+	mem rsp 8 <- rdi
+	rdi <- 2000
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :ca_ret
+	call :create_array 2
+	:ca_ret
+	rdi <- rax
+	rsi <- mem rsp 8
+	rsi <- rsi
+	rdx <- mem rsp 0
+	rdx <- rdx
+	mem rsp -8 <- :fa_ret
+	call :fill_array 3
+	:fa_ret
+	rdi <- rax
+	call print 1
+	return
+)
+
+(:create_array
+	2 0
+	rsi <- rsi
+	rsi -= rdi
+	rsi >>= 2
+	rsi++
+	rsi <<= 1
+	rsi++
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	return
+)
+
+(:fill_array
+	3 0
+	r8 <- rsi
+	rcx <- rdi
+	rsi <- rdi
+	:loop_start
+	cjump r8 <= rdx :calc :ret
+	:calc
+	rdi <- r8
+	rdi &= 3
+	cjump 0 < rdi :not_leap :leap
+	:not_leap
+	goto :continue_loop
+	:leap
+	rdi <- r8
+	rdi <<= 1
+	rdi++
+	rcx += 8
+	mem rcx 0 <- rdi
+	:continue_loop
+	r8 += 1
+	goto :loop_start
+	:ret
+	rax <- rsi
+	return
+)
+
+)

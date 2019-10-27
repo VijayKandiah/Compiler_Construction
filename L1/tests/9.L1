@@ -1,0 +1,10 @@
+(:main
+ (:main
+  0 0
+  r8 <- 3
+  r9 <- 5
+  rdi <- r8 = r9
+  rdi <<= 1
+  rdi += 1
+  call print 1
+  return))

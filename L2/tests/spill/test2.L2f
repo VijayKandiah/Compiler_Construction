@@ -1,0 +1,17 @@
+(:myF
+  0 0
+
+  %myVar <- 0
+  %myVar++
+  %myVar += 3
+  %myVar += 5
+
+  rdi <- %myVar
+  call :myF2 0
+
+  return
+)
+
+%myVarY
+
+%S

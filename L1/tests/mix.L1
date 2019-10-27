@@ -1,0 +1,16 @@
+(:mix
+ (:mix
+  0 0
+  rdi <- 5
+  cjump rdi = 5 :yes :no
+  :yes
+  rdi += 2
+  rdi &= 6
+  rdi += 3
+  goto :continue
+  :no
+  goto :end
+  :continue
+  call print 1
+  :end
+  return))

@@ -1,0 +1,14 @@
+
+(:main
+ (:main
+  0 0
+  rdi <- 5
+  cjump rdi <= 4 :true :false
+  :false
+  rdi <- 5
+  call print 1
+  return
+  :true
+  rdi <- 7
+  call print 1
+  return))

@@ -1,0 +1,13 @@
+(:main
+  (:main
+    0 0
+    %v1 <- 1
+    %v2 <- 2
+    goto :call_label0
+    %v4 <- %v1 < %v2
+    
+    :call_label0
+    rax <- %v4
+    return
+  )
+)

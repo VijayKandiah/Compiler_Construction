@@ -1,0 +1,105 @@
+// Determine whether a given number is positive or negative
+
+// Take a negative number and get its positive counterpart
+define :make_pos(%n){
+	// set and initialize helper variables
+	%increm <- 1
+	%counter <- 0
+	%iterations <- -2*%n
+	
+	// print original value
+	call print(%n)
+
+	// Loop until absolute value obtained
+	:loop
+	%n <- %n + %increm
+	%counter <- %counter + 1
+	%check <- %counter < %iterations
+	br %check :loop
+  br :finish
+	
+	// Print out absolute value
+	:finish	
+	call print(%n)
+	return
+}
+
+// Take a positive number and get its negative counterpart
+define :make_neg(%n){
+	// set and initialize helper variables
+	%increm <- 1
+	%counter <- 0
+	%iterations <- 2*%n
+	
+	// print original value
+	call print(%n)
+
+	// Loop until negative value obtained
+	:loop
+	%n <- %n - %increm
+	%counter <- %counter + 1
+	%check <- %counter < %iterations
+	br %check :loop
+  br :finish
+	
+	// Print out absolute value
+	:finish
+	call print(%n)
+	return
+}
+
+// Determine which way to branch
+define :pos_or_neg(%n){
+	// Determine whether %n is pos or neg
+	%check <- %n < 0
+	// Call corresponding function
+	br %check :pos
+  br :neg
+	:pos
+	call :make_pos(%n)
+	return
+	:neg
+	call :make_neg(%n)
+	return
+}
+
+define :initialize_array(%p){
+	%index <- 0
+	%ptr <- %p
+	:loop
+	%val <- %index + 1
+ 	%val <- %val << 1
+	%val <- %val + 1
+ 	store %ptr <- %val
+	%check <- %index < 10
+	%index <- %index + 1
+	%ptr <- %ptr + 8
+	br %check :loop
+  br :finish
+	:finish
+	return
+}
+
+define :main(){
+	%arr_size <- 10
+	%arr_size <- %arr_size << 1
+	%arr_size <- %arr_size + 1
+	%arr <- call allocate(%arr_size, 0)
+	%ptr <- %arr + 8
+	call :initialize_array(%ptr)
+	%new_ptr <- %arr + 8
+	call print(%arr)
+	%index <- 0
+	
+	:loop 
+	%num <- load %new_ptr
+	call print(%num)
+	call :pos_or_neg(%num)
+	%check <- %index < 10
+	%index <- %index + 1
+	%new_ptr <- %new_ptr + 8
+	br %check :loop
+  br :finish
+	:finish
+	return	
+}

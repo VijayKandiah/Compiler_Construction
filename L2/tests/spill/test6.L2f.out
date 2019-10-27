@@ -1,0 +1,11 @@
+(:myF
+	0 3
+	mem rsp 8 <- 3
+	%S0 <- 0
+	mem rsp 16 <- %S0
+	%S1 <- mem rsp 16
+	mem rsp 0 <- %S1
+	%S2 <- mem rsp 8
+	mem rsp 16 <- %S2
+	return
+)

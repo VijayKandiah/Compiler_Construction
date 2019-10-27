@@ -1,0 +1,10 @@
+(:mern
+ (:mern
+  0 0
+  rdi <- 3
+  cjump 0 = 0 :true :false
+  :true
+  rdi <- 1
+  :false
+  call print 1
+  return))

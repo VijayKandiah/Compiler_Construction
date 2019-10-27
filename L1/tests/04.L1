@@ -1,0 +1,17 @@
+(:go
+    (:go
+        0 0
+        rdi <- 4
+        mem rsp -8 <- :encode_ret
+        call :encode 1
+        :encode_ret
+        rdi <- rax
+        call print 1
+        return)
+
+	(:encode
+        	1 0
+	        rdi <<= 1
+        	rdi += 1
+	        rax <- rdi
+       		return))

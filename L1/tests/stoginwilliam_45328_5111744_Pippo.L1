@@ -1,0 +1,64 @@
+// This test will cover shift operations 
+//  and doing arithmetic on local variables
+//  and comparison
+//  and jump
+//
+// All outputs should be 1, otherwise there was an error
+//
+// Expected output:
+//
+//  1
+//  1
+//  1
+//  1
+//  1
+//
+
+(:go
+  (:go
+    0 1
+
+    // Test right shift
+    // 1 is encoded as 3. 3 left shift by 2 is 12
+    rdi <- 12
+    rdi >>= 2
+    call print 1
+
+    // Test left shift and comparison
+    rdi <- 2
+    rdi <<= 2
+    rdi <- rdi = 8
+    rdi <<= 1
+    rdi += 1
+    call print 1
+
+    // Test local variable arithmetic
+    mem rsp 0 <- 7 // Prints as 3
+    mem rsp 0 -= 4 // back to 2
+    rdi <- mem rsp 0
+    call print 1
+
+    mem rsp 0 <- 1
+    mem rsp 0 += 2
+    rdi <- mem rsp 0
+    call print 1
+    
+    mem rsp -8 <- :myRet
+    mem rsp -16 <- 3
+
+    call :test7args 7
+    :myRet
+
+    return
+  )
+
+  (:test7args
+    7 1
+
+    // retrieve 7th arg
+    rdi <- mem rsp 8
+    call print 1
+	
+    return
+  )
+)

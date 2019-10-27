@@ -1,0 +1,39 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    %newVar1 <- 3
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 4
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %ar <- rax
+    %newVar2 <- %ar
+    %newVar2 += 8
+    mem %newVar2 0  <- 3
+    %newVar3 <- %ar
+    %newVar3 += 16
+    mem %newVar3 0  <- 3
+    %newVar5 <- 0
+    %newVar6 <- 1
+    %newVar5 <- %newVar5
+    %newVar5 += 1
+    %newVar4 <- %newVar5
+    %newVar4 *= 8
+    %newVar4 <- %newVar4
+    %newVar4 += 24
+    %newVar7 <- %ar
+    %newVar7 += %newVar4
+    mem %newVar7 0  <- 5
+    return
+  )
+)

@@ -1,0 +1,20 @@
+(:main
+ (:main
+  0
+  1
+  mem rsp 0 <- r12
+  r12 <- 4
+  rax <- 1
+  :top
+  cjump r12 = 0 :done :cont
+  :cont
+  rdi <- 3
+  rsi <- rax
+  call allocate 2
+  r12 -= 1
+  goto :top
+  :done
+  rdi <- rax
+  call print 1
+  r12 <- mem rsp 0
+  return))

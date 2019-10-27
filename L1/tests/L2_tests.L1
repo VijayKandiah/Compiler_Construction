@@ -1,0 +1,103 @@
+(:main
+  (:main 0 0
+    rdi <- 7
+    rsi <- 7
+    call allocate 2
+    rdi <- rax
+
+    mem rsp -8 <- :printArray_ret
+    call :printArray 1
+    :printArray_ret
+
+    return
+  )
+
+  (:printArray 1 3
+    mem rsp 0 <- r12 // save r12 hold array size
+
+
+    // and-equals with 1 to determine lowest bit
+    r12 <- 1
+    r12 &= rdi
+    cjump r12 = 0 :is_array :not_array
+
+    :not_array
+    rax <- 0
+    return
+
+    :is_array
+    rsi <- 0 // index counter...
+    r12 <- mem rdi 0 // ...and array size
+
+    goto :loop
+
+    :continue
+    mem rsp 8 <- rdi // save array pointer
+    mem rsp 16 <- rsi // save index
+
+    mem rsp -8 <- :printArrayElement_ret
+    call :printArrayElement 2
+    :printArrayElement_ret
+
+    rdi <- mem rsp 8
+    rsi <- mem rsp 16
+
+    rsi++ // i++
+
+    :loop
+    cjump rsi < r12 :continue :end
+
+    :end
+    rax <- 1
+    r12 <- mem rsp 0
+    return
+  )
+
+  (:printArrayElement 2 3
+    mem rsp 0 	<- r12 // love the shape of the characters r12 if anyone is reading this, hope you're having a great day!
+    mem rsp 8 <- rdi // need rdi arg for print calls
+
+    // print the index
+    rdi <- rsi
+    rdi <<= 1
+    rdi++
+    mem rsp 16 <- rsi // calling print breaks rsi caller save
+    call print 1
+    rsi <- mem rsp 16
+
+    // memory offset
+    r12 <- rsi
+    r12 *= 8
+    r12 += 8
+
+    rdi <- r12
+    rdi <<= 1
+    rdi++
+    call print 1
+
+    // offset from array start
+    rdi <- mem rsp 8
+    rdi += r12
+    rdi <- mem rdi 0
+
+    // check for nested arrays
+    r12 <- 1
+    r12 &= rdi
+
+    cjump r12 = 0 :is_array1 :not_array1
+
+    :is_array1 // rdi holds an array
+    mem rsp -8 <- :printArray_ret1
+    call :printArray 1
+    :printArray_ret1
+
+    r12 <- mem rsp 0
+    return
+
+    :not_array1 // rdi holds a number
+    call print 1
+
+    r12 <- mem rsp 0
+    return
+  )
+)

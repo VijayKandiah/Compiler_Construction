@@ -1,0 +1,108 @@
+
+(:printArray
+ //// (:test
+ ////  0 0
+ ////  // test
+ ////  rdi <- 5 // size 2 array
+ ////  rsi <- 15 // of int = 7
+ ////  call allocate 2
+  
+ ////  rdi <- 7 // size 3 array
+ ////  rsi <- rax 
+ ////  call allocate 2
+ ////  rdi <- rax
+ ////  mem rdi 16 <- 5 // put 2 in second position
+ ////  mem rsp -8 <- :test_ret
+ ////  call :printArray 1
+ ////  :test_ret
+ ////  return
+ ////  )
+ (:printArray
+  1 3
+  //// store callee-save
+  mem rsp 0 <- r12
+  mem rsp 8 <- r13
+  mem rsp 16 <- r14
+  
+  
+  // Check if array
+  r9 <- rdi
+  r9 <<= 63 // if zero -> mem, otherwise int
+  cjump r9 = 0 :isarr :isnotarr
+
+  :isnotarr
+  rax <- 1
+  goto :end
+  
+  :isarr
+  r14 <- rdi
+  r13 <- mem rdi 0 // get array size
+  r12 <- 0 // counter
+   :loop
+  cjump r12 < r13 :body :end
+  :body
+  rdi <- r14 // array ptr
+  rsi <- r12 // index
+  mem rsp -8 <- :printArrayElement_ret
+  call :printArrayElement 2
+  :printArrayElement_ret
+  r12++
+  goto :loop
+
+  :end
+  rax <- 3
+  //// restore callee-save
+  r12 <- mem rsp 0
+  r13 <- mem rsp 8
+  r14 <- mem rsp 16
+  return
+  )
+
+ (:printArrayElement
+  2 2
+  mem rsp 0 <- r12
+  mem rsp 8 <- r13
+  rsi++ //// base 1 idx
+  
+  //// print the index
+  rdi @ rdi rsi 8
+  rdi <- mem rdi 0
+  r12 <- rdi
+  r13 <- rsi
+  
+  //// print idx
+  rdi <- rsi
+  rdi--
+  rdi <<= 1
+  rdi++
+  call print 1
+
+  //// print offset
+  rdi <- r13
+  rdi *= 8
+  rdi <<= 1
+  rdi++
+  call print 1
+  
+  //// check if array
+  rdi <- r12
+  rsi <- r13
+  r8 <- rdi
+  r8 <<= 63 // if zero -> mem, otherwise int
+  cjump r8 = 0 :isarr_2 :isnotarr_2
+
+  :isnotarr_2
+  call print 1
+  goto :exit_2
+  
+  :isarr_2
+  mem rsp -8 <- :printArray_ret
+  call :printArray 1
+  :printArray_ret                       
+
+  :exit_2
+  r12 <- mem rsp 0
+  r13 <- mem rsp 8
+  return
+  )
+ )

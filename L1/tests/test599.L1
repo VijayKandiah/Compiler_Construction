@@ -1,0 +1,30 @@
+(:main
+(:main
+	0 0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 3
+	rdi >>= 1
+	rdi <- rdi
+	rdi <<= 1
+	rdi += 1
+	rdi += 4
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	mem rsi 8 <- 3
+	mem rsi 16 <- 3
+	rdi <- 0
+	rdi += 1
+	rdx <- rdi
+	rdx *= 8
+	rdx += 24
+	rdi <- rsi
+	rdi += rdx
+	mem rdi 0 <- 5
+	return
+)
+
+)

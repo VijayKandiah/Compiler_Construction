@@ -1,0 +1,11 @@
+(:myF
+  1 0
+
+  %myVar1 <- 0
+
+  %myVar1 += rdi
+
+  rax <- %myVar1
+
+  return
+)

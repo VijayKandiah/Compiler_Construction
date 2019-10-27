@@ -1,0 +1,22 @@
+(:myF
+	0 1
+	%S0 <- 0
+	mem rsp 0 <- %S0
+	%S1 <- mem rsp 0
+	%S1 += 3
+	mem rsp 0 <- %S1
+	%S2 <- mem rsp 0
+	%S2 += 3
+	mem rsp 0 <- %S2
+	%S3 <- mem rsp 0
+	%S3 += 5
+	mem rsp 0 <- %S3
+	%S4 <- mem rsp 0
+	cjump %S4 <= 1 :true :false
+	:true
+	%S5 <- mem rsp 0
+	rdi <- %S5
+	call :myF2 0
+	:false
+	return
+)

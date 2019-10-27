@@ -1,0 +1,79 @@
+(:Jenny
+(:Jenny
+	0 14
+	mem rsp 88 <- 17
+	mem rsp 80 <- 13
+	mem rsp 104 <- 15
+	mem rsp 96 <- 11
+	mem rsp 72 <- 7
+	mem rsp 64 <- 1
+	mem rsp 56 <- 19
+	rdi <- mem rsp 88
+	rsi <- mem rsp 80
+	rdx <- mem rsp 104
+	rcx <- mem rsp 96
+	r8 <- mem rsp 72
+	r9 <- mem rsp 64
+	rsi <- mem rsp 56
+	mem rsp -16 <- rsi
+	rsi <- mem rsp 88
+	mem rsp 0 <- rsi
+	rsi <- mem rsp 80
+	mem rsp 8 <- rsi
+	rsi <- mem rsp 104
+	mem rsp 16 <- rsi
+	rsi <- mem rsp 96
+	mem rsp 24 <- rsi
+	rsi <- mem rsp 72
+	mem rsp 32 <- rsi
+	rsi <- mem rsp 64
+	mem rsp 40 <- rsi
+	rsi <- mem rsp 56
+	mem rsp 48 <- rsi
+	call print 1
+	rdi <- mem rsp 80
+	call print 1
+	rdi <- mem rsp 104
+	call print 1
+	rdi <- mem rsp 96
+	call print 1
+	rdi <- mem rsp 72
+	call print 1
+	rdi <- mem rsp 64
+	call print 1
+	rdi <- mem rsp 56
+	call print 1
+	mem rsp -8 <- :GimmeACall
+	call :IGotIt 7
+	:GimmeACall
+	rdi <- mem rsp 88
+	call print 1
+	rdi <- mem rsp 80
+	call print 1
+	rdi <- mem rsp 104
+	call print 1
+	rdi <- mem rsp 96
+	call print 1
+	rdi <- mem rsp 72
+	call print 1
+	rdi <- mem rsp 64
+	call print 1
+	rdi <- mem rsp 56
+	call print 1
+	return
+)
+
+(:IGotIt
+	7 1
+	mem rsp 0 <- r12
+	r12 <- mem rsp 8
+	rdi <- rsi
+	rdi <- rdx
+	rdi <- rcx
+	rdi <- r8
+	rdi <- r9
+	rdi <- r12
+	return
+)
+
+)

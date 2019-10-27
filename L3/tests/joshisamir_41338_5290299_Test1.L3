@@ -1,0 +1,175 @@
+// Array operations: Max, Min, Sum
+
+define :getMax(%array) {
+    %i <- 0
+    %maxValue <- -1
+    %currPointer <- %array
+    %arrayLength <- load %currPointer
+
+    :loop
+        %currPointer <- %currPointer + 8
+        %currValue <- load %currPointer
+        %isGreaterThanMaxValue <- %maxValue < %currValue
+        br %isGreaterThanMaxValue :assign
+        br :continue
+
+    :assign
+        %maxValue <- %currValue
+
+    :continue
+        %i <- %i + 1
+        %isIteratorLessThanArrayLength <- %i < %arrayLength
+        br %isIteratorLessThanArrayLength :loop
+        br :terminate
+
+    :terminate
+        return %maxValue
+}
+
+define :getMin(%array) {
+    %i <- 0
+    %minValue <- 999999
+    %currPointer <- %array
+    %arrayLength <- load %currPointer
+
+    :loop
+        %currPointer <- %currPointer + 8
+        %currValue <- load %currPointer
+        %isLessThanMinValue <- %currValue < %minValue
+        br %isLessThanMinValue :assign
+        br :continue
+
+    :assign
+        %minValue <- %currValue
+
+    :continue
+        %i <- %i + 1
+        %isIteratorLessThanArrayLength <- %i < %arrayLength
+        br %isIteratorLessThanArrayLength :loop
+        br :terminate
+
+    :terminate
+        return %minValue
+}
+
+define :getSum(%array) {
+    %i <- 0
+    %sum <- 1
+    %currPointer <- %array
+    %arrayLength <- load %currPointer
+
+    :loop
+        %currPointer <- %currPointer + 8
+        %currValue <- load %currPointer
+
+        %sum <- %sum - 1
+        %sum <- %sum >> 1
+        %currValue <- %currValue - 1
+        %currValue <- %currValue >> 1
+
+        %sum <- %sum + %currValue
+        %sum <- %sum << 1
+        %sum <- %sum + 1
+
+    :continue
+        %i <- %i + 1
+        %isIteratorLessThanArrayLength <- %i < %arrayLength
+        br %isIteratorLessThanArrayLength :loop
+        br :terminate
+
+    :terminate
+        return %sum
+}
+
+define :main() {
+    %arr <- call allocate(21, 1)
+    %element1Address <- %arr + 8
+    %element2Address <- %arr + 16
+    %element3Address <- %arr + 24
+    %element4Address <- %arr + 32
+    %element5Address <- %arr + 40
+    %element6Address <- %arr + 48
+    %element7Address <- %arr + 56
+    %element8Address <- %arr + 64
+    %element9Address <- %arr + 72
+    %element10Address <- %arr + 80
+
+    store %element1Address <- 25  // 12
+    store %element2Address <- 41  // 20
+    store %element3Address <- 37  // 18
+    store %element4Address <- 107 // 53
+    store %element5Address <- 27  // 13
+    store %element6Address <- 49  // 24
+    store %element7Address <- 121 // 60
+    store %element8Address <- 81  // 40
+    store %element9Address <- 73  // 36
+    store %element10Address <- 7  // 3
+
+    call print(%arr)
+    %max <- call :getMax(%arr)
+    call print(%max) // expects 60
+
+    %min <- call :getMin(%arr)
+    call print(%min) // expects 3
+
+    %total <- call :getSum(%arr)
+    call print(%total) // expects 279
+
+    %newarr <- call allocate(31, 1)
+    %element1Addr <- %newarr + 8
+    store %element1Addr <- 25  // 12
+
+    %element2Addr <- %newarr + 16
+    store %element2Addr <- 41  // 20
+
+    %element3Addr <- %newarr + 24
+    store %element3Addr <- 37  // 18
+
+    %element4Addr <- %newarr + 32
+    store %element4Addr <- 107 // 53
+
+    %element5Addr <- %newarr + 40
+    store %element5Addr <- 27  // 13
+
+    %element6Addr <- %newarr + 48
+    store %element6Addr <- 49  // 24
+
+    %element7Addr <- %newarr + 56
+    store %element7Addr <- 121 // 60
+
+    %element8Addr <- %newarr + 64
+    store %element8Addr <- 81  // 40
+
+    %element9Addr <- %newarr + 72
+    store %element9Addr <- 73  // 36
+
+    %element10Addr <- %newarr + 80
+    store %element10Addr <- 7  // 3
+
+    %element11Addr <- %newarr + 88
+    store %element11Addr <- 255  // 127
+
+    %element12Addr <- %newarr + 96
+    store %element12Addr <- 129  // 64
+
+    %element13Addr <- %newarr + 104
+    store %element13Addr <- 17  // 8
+
+    %element14Addr <- %newarr + 112
+    store %element14Addr <- 7  // 3
+
+    %element15Addr <- %newarr + 120
+    store %element15Addr <- 91  // 45
+
+    call print(%newarr)
+    %newmax <- call :getMax(%newarr)
+    call print(%newmax) // expects 127
+
+    %newmin <- call :getMin(%newarr)
+    call print(%newmin) // expects 3
+
+    %newtotal <- call :getSum(%newarr)
+    call print(%newtotal) // expects 526
+
+    return
+}

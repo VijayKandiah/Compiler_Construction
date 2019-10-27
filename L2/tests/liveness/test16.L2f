@@ -1,0 +1,7 @@
+(:myF
+  0 0
+  %a <- 2
+  call :myF2 0
+  %a *= %a
+  return
+)

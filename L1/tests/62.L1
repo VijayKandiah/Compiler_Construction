@@ -1,0 +1,10 @@
+(:main
+ (:main
+  0
+  0
+  r10 <- 1 = 1
+  r10 += r10
+  r10 += 1
+  rdi <- r10
+  call print 1
+  return))

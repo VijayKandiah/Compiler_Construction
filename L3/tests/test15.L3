@@ -1,0 +1,29 @@
+define :main ( ){
+  %v1 <- 1
+  %v2 <- 2
+
+  %v4 <- call :myF(%v1, %v2, 3)
+
+  %v4Encoded <- %v4 << 1
+  %v4Encoded <- %v4Encoded + 1
+
+  call print(%v4Encoded)
+
+  %myAr <- call allocate(%v4Encoded, 1)
+  %el1Address <- %myAr + 8
+  store %el1Address <- 7
+
+  %el1 <- load %el1Address
+  call print(%el1)
+
+  call print(%myAr)
+
+  return 0
+}
+
+define :myF (%p1, %p2, %p3){
+  %tempV <- %p1 + %p2
+  %tempV <- %tempV + %p3
+
+  return %tempV
+}

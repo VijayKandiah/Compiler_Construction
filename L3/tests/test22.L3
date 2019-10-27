@@ -1,0 +1,86 @@
+define :main () {
+ :entry
+ %t <- call :createMyClosure (3)
+ return 
+}
+
+define :createMyClosure (%p1) {
+ :entry
+ %x2 <- 21
+ %p <- call allocate (9, 1)
+ %newVar1 <- 0 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %p + %newVar0
+ store %newVar2 <- 0
+ %newVar4 <- 1 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %p + %newVar3
+ store %newVar5 <- 1
+ %newVar7 <- 2 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %p + %newVar6
+ store %newVar8 <- %p1
+ %newVar10 <- 3 * 8
+ %newVar9 <- %newVar10 + 8
+ %newVar11 <- %p + %newVar9
+ store %newVar11 <- %x2
+ return %p
+}
+
+define :myF (%c, %p1) {
+ :entry
+ %newVar1 <- 0
+ %newVar2 <- %x1 + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- %x1 + 32
+ %newVar6 <- load %newVar5
+ %newVar7 <- %newVar6 >> 1
+ %newVar8 <- %x1 + 40
+ %newVar9 <- load %newVar8
+ %newVar10 <- %newVar9 >> 1
+ %newVar11 <- 1
+ %newVar11 <- %newVar10 * %newVar11
+ %newVar12 <- %c * %newVar11
+ %newVar1 <- %newVar12 + %newVar1
+ %newVar11 <- %newVar7 * %newVar11
+ %newVar13 <- %x1 * %newVar11
+ %newVar1 <- %newVar13 + %newVar1
+ %newVar11 <- %newVar4 * %newVar11
+ %newVar14 <- %x1 * %newVar11
+ %newVar1 <- %newVar14 + %newVar1
+ %newVar1 <- %newVar1 + 2
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 48
+ %newVar15 <- %x1 + %newVar0
+ %x1 <- load %newVar15
+ %newVar17 <- 0
+ %newVar18 <- %x2 + 24
+ %newVar19 <- load %newVar18
+ %newVar20 <- %newVar19 >> 1
+ %newVar21 <- %x2 + 32
+ %newVar22 <- load %newVar21
+ %newVar23 <- %newVar22 >> 1
+ %newVar24 <- %x2 + 40
+ %newVar25 <- load %newVar24
+ %newVar26 <- %newVar25 >> 1
+ %newVar27 <- 1
+ %newVar27 <- %newVar26 * %newVar27
+ %newVar28 <- %c * %newVar27
+ %newVar17 <- %newVar28 + %newVar17
+ %newVar27 <- %newVar23 * %newVar27
+ %newVar29 <- %x2 * %newVar27
+ %newVar17 <- %newVar29 + %newVar17
+ %newVar27 <- %newVar20 * %newVar27
+ %newVar30 <- %x2 * %newVar27
+ %newVar17 <- %newVar30 + %newVar17
+ %newVar17 <- %newVar17 + 3
+ %newVar16 <- %newVar17 * 8
+ %newVar16 <- %newVar16 + 48
+ %newVar31 <- %x2 + %newVar16
+ %x2 <- load %newVar31
+ %r1 <- %x1 + %x2
+ %r2 <- %r1 + %p1
+ return %r2
+}
+

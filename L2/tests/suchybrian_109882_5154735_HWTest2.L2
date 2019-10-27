@@ -1,0 +1,73 @@
+(:Jenny
+  (:Jenny
+    0 7
+    
+    %myvar0 <- 17
+    %myvar1 <- 13
+    %myvar2 <- 15
+    %myvar3 <- 11
+    %myvar4 <- 7
+    %myvar5 <- 1
+    %myvar6 <- 19
+
+    rdi <- %myvar0
+    rsi <- %myvar1
+    rdx <- %myvar2
+    rcx <- %myvar3
+    r8  <- %myvar4
+    r9  <- %myvar5
+    mem rsp -16 <- %myvar6
+
+    mem rsp 0  <- %myvar0
+    mem rsp 8  <- %myvar1
+    mem rsp 16 <- %myvar2
+    mem rsp 24 <- %myvar3
+    mem rsp 32 <- %myvar4
+    mem rsp 40 <- %myvar5
+    mem rsp 48 <- %myvar6
+    call print 1
+    rdi <- %myvar1
+    call print 1
+    rdi <- %myvar2
+    call print 1
+    rdi <- %myvar3
+    call print 1
+    rdi <- %myvar4
+    call print 1
+    rdi <- %myvar5
+    call print 1
+    rdi <- %myvar6
+    call print 1
+    mem rsp -8 <- :GimmeACall
+    call :IGotIt 7
+    :GimmeACall
+    rdi <- %myvar0
+    call print 1
+    rdi <- %myvar1
+    call print 1
+    rdi <- %myvar2
+    call print 1
+    rdi <- %myvar3
+    call print 1
+    rdi <- %myvar4
+    call print 1
+    rdi <- %myvar5
+    call print 1
+    rdi <- %myvar6
+    call print 1
+    return
+  )
+  (:IGotIt
+    7 1
+    mem rsp 0 <- r12
+    r12 <- stack-arg 0
+    rdi <- rsi
+    rdi <- rdx
+    rdi <- rcx
+    rdi <- r8
+    rdi <- r9
+    rdi <- r12
+   r12 <- mem rsp 0
+    return
+  )
+)

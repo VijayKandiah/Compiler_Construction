@@ -1,0 +1,84 @@
+(:printArray
+  (:printArray
+    1 0
+    // Param 1: array pointer
+
+    %pntr <- rdi
+    rdi &= 1
+    // If the leading bit is 0, it is a pointer
+    cjump rdi = 0 :isArr :notArr
+    
+    :notArr
+    rax <- 0
+    return
+    
+    :isArr
+    // indexer
+    rsi <- 0
+    // size of array
+    %arrsize <- mem %pntr 0
+    
+    cjump rsi = %arrsize :endLoop :loopArr
+    :loopArr
+    rdi <- %pntr
+    mem rsp -8 <- :elemRet
+    call :printArrayElement 2
+    :elemRet
+    rsi++
+    cjump rsi < %arrsize :loopArr :endLoop
+    
+    :endLoop
+    rax <- 1
+    return
+  )
+
+  (:printArrayElement
+    2 4
+    // Param 1: array pointer
+    // Param 2: array index
+
+    %pntr <- rdi
+    %ind <- rsi
+
+    // Encode index to print
+    rdi <- %ind
+    rdi <<= 1
+    rdi++
+
+    call print 1
+
+    // Encode array %offset to print
+    rdi <- %ind
+    rdi *= 8
+    rdi += 8
+    // Save %offset for use later
+    %offset <- rdi
+    rdi <<= 1
+    rdi++
+
+    call print 1
+
+    // Check if %element of array is array or not
+    rdi <- %pntr
+    rdi += %offset
+    rdi <- mem rdi 0
+    // Save value for later
+    %element <- rdi
+    rdi &= 1
+    cjump rdi = 0 :isArr2 :notArr2
+
+    :isArr2
+    // Store arr %element and index to recurse
+    rdi <- %element
+    mem rsp -8 <- :recPrintArr
+    call :printArray 1
+    :recPrintArr
+    return
+
+    :notArr2
+    // Store arr %element value to be printed
+    rdi <- %element
+    call print 1
+    return
+  )
+)

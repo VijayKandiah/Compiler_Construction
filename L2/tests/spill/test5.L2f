@@ -1,0 +1,12 @@
+(:myF
+  0 0
+
+  %myVar <- 0
+  %myVar <- %myVar
+
+  return
+)
+
+%myVar
+
+%S

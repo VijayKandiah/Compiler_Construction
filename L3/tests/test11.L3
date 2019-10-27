@@ -1,0 +1,16 @@
+define :main ( ){
+  %v1 <- 1
+  %v2 <- 2
+
+  call :myF(%v1)
+
+  return 0
+}
+
+define :myF (%p1){
+  %tempV <- %p1 + 2
+
+  call print(%tempV)
+
+  return 
+}

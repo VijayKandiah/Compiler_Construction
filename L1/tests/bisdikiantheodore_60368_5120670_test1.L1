@@ -1,0 +1,45 @@
+(:main
+    (:main
+        0 0
+        rdi <- 21
+        rsi <- 7
+        r12 <- rdi // size of array
+        r12 >>= 1
+        call allocate 2
+        r13 <- 0 // counter
+        r14 <- rax // store iterating address
+        :true
+        r14 += 8 //increment address
+        rdi <- 2
+        rsi <- r13
+        mem rsp -8 <- :power_ret
+        call :power 2
+        :power_ret
+        rdi <- rax
+        mem rsp -8 <- :encode_ret
+        call :encode 1
+        :encode_ret
+        mem r14 0 <- rax // store index in array
+        rdi <- mem r14 0 // access array 
+        call print 1
+        r13 += 1 // inc counter
+        cjump r13 < r12 :true :done
+        :done
+        return
+    )
+    (:power
+        2 0
+        // rdi ^ rsi
+        rcx <- rsi
+        rdi <<= rcx
+        rax <- rdi
+        return
+    )
+    (:encode
+        1 0
+        rax <- rdi
+        rax <<= 1
+        rax += 1
+        return
+    )
+)

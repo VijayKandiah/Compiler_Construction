@@ -1,0 +1,70 @@
+(:go
+  (:go
+	0 0
+	rsi <- 5
+	rdx <- 3
+	rdi <- rdx < rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 3
+	rdx <- 5
+	rdi <- rdx < rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 4
+	rdx <- 4
+	rdi <- rdx <= rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 5
+	rdx <- 3
+	rdi <- rdx <= rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 3
+	rdx <- 5
+	rdi <- rdx <= rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	
+	rsi <- 4
+	rdx <- 4
+	rdi <- rdx = rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	
+	rsi <- 5
+	rdx <- 3
+	rdi <- rdx = rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 4
+	rdi <- rsi < rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 4
+	rdi <- rsi <= rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 4
+	rdi <- rsi = rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return))	

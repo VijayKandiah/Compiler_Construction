@@ -1,0 +1,12 @@
+(:go
+
+(:go
+  0 0
+  rdi <- 5
+  rsi <- 7
+  call allocate 2
+  rdi <- mem rax 8
+  call print 1   
+  return
+)
+)

@@ -1,0 +1,65 @@
+(:go
+  (:go
+	0 1
+	mem rsp 0 <- 1
+
+	// is number ?
+	mem rsp -8 <- :is_number_return
+	rdi <- mem rsp 0
+	call :is_number 1
+	:is_number_return
+	cjump rax = 1 :exit :next_1
+
+	// is zero ?
+	:next_1
+	mem rsp -8 <- :is_not_zero_return
+	rdi <- mem rsp 0
+	call :is_not_zero 1
+	:is_not_zero_return
+	cjump rax = 1 :exit :next_2
+
+	// is positive ?
+	:next_2
+	mem rsp -8 <- :exit
+	rdi <- mem rsp 0
+	call :is_positive 1
+
+	:exit
+	rdi <- rax
+	call print 1
+	return)
+
+  (:is_number
+	1 0
+	rsi <- rdi
+	rsi &= 1
+	cjump rsi = 0 :ret_false_1 :ret_true_1
+	:ret_false_1
+	rax <- 1
+	return
+	:ret_true_1
+	rax <- 3
+	return)
+
+  (:is_not_zero
+	1 0
+	rsi <- rdi
+	cjump rsi = 1 :ret_false_2 :ret_true_2
+	:ret_false_2
+	rax <- 1
+	return
+	:ret_true_2
+	rax <- 3
+	return)
+
+  (:is_positive
+	1 0
+	rsi <- rdi
+	rsi >>= 63
+	cjump rsi = 0 :ret_true_3 :ret_false_3
+	:ret_false_3
+	rax <- 1
+	return
+	:ret_true_3
+	rax <- 3
+	return))

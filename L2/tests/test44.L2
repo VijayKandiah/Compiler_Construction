@@ -1,0 +1,13 @@
+(:main
+  (:main
+    0 0
+    rax <- 0
+    return
+  )
+  (:myF
+    1 0
+    %v1 <- rdi
+    rax <- %v1
+    return
+  )
+)

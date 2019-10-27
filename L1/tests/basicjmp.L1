@@ -1,0 +1,9 @@
+(:go
+(:go
+0 0
+rdi <- 7
+goto :pass
+rdi <- 9
+:pass
+call print 1
+return))

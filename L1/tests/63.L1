@@ -1,0 +1,12 @@
+(:main
+ (:main
+  0
+  1
+  mem rsp 0 <- rbx
+  rbx <- 1
+  rdi <- rbx
+  call print 1
+  rdi <- rbx
+  call print 1
+  rbx <- mem rsp 0
+  return))

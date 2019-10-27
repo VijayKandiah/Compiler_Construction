@@ -1,0 +1,61 @@
+(:go
+ (:go
+  0 0
+  // initialize array length 6, vals initialized to 1 (unencoded)
+  rdi <- 13
+  rsi <- 3
+  call allocate 2
+  // fill array with increasing numbers
+  // rdi = counter
+  rdi <- 1
+  rsi <- rax
+  rsi += 8
+
+  :loop
+  cjump rdi = 13 :printloop :next
+  :next
+  mem rsi 0 <- rdi
+  rsi += 8
+  rdi += 2
+  goto :loop
+
+  :printloop
+  //put pointer to array from rax to r12, print
+  r12 <- rax
+  rdi <- rax
+  call print 1
+  rdi <- r12
+
+  mem rsp -8 <- :addArray_ret
+  call :addArray 1
+  :addArray_ret
+  rdi <- rax
+  call print 1
+
+  return)
+  (:addArray
+  1 0
+  // r10 = counter, rdx = running total, rdi = array walker
+  rcx <- 1
+  r10 <- 1
+  rdx <- 1
+  rdi += 8
+  :aaloop
+  cjump r10 = 13 :ret :aanext
+  :aanext
+  //r11 = temp tracker
+  r11 <- mem rdi 0
+  r11 >>= rcx
+  rdx += r11
+  rdi += 8
+  r10 += 2
+  goto :aaloop
+
+  :ret
+  rdx <<= rcx
+  rdx -= 1
+  rax <- rdx
+  return
+
+
+  ))

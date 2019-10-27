@@ -1,0 +1,13 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %v <- 7
+    rdi <- %v
+    call print 1
+    %v <- 9
+    rdi <- %v
+    call print 1
+    return
+  )
+)

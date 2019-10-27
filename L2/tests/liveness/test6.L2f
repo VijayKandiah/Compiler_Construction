@@ -1,0 +1,7 @@
+(:myF
+  0 0
+
+  %myVar1 <- 5
+
+  return
+)

@@ -1,0 +1,52 @@
+(:go
+	(:go 0 0
+		// count how many positive integers below 1000 are 
+		// divisible by 4 and add them all up
+		// count should be 249 and total should be 1249500
+
+		r12 <- 1 // count = 0
+		r13 <- 3 // current = 1
+		r14 <- 1 // total sum = 0
+
+		:loop
+		rdi <- r12
+		rsi <- r13
+		mem rsp -8 <- :conditionalincrement_ret
+		call :conditionalincrement 2
+		:conditionalincrement_ret
+		cjump r12 = rax :noadd :add
+
+		:add
+		r12 <- rax
+		r14 += -1
+		r14 += r13
+		rdi <- r13
+		call print 1
+
+		:noadd
+		r13 += 2
+		cjump r13 < 2001 :loop :done // 1000
+
+		:done
+		rdi <- r12
+		call print 1
+		rdi <- r14
+		call print 1
+
+		return
+	)
+
+	(:conditionalincrement 2 0
+		rax <- rdi
+		// increment if rsi is divisible by 4
+		rsi &= 7
+		cjump rsi = 1 :increment :noincrement
+
+		:increment
+		rax += 2
+
+		:noincrement
+		return
+	)
+
+)

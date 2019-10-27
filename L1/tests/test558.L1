@@ -1,0 +1,144 @@
+(:main
+(:getMax
+	1 0
+	rdi <- rdi
+	r8 <- 0
+	r9 <- -1
+	rcx <- rdi
+	rdx <- mem rcx 0
+	:call_label0
+	rcx <- rcx
+	rcx += 8
+	rsi <- mem rcx 0
+	rdi <- r9 < rsi
+	cjump rdi = 1 :call_label1 :call_label2
+	:call_label1
+	r9 <- rsi
+	:call_label2
+	r8 <- r8
+	r8 += 1
+	rdi <- r8 < rdx
+	cjump rdi = 1 :call_label0 :call_label3
+	:call_label3
+	rax <- r9
+	return
+)
+
+(:getMin
+	1 0
+	rdi <- rdi
+	r8 <- 0
+	r9 <- 999999
+	rcx <- rdi
+	rdx <- mem rcx 0
+	:call_label_ciao_4
+	rcx <- rcx
+	rcx += 8
+	rdi <- mem rcx 0
+	rsi <- rdi < r9
+	cjump rsi = 1 :call_label_ciao_5 :call_label_ciao_6
+	:call_label_ciao_5
+	r9 <- rdi
+	:call_label_ciao_6
+	r8 <- r8
+	r8 += 1
+	rdi <- r8 < rdx
+	cjump rdi = 1 :call_label_ciao_4 :call_label_ciao_7
+	:call_label_ciao_7
+	rax <- r9
+	return
+)
+
+(:getSum
+	1 0
+	rdi <- rdi
+	rcx <- 0
+	r8 <- 1
+	rsi <- rdi
+	rdx <- mem rsi 0
+	:call_label_ciao__ciao_8
+	rsi <- rsi
+	rsi += 8
+	rdi <- mem rsi 0
+	r8 <- r8
+	r8 -= 1
+	r8 <- r8
+	r8 >>= 1
+	rdi <- rdi
+	rdi -= 1
+	rdi <- rdi
+	rdi >>= 1
+	r8 <- r8
+	r8 += rdi
+	r8 <- r8
+	r8 <<= 1
+	r8 <- r8
+	r8 += 1
+	:call_label_ciao__ciao_9
+	rcx <- rcx
+	rcx += 1
+	rdi <- rcx < rdx
+	cjump rdi = 1 :call_label_ciao__ciao_8 :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	rax <- r8
+	return
+)
+
+(:main
+	0 1
+	rdi <- 21
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	mem rdi 8 <- 25
+	rdi <- mem rsp 0
+	mem rdi 16 <- 41
+	rdi <- mem rsp 0
+	mem rdi 24 <- 37
+	rdi <- mem rsp 0
+	mem rdi 32 <- 107
+	rdi <- mem rsp 0
+	mem rdi 40 <- 27
+	rdi <- mem rsp 0
+	mem rdi 48 <- 49
+	rdi <- mem rsp 0
+	mem rdi 56 <- 121
+	rdi <- mem rsp 0
+	mem rdi 64 <- 81
+	rdi <- mem rsp 0
+	mem rdi 72 <- 73
+	rdi <- mem rsp 0
+	mem rdi 80 <- 7
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_11
+	call :getMax 1
+	:call_label_ciao__ciao__ciao_11
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_12
+	call :getMin 1
+	:call_label_ciao__ciao__ciao_12
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_13
+	call :getSum 1
+	:call_label_ciao__ciao__ciao_13
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

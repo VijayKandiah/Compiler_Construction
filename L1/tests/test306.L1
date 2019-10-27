@@ -1,0 +1,35 @@
+(:main
+(:main
+	0 1
+	rdi <- 1
+	rsi <- 2
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- 3
+	mem rsp -8 <- :call_label0
+	call :myF 3
+	:call_label0
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rax <- rdi
+	return
+)
+
+(:myF
+	3 0
+	rdi <- rdi
+	rcx <- rsi
+	rsi <- rdx
+	rdi <- rdi
+	rdi += rcx
+	rdi += rsi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+)

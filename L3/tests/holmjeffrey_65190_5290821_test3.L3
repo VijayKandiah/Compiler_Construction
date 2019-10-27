@@ -1,0 +1,134 @@
+define :main (){
+    %ret <- call :loop1 (20)
+    %ret <- call :encode (%ret)
+    call print (%ret)
+    %ret <- call :loop2 (-20)
+    %ret <- call :encode (%ret)
+    call print (%ret)
+    %ret <- call :loop3 (100)
+    %ret <- call :encode (%ret)
+    call print (%ret)
+    %ret <- call :loop4 (20)
+    %ret <- call :encode (%ret)
+    call print (%ret)
+    %ret <- call :loop5 (248)
+    %ret <- call :encode (%ret)
+    call print (%ret)
+    %ret <- call :loop6 (19)
+    %ret <- call :encode (%ret)
+    call print (%ret)
+    %ret <- call :loop7 (15)
+    %ret <- call :encode (%ret)
+    call print (%ret)
+    %ret <- call :loop8 (-61254)
+    %ret <- call :encode (%ret)
+    call print (%ret)
+    return
+}
+
+define :loop1 (%arg){
+    %value <- 0
+    :loopStart
+    %arg <- %arg - 1
+    %value <- %value + 1
+    %isDone <- %arg = 0
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return %value
+}
+
+define :loop2 (%arg){
+    %value <- 0
+    :loopStart
+    %arg <- %arg + 2
+    %value <- %value + 1
+    %isDone <- %arg = 0
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return %value
+}
+
+define :loop3 (%arg){
+    %value <- 0
+    :loopStart
+    %arg <- %arg >> 1
+    %value <- %value + 1
+    %isDone <- %arg = 0
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return %value
+}
+
+define :loop4 (%arg){
+    %value <- 0
+    :loopStart
+    %arg <- %arg * 0
+    %value <- %value + 1
+    %isDone <- %arg = 0
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return %value
+}
+
+define :loop5 (%arg){
+    %value <- 0
+    :loopStart
+    %arg <- %arg - 4
+    %value <- %value + 1
+    %isDone <- %arg = 0
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return %value
+}
+
+define :loop6 (%arg){
+    %value <- 0
+    :loopStart
+    %arg <- %arg << 1
+    %value <- %value + 1
+    %isDone <- %arg = 0
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return %value
+}
+
+define :loop7 (%arg){
+    %value <- 0
+    :loopStart
+    %arg <- %arg > 1
+    %value <- %value + 1
+    %isDone <- %arg = 0
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return %value
+}
+
+define :loop8 (%arg){
+    %value <- 0
+    :loopStart
+    %arg <- %arg + 3
+    %value <- %value + 1
+    %isDone <- %arg = 0
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return %value
+}
+
+define :encode (%v1){
+    %isEncoded <- %v1 & 1
+    %isEncoded <- %isEncoded = 1
+    br %isEncoded :skip
+    br :encode
+    :encode
+    %v1 <- %v1 + 1
+    :skip
+    return %v1
+}

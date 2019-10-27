@@ -1,0 +1,123 @@
+define :main (){
+    call :loopTransform (1)
+    call :loopTransform (-2)
+    call :loopTransform (10)
+    call :loopTransform (-4)
+    call :loopTransform (7)
+    %v4 <- call :math ()
+    call :loopTransform (%v4)
+    return
+}
+
+define :loopTransform (%hello){
+    %count <- 0
+    %v1 <- %hello
+    :loopStart
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :transform (%v1)
+    %v1 <- call :encode (%v1)
+    call print (%v1)
+    %v1 <- %v1 + 4
+    %count <- %count + 1
+    %isDone <- %count >= 7
+    br %isDone :stop
+    br :loopStart
+    :stop
+    return
+}
+
+define :math (){
+    %v1 <- 7
+    %v2 <- %v1 + 8
+    %v3 <- %v2 * 3
+    %v4 <- %v3 - 17
+    %v5 <- %v4 & 7192369
+    %v6 <- %v5 << 2
+    %v7 <- %v6 + 1454
+    return %v7
+}
+
+define :transform (%v1){
+    br %v1 :add
+    br :next1
+    :add
+    %v1 <- %v1 + 12
+    %v1 <- %v1 + 234
+    %v1 <- %v1 + 35
+    %v1 <- %v1 + 4
+    %v1 <- %v1 + 5
+    %v1 <- %v1 + 64
+    %v1 <- %v1 + 1
+    %v1 <- %v1 + 2225
+    %v1 <- %v1 + 2
+    %v1 <- %v1 + 232
+    %v1 <- %v1 + 335
+    %v1 <- %v1 + 32
+    %v1 <- %v1 + 31
+    :next1
+    br %v1 :subtract
+    br :next2
+    :subtract
+    %v1 <- %v1 - 6
+    :next2
+    br %v1 :multiply
+    br :next3
+    :multiply
+    %v1 <- %v1 * 2
+    %v1 <- %v1 * 1
+    %v1 <- %v1 * 3
+    %v1 <- %v1 * 4
+    %v1 <- %v1 * 2
+    %v1 <- %v1 * 2
+    %v1 <- %v1 * -1
+    %v1 <- %v1 * -12
+    %v1 <- %v1 * -13
+    :next3
+    br %v1 :and
+    br :next4
+    :and
+    %v1 <- %v1 & 091823012
+    %v1 <- %v1 & 283748234
+    %v1 <- %v1 & 923492834
+    %v1 <- %v1 & 837023412
+    %v1 <- %v1 & 093498237
+    %v1 <- %v1 & 987234922
+    %v1 <- %v1 & 928374234
+    %v1 <- %v1 & 98249234
+    %v1 <- %v1 & 88888888
+    %v1 <- %v1 & 88918239
+    %v1 <- %v1 & 989891823
+    %v1 <- %v1 & 98293849
+    :next4
+    br %v1 :shiftLeft
+    br :next5
+    :shiftLeft
+    %v1 <- %v1 << 3
+    :next5
+    br %v1 :shiftRight
+    br :next6
+    :shiftRight
+    %v1 <- %v1 >> 2
+    :next6
+    return %v1
+}
+
+define :encode (%v1){
+    %isEncoded <- %v1 & 1
+    %isEncoded <- %isEncoded = 1
+    br %isEncoded :skip
+    br :encode
+    :encode
+    %v1 <- %v1 + 1
+    :skip
+    return %v1
+}

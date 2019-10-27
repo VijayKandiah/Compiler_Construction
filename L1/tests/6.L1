@@ -1,0 +1,39 @@
+(:main
+ (:main
+  0 0
+  rdi <- 5
+  mem rsp -8 <- :encret
+  call :encode 1
+  :encret
+  rdi <- rax
+  mem rsp -8 <- :factret
+  call :fact 1
+  :factret
+  rdi <- rax
+  call print 1
+  return)
+ (:fact
+  1 1
+  cjump rdi = 1 :zero :recur
+  :zero
+  rax <- 3
+  return
+  :recur
+  mem rsp 0 <- rdi
+  rdi -= 2
+  mem rsp -8 <- :return
+  call :fact 1
+  :return
+  r10 <- mem rsp 0
+  r10 >>= 1
+  rax >>= 1
+  rax *= r10
+  rax <<= 1
+  rax += 1
+  return)
+ (:encode
+  1 0
+  rdi <<= 1
+  rdi += 1
+  rax <- rdi
+  return))

@@ -1,0 +1,74 @@
+//// gets the max of an array
+//// assumes the array size is >= 1
+//// linear search of an array
+
+(:go
+    (:fill_mult
+        2 1	//// first is size, second is factor decoded
+        ////make array
+	mem rsp 0 <- rsi
+        rsi <- 1
+        call allocate 2
+
+        ////initialize counters
+        rdi <- rax
+        rdi += 8
+        rcx <- mem rax 0
+	rdx <- rcx
+	r8 <- mem rsp 0
+
+        :loop
+	cjump rcx = 0 :done :more
+
+	:more
+	rsi <- rdx
+	rsi -= rcx
+	rsi *= r8
+	rsi *= 2
+	rsi += 1
+	mem rdi 0 <- rsi
+	rcx -= 1
+	rdi += 8
+	goto :loop
+
+	:done
+	return)
+
+	(:max
+		1 0 //// first is pointer to array, second is int
+		rcx <- mem rdi 0
+		rdi += 8
+		rax <- mem rdi 0
+
+		:max_loop
+		cjump rcx = 0 :max_done :max_more
+		
+		:max_more
+		rdx <- mem rdi 0
+		rcx -= 1
+		rdi += 8
+		cjump rax < rdx :replace :max_loop
+		
+		:replace
+		rax <- rdx
+		goto :max_loop
+		:max_done
+		return)
+
+    (:go
+        0 0
+        rdi <- 13
+        rsi <- 7
+        mem rsp -8 <- :fill_ret1
+        call :fill_mult 2
+        
+	:fill_ret1
+        rdi <- rax
+	mem rsp -8 <- :max_ret
+	call :max 1
+	:max_ret
+
+	rdi <- rax
+	call print 1
+        return))
+

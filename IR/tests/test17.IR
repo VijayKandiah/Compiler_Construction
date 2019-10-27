@@ -1,0 +1,18 @@
+define void :main ( ){
+
+  :entry
+  int64 %arLen
+  int64[][][] %ar
+  br :myLabel1
+
+  :myLabel1
+  %ar <- new Array(3, 5, 7)
+  %arLen <- length %ar 0
+  call print(%arLen)
+  %arLen <- length %ar 1
+  call print(%arLen)
+  %arLen <- length %ar 2
+  call print(%arLen)
+  return
+
+}

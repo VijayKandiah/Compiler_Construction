@@ -1,0 +1,33 @@
+//// Is 2018 a leap year (with function call)?
+(:main
+	(:main
+		0 1
+		r10 <- 2016
+		r10 <<= 1
+		r10++
+		mem rsp 0 <- r10
+		rdi <- r10
+		//// print 2018
+		call print 1
+		r10 <- mem rsp 0
+		rdi <- r10
+		mem rsp -8 <- :foo_ret
+		call :foo 1
+		:foo_ret
+		rdi <- rax
+		call print 1
+		return		
+	)
+	(:foo
+		1 0
+		rdi &= 6
+		cjump 1 < rdi :no :yes
+		:no
+		rax <- 1
+		goto :ret
+		:yes
+		rax <- 3
+		:ret
+		return
+	)
+)

@@ -1,0 +1,14 @@
+define void :main ( ){
+
+  :entry
+  int64[] %ar
+  int64 %arElement
+  br :myLabel1
+
+  :myLabel1
+  %ar <- new Array(3)
+  %arElement <- %ar[0]
+  call print(%arElement)
+  return
+
+}

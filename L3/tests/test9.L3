@@ -1,0 +1,15 @@
+define :main ( ){
+  %v1 <- 1
+  %v2 <- 2
+
+  %v4 <- %v1 < %v2
+
+  br %v4 :true 
+  br :false
+
+  :true
+  return 0
+
+  :false
+  return %v4
+}

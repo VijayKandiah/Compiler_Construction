@@ -1,0 +1,16 @@
+void main ( ){
+
+  int64[][] a
+  a <- new Array(2,2)
+   print(a)
+   initArray(a)
+  return 
+
+}
+
+void initArray (int64[][] A){
+
+  A[2][0] <- 0
+  return
+
+}

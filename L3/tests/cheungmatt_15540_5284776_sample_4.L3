@@ -1,0 +1,101 @@
+define :main() {
+  %arr <- call :createArray()
+
+  %rotArr <- call :rotateOnce(%arr)
+  call :printArr(%rotArr)
+  return
+}
+
+define :createArray() {
+  %len <- 15
+  %arr <- call allocate(%len, 1)
+
+  %newVar0 <- 0 * 8
+  %newVar1 <- %newVar0 + 8
+  %newVar2 <- %arr + %newVar1
+  store %newVar2 <- 3 
+
+  %newVar3 <- 1 * 8
+  %newVar4 <- %newVar3 + 8
+  %newVar5 <- %arr + %newVar4
+  store %newVar5 <- 7 
+
+  %newVar6 <- 2 * 8
+  %newVar7 <- %newVar6 + 8
+  %newVar8 <- %arr + %newVar7
+  store %newVar8 <- 5 
+
+  %newVar9 <- 3 * 8
+  %newVar10 <- %newVar9 + 8
+  %newVar11 <- %arr + %newVar10
+  store %newVar11 <- 5 
+
+  %newVar12 <- 4 * 8
+  %newVar13 <- %newVar12 + 8
+  %newVar14 <- %arr + %newVar13
+  store %newVar14 <- 5 
+
+  %newVar15 <- 5 * 8
+  %newVar16 <- %newVar15 + 8
+  %newVar17 <- %arr + %newVar16
+  store %newVar17 <- 5 
+
+  %newVar18 <- 6 * 8
+  %newVar19 <- %newVar18 + 8
+  %newVar20 <- %arr + %newVar19
+  store %newVar20 <- 5 
+
+  return %arr
+}
+
+define :printArr (%arr) {
+  %len <- load %arr
+
+  %count <- 0
+  %curr <- %arr
+  :loop
+  %curr <- %curr + 8
+  %currP <- load %curr
+  
+  %currP <- %currP << 1
+  %currP <- %currP + 1
+  call print(%currP)
+
+  %count <- %count + 1
+  %cont <- %count < %len 
+  br %cont :loop
+  br :stop
+  :stop
+
+  return
+}
+
+define :rotateOnce(%arr) {
+  %count <- 0
+  %len <- load %arr
+  %len <- %len << 1
+  %len <- %len + 1
+  %newArr <- call allocate(%len, 0)
+  %newVar <- %newArr + 8
+  %tempLen <- %len - 1
+  %lastElem <- %tempLen * 8
+  %lastElem <- %arr + %lastElem
+  %lastElem <- load %lastElem
+  store %newVar <- %lastElem
+
+  %len <- %len - 1
+  %curr <- %arr
+  %newCurr <- %newArr + 8
+  :loop
+  %curr <- %curr + 8
+  %newCurr <- %newCurr + 8
+  %temp <- load %curr
+  store %newCurr <- %temp 
+  
+  %count <- %count + 1
+  %cont <- %count < %len
+  br %cont :loop
+  br :stop
+  :stop
+  return %newArr
+}

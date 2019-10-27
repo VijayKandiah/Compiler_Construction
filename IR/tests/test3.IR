@@ -1,0 +1,6 @@
+define int64 :main ( ){
+
+  :entry
+  return 1
+
+}

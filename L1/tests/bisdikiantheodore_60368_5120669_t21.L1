@@ -1,0 +1,55 @@
+(:go
+	(:go
+		0 0
+		rdi <- 13
+		rsi <- 5
+		call allocate 2 // array currently in rax
+		rdi <- rax
+		rsi <- 13
+		mem rsp -8 <- :sumArr_ret
+		call :sumArr 2
+		
+		:sumArr_ret
+		rdi <- rax
+		call print 1
+		return
+	)
+	(:sumArr
+		2 2
+		// rdi = array base pointerg
+		// rsi = size of arr (encoded)
+		// r8 = the counter
+		// r9 = the sum
+
+		r8 <- 1 // r8 = 0
+		r9 <- 1 // r9 = 0
+
+		// r12 is the location of the current array
+		// r13 is the value of the array element
+		mem rsp 0 <- r12
+		mem rsp 8 <- r13
+		r12 <- rdi
+		r12 += 8 //move r12 to the first value of the array
+
+		goto :start
+		:start
+		cjump r8 = rsi :done :add
+
+		:add
+		r13 <- mem r12 0
+		r9 += r13
+		r9--
+
+		// increment counter and array location
+		r8 += 2
+		r12 += 8
+
+		goto :start
+
+		:done
+		r12 <- mem rsp 0
+		r13 <- mem rsp 8
+		rax <- r9
+		return
+	)
+)

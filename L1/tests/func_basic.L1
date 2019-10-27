@@ -1,0 +1,13 @@
+(:func_basic
+ (:func_basic
+  0 0
+  mem rsp -8 <- :f_ret
+  call :fun 0
+  :f_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:fun
+  0 0
+  rax <- 13
+  return))

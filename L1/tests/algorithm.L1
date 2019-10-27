@@ -1,0 +1,105 @@
+(:testing
+  (:testing
+    0 0
+    rdi <- 5
+    rsi <- 85
+
+    mem rsp -8 <- :myfunc_ret
+    call allocate 2
+    :myfunc_ret
+    mem rax 16 <- 5
+
+    rdi <- rax
+    mem rsp -8 <- :rett
+    call :printArray 1
+    :rett
+    return
+  )
+  (:printArray
+    1 3
+    rcx <- rdi
+    // array check 
+    rcx &= 1
+    cjump rcx = 0 :isarray :notarray
+    :notarray
+    rax <- 0
+    return
+
+    :isarray 
+    // initialize counter 
+    rsi <- 0
+
+    // get length of array 
+    r8 <- mem rdi 0
+
+    // check counter 
+    :forloop
+    cjump rsi < r8 :continue :done
+
+    :continue
+    mem rsp 0 <- rsi
+    mem rsp 8 <- rdi
+    mem rsp 16 <- r8
+    mem rsp -8 <- :ret
+    call :printArrayElement 2
+    :ret
+    rsi <- mem rsp 0
+    rdi <- mem rsp 8
+    r8 <- mem rsp 16
+    rsi++
+    goto :forloop
+
+    :done
+    rax <- 1
+    return
+  )
+
+  (:printArrayElement
+    2 2
+
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+
+    r13 <- rdi
+    r12 <- rsi  // rsi input is decoded
+
+    // print the index
+    rdi <- r12
+    rdi <<= 1
+    rdi += 1
+    call print 1
+
+    rdi <- r12
+    rdi *= 8
+    rdi += 8
+
+    // encode result and print 
+    rdi <<= 1
+    rdi += 1
+    r12 <- rdi
+    call print 1
+
+    // get a[i]
+    r12 >>= 1
+    r13 += r12
+    rdi <- mem r13 0
+
+    // check if a[i] is an array
+    r10 <- rdi
+    r10 &= 1
+    cjump r10 = 0 :isarr :notarr
+
+    :notarr
+    call print 1
+    goto :fnc_ret
+
+    :isarr 
+    mem rsp -8 <- :fnc_ret
+    call :printArray 1
+
+    :fnc_ret
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+    return
+  )
+)

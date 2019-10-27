@@ -1,0 +1,172 @@
+define :main () {
+ :entry
+ %v <- 21
+ %newVar1 <- 21 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 21 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %m <- call allocate (%newVar0, 1)
+ %newVar3 <- %m + 8
+ store %newVar3 <- 5
+ %newVar4 <- %m + 16
+ store %newVar4 <- 21
+ %newVar5 <- %m + 24
+ store %newVar5 <- 21
+ %r <- call :checkMatrix (%m, %v)
+ call print (%r)
+ %newVar7 <- 0
+ %newVar8 <- %m + 24
+ %newVar9 <- load %newVar8
+ %newVar10 <- %newVar9 >> 1
+ %newVar11 <- 1
+ %newVar11 <- %newVar10 * %newVar11
+ %newVar12 <- 0 * %newVar11
+ %newVar7 <- %newVar12 + %newVar7
+ %newVar7 <- %newVar7 + 0
+ %newVar6 <- %newVar7 * 8
+ %newVar6 <- %newVar6 + 32
+ %newVar13 <- %m + %newVar6
+ store %newVar13 <- %v
+ %r <- call :checkMatrix (%m, %v)
+ call print (%r)
+ %newVar15 <- 0
+ %newVar16 <- %m + 24
+ %newVar17 <- load %newVar16
+ %newVar18 <- %newVar17 >> 1
+ %newVar19 <- 1
+ %newVar19 <- %newVar18 * %newVar19
+ %newVar20 <- 0 * %newVar19
+ %newVar15 <- %newVar20 + %newVar15
+ %newVar15 <- %newVar15 + 1
+ %newVar14 <- %newVar15 * 8
+ %newVar14 <- %newVar14 + 32
+ %newVar21 <- %m + %newVar14
+ store %newVar21 <- %v
+ %r <- call :checkMatrix (%m, %v)
+ call print (%r)
+ %newVar23 <- 0
+ %newVar24 <- %m + 24
+ %newVar25 <- load %newVar24
+ %newVar26 <- %newVar25 >> 1
+ %newVar27 <- 1
+ %newVar27 <- %newVar26 * %newVar27
+ %newVar28 <- 1 * %newVar27
+ %newVar23 <- %newVar28 + %newVar23
+ %newVar23 <- %newVar23 + 0
+ %newVar22 <- %newVar23 * 8
+ %newVar22 <- %newVar22 + 32
+ %newVar29 <- %m + %newVar22
+ store %newVar29 <- %v
+ %r <- call :checkMatrix (%m, %v)
+ call print (%r)
+ %newVar31 <- 0
+ %newVar32 <- %m + 24
+ %newVar33 <- load %newVar32
+ %newVar34 <- %newVar33 >> 1
+ %newVar35 <- 1
+ %newVar35 <- %newVar34 * %newVar35
+ %newVar36 <- 3 * %newVar35
+ %newVar31 <- %newVar36 + %newVar31
+ %newVar31 <- %newVar31 + 0
+ %newVar30 <- %newVar31 * 8
+ %newVar30 <- %newVar30 + 32
+ %newVar37 <- %m + %newVar30
+ store %newVar37 <- %v
+ %r <- call :checkMatrix (%m, %v)
+ call print (%r)
+ %newVar39 <- 0
+ %newVar40 <- %m + 24
+ %newVar41 <- load %newVar40
+ %newVar42 <- %newVar41 >> 1
+ %newVar43 <- 1
+ %newVar43 <- %newVar42 * %newVar43
+ %newVar44 <- 3 * %newVar43
+ %newVar39 <- %newVar44 + %newVar39
+ %newVar39 <- %newVar39 + 1
+ %newVar38 <- %newVar39 * 8
+ %newVar38 <- %newVar38 + 32
+ %newVar45 <- %m + %newVar38
+ store %newVar45 <- %v
+ %r <- call :checkMatrix (%m, %v)
+ call print (%r)
+ %newVar47 <- 0
+ %newVar48 <- %m + 24
+ %newVar49 <- load %newVar48
+ %newVar50 <- %newVar49 >> 1
+ %newVar51 <- 1
+ %newVar51 <- %newVar50 * %newVar51
+ %newVar52 <- 3 * %newVar51
+ %newVar47 <- %newVar52 + %newVar47
+ %newVar47 <- %newVar47 + 3
+ %newVar46 <- %newVar47 * 8
+ %newVar46 <- %newVar46 + 32
+ %newVar53 <- %m + %newVar46
+ store %newVar53 <- %v
+ %r <- call :checkMatrix (%m, %v)
+ call print (%r)
+ return 
+}
+
+define :checkMatrix (%m, %v) {
+ :entry
+ %newVar0 <- 0 * 8
+ %newVar1 <- %newVar0 + 16
+ %newVar2 <- %m + %newVar1
+ %l1encoded <- load %newVar2
+ %newVar3 <- 1 * 8
+ %newVar4 <- %newVar3 + 16
+ %newVar5 <- %m + %newVar4
+ %l2encoded <- load %newVar5
+ call print (%l1encoded)
+ call print (%l2encoded)
+ %l1 <- %l1encoded >> 1
+ %l2 <- %l2encoded >> 1
+ br :init
+ :init
+ %found <- 1
+ %index <- 0
+ br :header
+ :header
+ %check <- %index < %l1
+ br %check :outerBody 
+ br :leave 
+ :outerBody
+ %index2 <- 0
+ br :header2
+ :header2
+ %check2 <- %index2 < %l2
+ br %check2 :innerBody 
+ br :endOuterBody 
+ :innerBody
+ %newVar7 <- 0
+ %newVar8 <- %m + 24
+ %newVar9 <- load %newVar8
+ %newVar10 <- %newVar9 >> 1
+ %newVar11 <- 1
+ %newVar11 <- %newVar10 * %newVar11
+ %newVar12 <- %index * %newVar11
+ %newVar7 <- %newVar12 + %newVar7
+ %newVar7 <- %newVar7 + %index2
+ %newVar6 <- %newVar7 * 8
+ %newVar6 <- %newVar6 + 32
+ %newVar13 <- %m + %newVar6
+ %e <- load %newVar13
+ %sameE <- %e = %v
+ br %sameE :setAndLeave 
+ br :endInnerBody 
+ :endInnerBody
+ %index2 <- %index2 + 1
+ br :header2
+ :endOuterBody
+ %index <- %index + 1
+ br :header
+ :setAndLeave
+ %found <- 3
+ br :leave
+ :leave
+ return %found
+}
+

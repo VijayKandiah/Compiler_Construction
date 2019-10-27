@@ -1,0 +1,45 @@
+(:go
+  (:go
+	0 0
+	rsi <- 5
+	rdi <- 3 < rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 3
+	rdi <- 5 < rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 4
+	rdi <- 4 <= rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 5
+	rdi <- 3 <= rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+
+	rsi <- 3
+	rdi <- 5 <= rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	
+	rsi <- 4
+	rdi <- 4 = rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	
+	rsi <- 5
+	rdi <- 3 = rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return))	

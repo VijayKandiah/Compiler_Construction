@@ -1,0 +1,11 @@
+(:simple_alloc
+ (:simple_alloc
+  0 0
+  rdi <- 7
+  rdi *= 2
+  rdi += 1
+  rsi <- 7
+  call allocate 2
+  rdi <- rax
+  call print 1
+  return)) 

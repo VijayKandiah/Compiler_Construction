@@ -1,0 +1,80 @@
+(:main
+(:main
+	0 0
+	:call_label0
+	rdi <- 7
+	rdi >>= 1
+	rdi <- rdi
+	rsi <- 7
+	rsi >>= 1
+	rdi *= rsi
+	rsi <- 7
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 8
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- rsi
+	rdi += 8
+	mem rdi 0 <- 7
+	rdi <- rsi
+	rdi += 16
+	mem rdi 0 <- 7
+	rdi <- rsi
+	rdi += 24
+	mem rdi 0 <- 7
+	rdi <- rsi
+	rdi += 32
+	mem rdi 0 <- 7
+	mem rsp -8 <- :call_label1
+	rdi <- rsi
+	rsi <- 1
+	rdx <- 2
+	rcx <- 3
+	call :storeV 4
+	:call_label1
+	return
+)
+
+(:storeV
+	4 0
+	r11 <- rdi
+	r10 <- rsi
+	r9 <- rdx
+	r8 <- rcx
+	:call_label2
+	rcx <- 0
+	rdi <- r11
+	rdi += 24
+	rdi <- mem rdi 0
+	rdx <- rdi
+	rdx >>= 1
+	rdi <- r11
+	rdi += 32
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi *= rdi
+	rdi <- r9
+	rdi *= rsi
+	rcx += rdi
+	rsi *= rdx
+	rdi <- r10
+	rdi *= rsi
+	rcx += rdi
+	rcx += r8
+	rsi <- rcx
+	rsi *= 8
+	rsi += 40
+	rdi <- r11
+	rdi += rsi
+	mem rdi 0 <- 5
+	return
+)
+
+)

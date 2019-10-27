@@ -1,0 +1,99 @@
+// Print all even numbers between 1 and 100
+// Make %a second array that doubles all of these values
+// Print both out
+
+// Takes %a pointer to an array and %a size
+// Fill array with even numbers
+define :fill_array(%a, %m){
+	// set variables
+	%counter <- %a
+        %index <- 0
+        %val <- 0
+
+	// Loop through and fill the array
+        :loop
+	
+	// Must encode values entered into an array
+	%val <- %val << 1
+	%val <- %val + 1
+	
+	// Load even number into the array
+	store %counter <- %val
+	%val <- %val - 1
+	%val <- %val >> 1
+	%val <- %val+2
+       
+	// Increment %counter to array by 8 bytes
+	%counter <- %counter+8
+        %check <- %index < %m
+        %index <- %index + 1
+        br %check :loop
+        br :finish
+        :finish
+        return
+ }
+
+// Takes pointers to two arrays and %a %max size
+// Transfers values in one to the other, doubling them
+ define :double_array(%p1, %p2, %m){
+	// set variables
+	%c1 <- %p1
+	%c2 <- %p2
+	%index <- 0
+	
+	:loop
+	%val <- load %c1
+	
+	// Decode
+	%val <- %val -1
+	%val <- %val >> 1
+	
+	// Multiply
+	%val <- %val*2
+	
+	// Encode
+	%val <- %val << 1
+	%val <- %val + 1
+	
+	// Transfer the new value over	
+	store %c2 <- %val
+	
+	// Increment
+	%c1 <- %c1+8
+	%c2 <- %c2+8
+        
+	// Break when we hit %max value
+	%check <-  %index = %m
+        %index <- %index + 1
+	
+        br %check :finish
+        br :loop
+        :finish
+        return
+}	
+ 
+ define :main(){
+         // Set variables
+	 %filler <- 0
+         %max <- 100
+	 %max <- %max << 1
+	 %max <- %max + 1
+         %arr <- call allocate(%max, %filler)              
+         
+	 // Initialize pointer
+	 // Skip size elem
+	 %ptr <- %arr + 8
+	 call :fill_array(%ptr, %max)
+	 
+	// Create another array
+	 %arr2 <- call allocate(%max, %filler)
+	 %ptr2 <- %arr2 + 8
+	
+	 // Duplicate the array and multiply by 2
+	 call :double_array(%ptr, %ptr2, %max)
+	
+  	// Print both arrays out
+         call print(%arr)
+	 call print(%arr2)
+	 return 
+}

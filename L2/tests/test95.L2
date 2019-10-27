@@ -1,0 +1,126 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %v <- 21
+    %newVar1 <- 21
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- 21
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 6
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %m <- rax
+    %newVar3 <- %m
+    %newVar3 += 8
+    mem %newVar3 0  <- 5
+    %newVar4 <- %m
+    %newVar4 += 16
+    mem %newVar4 0  <- 21
+    %newVar5 <- %m
+    %newVar5 += 24
+    mem %newVar5 0  <- 21
+    rdi <- %m
+    rsi <- %v
+    mem rsp -8 <- :call_label1
+    call :checkMatrix 2
+    :call_label1
+    %r <- rax
+    rdi <- %r
+    call print 1
+    return
+  )
+  (:checkMatrix
+    2 0
+    %m <- rdi
+    %v <- rsi
+    :call_label2
+    %newVar0 <- 0
+    %newVar0 *= 8
+    %newVar1 <- %newVar0
+    %newVar1 += 16
+    %newVar2 <- %m
+    %newVar2 += %newVar1
+    %l1encoded <- mem %newVar2 0 
+    %newVar3 <- 1
+    %newVar3 *= 8
+    %newVar4 <- %newVar3
+    %newVar4 += 16
+    %newVar5 <- %m
+    %newVar5 += %newVar4
+    %l2encoded <- mem %newVar5 0 
+    rdi <- %l1encoded
+    call print 1
+    rdi <- %l2encoded
+    call print 1
+    %l1 <- %l1encoded
+    %l1 >>= 1
+    %l2 <- %l2encoded
+    %l2 >>= 1
+    goto :call_label3
+    :call_label3
+    %found <- 1
+    %index <- 0
+    goto :call_label4
+    :call_label4
+    %check <- %index < %l1
+    
+    cjump %check = 1 :call_label5 :call_label11
+    :call_label5
+    %index2 <- 0
+    goto :call_label6
+    :call_label6
+    %check2 <- %index2 < %l2
+    
+    cjump %check2 = 1 :call_label7 :call_label9
+    :call_label7
+    %newVar7 <- 0
+    %newVar8 <- %m
+    %newVar8 += 24
+    %newVar9 <- mem %newVar8 0 
+    %newVar10 <- %newVar9
+    %newVar10 >>= 1
+    %newVar11 <- 1
+    %newVar11 <- %newVar11
+    %newVar11 *= %newVar10
+    %newVar12 <- %index
+    %newVar12 *= %newVar11
+    %newVar7 <- %newVar7
+    %newVar7 += %newVar12
+    %newVar7 <- %newVar7
+    %newVar7 += %index2
+    %newVar6 <- %newVar7
+    %newVar6 *= 8
+    %newVar6 <- %newVar6
+    %newVar6 += 32
+    %newVar13 <- %m
+    %newVar13 += %newVar6
+    %e <- mem %newVar13 0 
+    %sameE <- %e = %v
+    
+    cjump %sameE = 1 :call_label10 :call_label8
+    :call_label8
+    %index2 <- %index2
+    %index2 += 1
+    goto :call_label6
+    :call_label9
+    %index <- %index
+    %index += 1
+    goto :call_label4
+    :call_label10
+    %found <- 3
+    goto :call_label11
+    :call_label11
+    rax <- %found
+    return
+  )
+)

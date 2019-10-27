@@ -1,0 +1,61 @@
+(:go
+  (:go
+    0 0
+
+    // Compute the data
+    rdi <- 3
+    rsi <- 5
+    rdx <- 7
+    rcx <- 9
+    r8 <- 11
+    r9 <- 13
+    mem rsp -16 <- 15
+    mem rsp -24 <- 17
+    mem rsp -8 <- :testFunction_ret
+    call :testFunction 8
+    :testFunction_ret
+
+    return
+  )
+
+  (:testFunction
+    8 8
+
+    mem rsp 0 <- rdi
+    mem rsp 8 <- rsi
+    mem rsp 16 <- rdx
+    mem rsp 24 <- rcx
+    mem rsp 32 <- r8
+    mem rsp 40 <- r9
+    rdi <- mem rsp 72
+    mem rsp 48 <- rdi
+    rdi <- mem rsp 64
+    mem rsp 56 <- rdi
+
+    rdi <- mem rsp 0
+    call print 1
+    
+    rdi <- mem rsp 8
+    call print 1
+
+    rdi <- mem rsp 16
+    call print 1
+    
+    rdi <- mem rsp 24
+    call print 1
+
+    rdi <- mem rsp 32
+    call print 1
+
+    rdi <- mem rsp 40
+    call print 1
+
+    rdi <- mem rsp 48
+    call print 1
+
+    rdi <- mem rsp 56
+    call print 1
+
+    return
+  )
+)

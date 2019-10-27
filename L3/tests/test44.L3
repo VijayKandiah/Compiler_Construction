@@ -1,0 +1,48 @@
+define :main () {
+ :entry
+ br :myLabel1
+ :myLabel1
+ %newVar1 <- 7 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 7 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %ar <- call allocate (%newVar0, 1)
+ %newVar3 <- %ar + 8
+ store %newVar3 <- 5
+ %newVar4 <- %ar + 16
+ store %newVar4 <- 7
+ %newVar5 <- %ar + 24
+ store %newVar5 <- 7
+ %newVar7 <- 0
+ %newVar8 <- %ar + 24
+ %newVar9 <- load %newVar8
+ %newVar10 <- %newVar9 >> 1
+ %newVar11 <- 1
+ %newVar11 <- %newVar10 * %newVar11
+ %newVar12 <- 1 * %newVar11
+ %newVar7 <- %newVar12 + %newVar7
+ %newVar7 <- %newVar7 + 2
+ %newVar6 <- %newVar7 * 8
+ %newVar6 <- %newVar6 + 32
+ %newVar13 <- %ar + %newVar6
+ store %newVar13 <- 5
+ %newVar15 <- 0
+ %newVar16 <- %ar + 24
+ %newVar17 <- load %newVar16
+ %newVar18 <- %newVar17 >> 1
+ %newVar19 <- 1
+ %newVar19 <- %newVar18 * %newVar19
+ %newVar20 <- 1 * %newVar19
+ %newVar15 <- %newVar20 + %newVar15
+ %newVar15 <- %newVar15 + 2
+ %newVar14 <- %newVar15 * 8
+ %newVar14 <- %newVar14 + 32
+ %newVar21 <- %ar + %newVar14
+ %arElement <- load %newVar21
+ call print (%arElement)
+ return 
+}
+

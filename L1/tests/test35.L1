@@ -1,0 +1,19 @@
+(:go
+  (:go
+    0 1
+
+    // Store
+    mem rsp 0 <- 5
+
+    // Compute
+    mem rsp 0 += 2
+
+    // Load
+    rdi <- mem rsp 0
+
+    // Print
+    call print 1
+
+    return
+  )
+)

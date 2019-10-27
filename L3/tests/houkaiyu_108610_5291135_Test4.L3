@@ -1,0 +1,197 @@
+//// 1. compute the greatest number.
+//// 2. output the value with the greatest frequecy.
+//// 3. use euclid algorithm to compute the greatest common divisor.
+
+define :getfreq (%var, %c1, %c2, %c3, %c4, %c5){
+	%ret <- %c1 = %var
+	%ret2 <- %c2 = %var
+	%ret3 <- %c3 = %var
+	%ret4 <- %c4 = %var
+	%ret5 <- %c5 = %var
+	
+	%ret <- %ret + %ret2
+	%ret <- %ret + %ret3
+	%ret <- %ret + %ret4
+	%ret <- %ret + %ret5
+	
+	return %ret
+}
+
+define :encode (%num_to_encode){
+	%num_to_encode <- %num_to_encode << 1
+	%num_to_encode <- %num_to_encode + 1
+	return %num_to_encode
+}
+
+define :euclid (%i0, %i1){
+	%foo <- %i0
+	%bar <- %i1
+
+	:start
+	%flag3 <- %foo = %bar
+	br %flag3 :ret
+  br :cont
+	:cont
+
+	%flag <- %foo > %bar
+	br %flag :foogbar
+  br :cont2
+	:cont2
+	%temp <- %foo
+	%foo <- %bar
+	%bar <- %temp
+
+	:foogbar
+	%temp <- %foo - %bar
+	%foo <- %bar
+	%bar <- %temp
+
+	%flag2 <- 1
+	br %flag2 :start
+  br :ret
+
+	:ret
+	return %foo
+}
+
+define :main (){
+	%v1 <- 1
+	%v2 <- 2
+	%v3 <- 3
+	%v4 <- 4
+	%v5 <- 5
+	%v6 <- 1
+	%v7 <- 1
+	%v8 <- 3
+	%v9 <- 2
+	%v10 <- 5
+
+	%g <- 0
+
+	%g <- call :greater (%g, %v1)
+	%g <- call :greater (%g, %v2)
+	%g <- call :greater (%g, %v3)
+	%g <- call :greater (%g, %v4)
+	%g <- call :greater (%g, %v5)
+	%g <- call :greater (%g, %v6)
+	%g <- call :greater (%g, %v7)
+	%g <- call :greater (%g, %v8)
+	%g <- call :greater (%g, %v9)
+	%g <- call :greater (%g, %v10)
+	
+	%g <- call :encode (%g)
+	call print (%g)
+
+	%f1 <- call :getfreq (1, %v1, %v2, %v3, %v4, %v5)
+	%temp <- call :getfreq (1, %v6, %v7, %v8, %v9, %v10)
+	%f1 <- %f1 + %temp
+
+	%f2 <- call :getfreq (2, %v1, %v2, %v3, %v4, %v5)
+	%temp <- call :getfreq (2, %v6, %v7, %v8, %v9, %v10)
+	%f2 <- %f2 + %temp
+
+	%f3 <- call :getfreq (3, %v1, %v2, %v3, %v4, %v5)
+	%temp <- call :getfreq (3, %v6, %v7, %v8, %v9, %v10)
+	%f3 <- %f3 + %temp
+
+	%f4 <- call :getfreq (4, %v1, %v2, %v3, %v4, %v5)
+	%temp <- call :getfreq (4, %v6, %v7, %v8, %v9, %v10)
+	%f4 <- %f4 + %temp
+
+	%f5 <- call :getfreq (5, %v1, %v2, %v3, %v4, %v5)
+	%temp <- call :getfreq (5, %v6, %v7, %v8, %v9, %v10)
+	%f5 <- %f1 + %temp
+
+	%gt <- 0
+
+	%f <- call :greater (%f1, %f2)
+
+	%flag <- %f1 = %f
+	br %flag :pf1
+  br :contf1
+	:contf1
+
+	%flag <- %f2 = %f
+	br %flag :pf2
+  br :contf2
+	:contf2
+
+	%f <- call :greater (%f, %f3)
+
+	%flag <- %f3 = %f
+	br %flag :pf3
+  br :contf3
+	:contf3
+
+	%f <- call :greater (%f, %f4)
+
+	%flag <- %f4 = %f
+	br %flag :pf4
+  br :contf4
+	:contf4
+
+	%f <- call :greater (%f, %f5)
+
+	%flag <- %f5 = %f
+	br %flag :pf5
+  br :contf5
+	:contf5
+
+	:pf1
+	%pf <- 1
+	br :prtf
+	
+	:pf2
+	%pf <- 2
+	br :prtf
+
+	:pf3
+	%pf <- 3
+	br :prtf
+
+	:pf4
+	%pf <- 4
+	br :prtf
+
+	:pf5
+	%pf <- 5
+	br :prtf
+	
+	:prtf
+	%pf <- call :encode (%pf)
+	call print (%pf)
+	%f <- call :encode (%f)
+	call print (%f)
+
+	%e1 <- 64
+	%e2 <- 72
+	%e3 <- 27
+	%e4 <- 54
+	%e5 <- 37	
+	%e6 <- 53
+		
+
+	%ep1 <- call :euclid (%e1, %e2)
+	%ep1 <- call :encode (%ep1)
+	call print (%ep1)
+
+	%ep2 <- call :euclid (%e3, %e4)
+	%ep2 <- call :encode (%ep2)
+	call print (%ep2)
+
+	%ep3 <- call :euclid (%e5, %e6)
+	%ep3 <- call :encode (%ep3)
+	call print (%ep3)
+
+	return 0
+}
+
+define :greater (%foo, %bar){
+	%flag <- %foo >= %bar
+	br %flag :foogeqbar
+  br :nfoogeqbar
+	:nfoogeqbar
+	return %bar
+	:foogeqbar
+	return %foo
+}

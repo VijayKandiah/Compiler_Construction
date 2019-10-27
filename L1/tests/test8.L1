@@ -1,0 +1,41 @@
+(:go
+  (:go
+    0 1
+
+    // Initialize the counter
+    mem rsp 0 <- r12
+    r12 <- 0
+
+    // Check the counter
+    :startLoop
+    cjump r12 <= 5 :loopBody :exitLoop
+
+    // Compute the data
+    :loopBody
+    rdi <- 5
+    mem rsp -8 <- :testFunction_ret
+    call :testFunction 1
+    :testFunction_ret
+
+    // Print the computed data
+    rdi <- rax
+    call print 1
+
+    // Increment the counter
+    r12 += 2
+
+    // Repeat the loop
+    goto :startLoop
+
+    :exitLoop
+    r12 <- mem rsp 0
+
+    return
+  )
+
+  (:testFunction
+    1 0
+    rax <- rdi
+    return
+  )
+)

@@ -1,0 +1,7 @@
+(:storeValueToArray
+  2 0
+  %A1 <- rdi
+  %a <- rsi
+  %length <- mem %A1 0 
+  return
+)

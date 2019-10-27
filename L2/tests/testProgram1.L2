@@ -1,0 +1,148 @@
+(:go
+  (:go
+    0 0
+
+    // Allocate the data
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    %array1 <- rax
+
+    // Change %array values
+    mem %array1 8 <- 85
+
+    // Print the %array
+    rdi <- %array1
+    call print 1
+
+    // Print the data
+    rdi <- %array1
+    mem rsp -8 <- :printArray_ret
+    call :printArray 1
+    :printArray_ret
+
+    // Allocate the data
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    %array2 <- rax
+    mem %array1 8 <- %array2
+
+    // Print the %array
+    rdi <- %array1
+    call print 1
+
+    // Print the data
+    rdi <- %array1
+    mem rsp -8 <- :printArray_ret2
+    call :printArray 1
+    :printArray_ret2
+
+    // Return
+    return
+  )
+
+  (:printArray
+    1 0
+
+    // Initialization of variables
+    %array <- rdi
+    %index <- 0         
+    %arrayLength <- mem %array 0
+
+    // Check if the %array is an actual %array
+    %tempArrayPointer <- %array
+    %tempArrayPointer &= 1
+    cjump %tempArrayPointer = 0 :isAnArray :isAnInt
+    :isAnInt
+    rax <- 0
+    return
+    :isAnArray
+
+    // Header of the loop
+    :check
+    cjump %index < %arrayLength :true :false
+
+    // Body of the loop
+    :true
+    %encodedIndex <- %index
+    %encodedIndex <<= 1
+    %encodedIndex++
+    rdi <- %array
+    rsi <- %encodedIndex
+    mem rsp -8 <- :printData_ret
+    call :printData 2
+    :printData_ret
+    %index++
+    goto :check
+
+    :false
+
+    // Return
+    rax <- 1
+    return
+  )
+
+  (:printData
+    2 0
+
+    // Store the input
+    %array <- rdi
+    %indexToPrintEncoded <- rsi
+
+    // Print the element number
+    rdi <- %indexToPrintEncoded
+    call print 1
+
+    // Fetch the length of the %array
+    %arrayLength <- mem %array 0
+
+    // Encode the length of the %array
+    %arrayLengthEncoded <- %arrayLength
+    %arrayLengthEncoded <<= 1
+    %arrayLengthEncoded += 1
+
+    // Check that %array is big enough
+    cjump %indexToPrintEncoded < %arrayLengthEncoded :correct :wrong
+    :wrong
+    rdi <- %array
+    rsi <- %indexToPrintEncoded
+    call array-error 2
+
+    // Compute the %offset of the specified element in the %array given as input
+    :correct
+    %offset <- %indexToPrintEncoded
+    %offset >>= 1
+    %offset *= 8
+    %offset += 8
+    %offsetEncoded <- %offset
+    %offsetEncoded <<= 1
+    %offsetEncoded += 1
+
+    // Print the %offset
+    rdi <- %offsetEncoded
+    call print 1
+
+    // Fetch the %array element to print
+    %arrayElementAddress <- %offset
+    %arrayElementAddress += %array
+    %arrayElement <- mem %arrayElementAddress 0
+
+    // Print the specified element of the %array
+    %isArrayElementAnInt <- %arrayElement
+    %isArrayElementAnInt &= 1
+    cjump %isArrayElementAnInt = 0 :isAnArray2 :isAnInt2
+    :isAnInt2
+    rdi <- %arrayElement
+    call print 1
+    goto :exitFunction
+    :isAnArray2
+    mem rsp -8 <- :exitFunction
+    rdi <- %arrayElement
+    call :printArray 1
+
+    // Return
+    :exitFunction
+    return
+  )
+)

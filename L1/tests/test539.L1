@@ -1,0 +1,71 @@
+(:go
+(:sort
+	1 0
+	r8 <- rdi
+	rax <- mem r8 0
+	r9 <- 2
+	:outer_loop
+	cjump rax < r9 :after :outer_step
+	:outer_step
+	r10 <- r9
+	:inner_loop
+	cjump r10 <= 1 :after_inner_step :inner_step
+	:inner_step
+	rcx <- r10
+	rcx--
+	rcx <<= 3
+	rcx += r8
+	rsi <- r10
+	rsi <<= 3
+	rsi += r8
+	rdx <- mem rcx 0
+	rdi <- mem rsi 0
+	cjump rdi < rdx :swap :after_inner_step
+	:swap
+	mem rsi 0 <- rdx
+	mem rcx 0 <- rdi
+	r10--
+	goto :inner_loop
+	:after_inner_step
+	r9++
+	goto :outer_loop
+	:after
+	rax <- r8
+	return
+)
+
+(:go
+	0 0
+	rdi <- 41
+	rsi <- 3
+	call allocate 2
+	mem rax 8 <- 35
+	mem rax 16 <- 15
+	mem rax 24 <- 13
+	mem rax 32 <- 19
+	mem rax 40 <- 51
+	mem rax 48 <- 27
+	mem rax 56 <- 49
+	mem rax 64 <- 57
+	mem rax 72 <- 9
+	mem rax 80 <- 63
+	mem rax 88 <- 81
+	mem rax 96 <- 97
+	mem rax 104 <- 11
+	mem rax 112 <- 11
+	mem rax 120 <- 13
+	mem rax 128 <- 7
+	mem rax 136 <- 33
+	mem rax 144 <- 37
+	mem rax 152 <- 27
+	mem rax 160 <- 51
+	mem rsp -8 <- :sort_ret
+	rdi <- rax
+	call :sort 1
+	:sort_ret
+	rdi <- rax
+	call print 1
+	return
+)
+
+)

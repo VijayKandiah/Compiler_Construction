@@ -1,0 +1,8 @@
+(:myF
+  0 0
+
+  rdi <- 5
+  call :myF2 1
+
+  return
+)

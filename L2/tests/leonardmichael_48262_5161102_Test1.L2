@@ -1,0 +1,79 @@
+// Specify rdi at the beginning
+// Fill array with increasing uints from 0 to (decoded rdi)
+// Walk array & print
+
+(:go
+ (:go
+  1 1
+  rdi <- 7
+
+  mem rsp -8 <- :populate_ree
+  mem rsp 0 <- rdi
+  call :populate 1
+  :populate_ree
+  rdi <- mem rsp 0
+
+  rsi <- rax
+  mem rsp -8 <- :print_arr_ree
+  call :print_arr 2
+  :print_arr_ree
+
+  return
+  )
+
+ (:populate
+  1 0
+  %size <- rdi
+  %count_to_write <- 1 // rdi already contains the %size
+  rsi <- %count_to_write
+  rdi <- %size
+  call allocate 2
+  %counter <- 0
+  %write_ptr <- rax
+
+  :write_val
+  %write_ptr += 8 // r9 holds write location
+  %encoded_counter <- %counter
+  %encoded_counter <<= 1
+  %encoded_counter += 1
+  mem %write_ptr 0 <- %counter
+  %counter += 1
+  goto :check_count
+
+  :check_count
+  cjump %counter <= %size :write_val :out
+
+  :out
+  return
+  )
+
+ (:print_arr
+  2 3
+  mem rsp 0 <- r12
+  mem rsp 8 <- r13
+  mem rsp 16 <- r14
+
+  %counter <- 0
+  %size <- rdi
+  %addr <- rsi
+
+  :print_val
+  %addr += 8
+  r13 <- %addr
+  rdi <- mem r13 0
+  rdi <<= 1
+  rdi += 1
+  call print 1
+  %counter += 1
+  goto :count
+
+  :count
+  cjump %counter <= %size :print_val :get_out
+
+  :get_out
+  r14 <- stack-arg -8
+  r13 <- stack-arg -16
+  r12 <- stack-arg -24
+  return
+  )
+ )

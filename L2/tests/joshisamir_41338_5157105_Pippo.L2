@@ -1,0 +1,91 @@
+// Insertion Sort: perform an in-place assertion sort on a given array
+// Input: an array of n integers
+// Output: the input array sorted by increasing value
+
+(:go 
+  (:sort
+    1 0
+    // store input array
+    %arr_ptr <- rdi
+  
+    %arr_len <- mem %arr_ptr 0
+    %i <- 2         // outer loop starting iterator
+
+    // while loop over the array
+    :outer_loop
+      cjump %arr_len < %i :after :outer_step  
+      
+      :outer_step 
+        %j <- %i
+     
+      // inner while loop for inserting a number using swap 
+      :inner_loop
+        cjump %j <= 1 :after_inner_step :inner_step
+
+        :inner_step
+            %prev_value_ptr <- %j
+            %prev_value_ptr --
+            %prev_value_ptr <<= 3
+            %prev_value_ptr += %arr_ptr
+            %curr_value_ptr <- %j
+            %curr_value_ptr <<= 3
+            %curr_value_ptr += %arr_ptr
+            %prev_value <- mem %prev_value_ptr 0   // array[%j - 1]
+            %curr_value <- mem %curr_value_ptr 0  // array[%j]
+            cjump %curr_value < %prev_value :swap :after_inner_step
+
+        // swap two numbers if array[%j - 1] > array[%j]
+        :swap
+            mem %curr_value_ptr 0 <- %prev_value
+            mem %prev_value_ptr 0 <- %curr_value
+            %j --
+            goto :inner_loop
+
+        :after_inner_step
+            %i ++ 
+
+      goto :outer_loop 
+
+    :after
+        rax <- %arr_ptr
+        return 
+  )
+
+  (:go
+    0 0
+
+    // Allocate array of 20 integers to be sorted by sort()
+    rdi <- 41
+    rsi <- 3
+    call allocate 2
+
+    mem rax 8 <- 35
+    mem rax 16 <- 15
+    mem rax 24 <- 13
+    mem rax 32 <- 19
+    mem rax 40 <- 51
+    mem rax 48 <- 27
+    mem rax 56 <- 49
+    mem rax 64 <- 57
+    mem rax 72 <- 9
+    mem rax 80 <- 63
+    mem rax 88 <- 81
+    mem rax 96 <- 97
+    mem rax 104 <- 11
+    mem rax 112 <- 11
+    mem rax 120 <- 13
+    mem rax 128 <- 7
+    mem rax 136 <- 33
+    mem rax 144 <- 37
+    mem rax 152 <- 27
+    mem rax 160 <- 51
+
+    mem rsp -8 <- :sort_ret
+    rdi <- rax
+    call :sort 1
+    :sort_ret
+    rdi <- rax
+    call print 1
+    return 
+  )
+)

@@ -1,0 +1,36 @@
+define :main () {
+ :entry
+ %newVar1 <- 5 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 5 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %a <- call allocate (%newVar0, 1)
+ %newVar3 <- %a + 8
+ store %newVar3 <- 5
+ %newVar4 <- %a + 16
+ store %newVar4 <- 5
+ %newVar5 <- %a + 24
+ store %newVar5 <- 5
+ call :initArray (%a)
+ return 
+}
+
+define :initArray (%A) {
+ :init
+ %newVar1 <- 0
+ %newVar2 <- %A + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+
+ %newVar5 <- 1
+
+ %newVar5 <- %newVar4 * %newVar5
+ %newVarX <- %newVar5 << 1
+ %newVarX <- %newVarX + 1
+ call print(%newVarX)
+
+ return 
+}

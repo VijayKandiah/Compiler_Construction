@@ -1,0 +1,131 @@
+define :main () {
+ :start
+ %test_value <- 1234
+ %newVar1 <- 9 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 9 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar3 <- 9 >> 1
+ %newVar0 <- %newVar0 * %newVar3
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 8
+ %matrix <- call allocate (%newVar0, 1)
+ %newVar4 <- %matrix + 8
+ store %newVar4 <- 7
+ %newVar5 <- %matrix + 16
+ store %newVar5 <- 9
+ %newVar6 <- %matrix + 24
+ store %newVar6 <- 9
+ %newVar7 <- %matrix + 32
+ store %newVar7 <- 9
+ %result <- call :find (%matrix, %test_value)
+ call print (%result)
+ %newVar9 <- 0
+ %newVar10 <- %matrix + 24
+ %newVar11 <- load %newVar10
+ %newVar12 <- %newVar11 >> 1
+ %newVar13 <- %matrix + 32
+ %newVar14 <- load %newVar13
+ %newVar15 <- %newVar14 >> 1
+ %newVar16 <- 1
+ %newVar16 <- %newVar15 * %newVar16
+ %newVar17 <- 1 * %newVar16
+ %newVar9 <- %newVar17 + %newVar9
+ %newVar16 <- %newVar12 * %newVar16
+ %newVar18 <- 2 * %newVar16
+ %newVar9 <- %newVar18 + %newVar9
+ %newVar9 <- %newVar9 + 0
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 40
+ %newVar19 <- %matrix + %newVar8
+ store %newVar19 <- %test_value
+ %result <- call :find (%matrix, %test_value)
+ call print (%result)
+ return 
+}
+
+define :find (%A, %v) {
+ :start
+ %newVar0 <- 0 * 8
+ %newVar1 <- %newVar0 + 16
+ %newVar2 <- %A + %newVar1
+ %length1 <- load %newVar2
+ call print (%length1)
+ %length1 <- %length1 >> 1
+ %newVar3 <- 1 * 8
+ %newVar4 <- %newVar3 + 16
+ %newVar5 <- %A + %newVar4
+ %length2 <- load %newVar5
+ call print (%length2)
+ %length2 <- %length2 >> 1
+ %newVar6 <- 2 * 8
+ %newVar7 <- %newVar6 + 16
+ %newVar8 <- %A + %newVar7
+ %length3 <- load %newVar8
+ call print (%length3)
+ %length3 <- %length3 >> 1
+ br :init
+ :init
+ %found <- 1
+ %i <- 0
+ %j <- 0
+ %k <- 0
+ br :first_cond
+ :first_inc
+ %i <- %i + 1
+ br :first_body
+ :second_inc
+ %j <- %j + 1
+ br :second_body
+ :third_inc
+ %k <- %k + 1
+ br :third_cond
+ :first_body
+ %j <- 0
+ br :first_cond
+ :second_body
+ %k <- 0
+ br :second_cond
+ :third_body
+ %newVar10 <- 0
+ %newVar11 <- %A + 24
+ %newVar12 <- load %newVar11
+ %newVar13 <- %newVar12 >> 1
+ %newVar14 <- %A + 32
+ %newVar15 <- load %newVar14
+ %newVar16 <- %newVar15 >> 1
+ %newVar17 <- 1
+ %newVar17 <- %newVar16 * %newVar17
+ %newVar18 <- %j * %newVar17
+ %newVar10 <- %newVar18 + %newVar10
+ %newVar17 <- %newVar13 * %newVar17
+ %newVar19 <- %i * %newVar17
+ %newVar10 <- %newVar19 + %newVar10
+ %newVar10 <- %newVar10 + %k
+ %newVar9 <- %newVar10 * 8
+ %newVar9 <- %newVar9 + 40
+ %newVar20 <- %A + %newVar9
+ %check_value <- load %newVar20
+ %equal <- %check_value = %v
+ br %equal :did_find
+ br :third_inc 
+ :third_cond
+ %check_index <- %k < %length3
+ br %check_index :third_body
+ br :second_inc 
+ :second_cond
+ %check_index <- %j < %length2
+ br %check_index :third_cond
+ br :first_inc 
+ :first_cond
+ %check_index <- %i < %length1
+ br %check_index :second_cond
+ br :end 
+ :did_find
+ %found <- 3
+ br :end
+ :end
+ return %found
+}
+

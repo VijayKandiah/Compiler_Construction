@@ -1,0 +1,20 @@
+(:main
+ (:main
+ 0 0
+ rdi <- 5
+ mem rsp -8 <- :f_ret
+ call :square 1
+ :f_ret
+ rdi <- rax
+ rdi *= 2
+ rdi += 1
+ call print 1
+ return)
+
+ (:square
+  1 0
+  rdx <- rdi
+  rdi *= rdi
+  rdi *= rdx
+  rax <- rdi
+  return))

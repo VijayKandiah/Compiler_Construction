@@ -1,0 +1,16 @@
+(:go
+  (:go
+    0 0
+
+    // Allocate the data
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+
+    // Print the computed data
+    rdi <- rax
+    call print 1
+
+    return
+  )
+)

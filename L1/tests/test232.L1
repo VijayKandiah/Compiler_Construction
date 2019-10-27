@@ -1,0 +1,132 @@
+(:go
+(:go
+	0 1
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :printArray_ret
+	call :printArray 1
+	:printArray_ret
+	return
+)
+
+(:printArray
+	1 3
+	rsi <- rdi
+	mem rsp 16 <- rsi
+	rsi <- 2
+	mem rsp 8 <- rsi
+	mem rsp -8 <- :checkArray_ret
+	call :checkArray 1
+	:checkArray_ret
+	cjump rax = 0 :isInt1 :isAnArray1
+	:isInt1
+	rax <- 0
+	return
+	:isAnArray1
+	rdi <- 0
+	mem rsp 0 <- rdi
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	cjump rsi < rdi :loop_start :loop_end
+	:loop_start
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :printArrayElement_ret
+	call :printArrayElement 2
+	:printArrayElement_ret
+	rdi <- mem rsp 0
+	rdi++
+	mem rsp 0 <- rdi
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	cjump rsi < rdi :loop_start :loop_end
+	:loop_end
+	return
+)
+
+(:printArrayElement
+	2 3
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 16 <- rdi
+	rdi <- rsi
+	mem rsp -8 <- :printValue_ret1
+	call :printValue 1
+	:printValue_ret1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi *= 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :printValue_ret2
+	call :printValue 1
+	:printValue_ret2
+	rdi <- mem rsp 0
+	rsi <- rdi
+	rdi <- mem rsp 8
+	rsi += rdi
+	rdi <- mem rsi 0
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :checkArray_ret1
+	call :checkArray 1
+	:checkArray_ret1
+	cjump rax = 0 :isInt2 :isAnArray2
+	:isInt2
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :printValue_ret3
+	call :printValue 1
+	:printValue_ret3
+	return
+	:isAnArray2
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :printArray_ret1
+	call :printArray 1
+	:printArray_ret1
+	return
+)
+
+(:checkArray
+	1 0
+	rdi <- rdi
+	rdi &= 1
+	cjump rdi = 0 :isAnArray :isAnInt
+	:isAnInt
+	rax <- 0
+	return
+	:isAnArray
+	rax <- 1
+	return
+)
+
+(:printValue
+	1 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

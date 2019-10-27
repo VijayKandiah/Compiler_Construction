@@ -1,0 +1,51 @@
+(:main
+	(:main
+		0 1
+		rdi <- 1
+		rsi <- 3
+		rdx <- 5
+		rcx <- 7
+		r8 <- 9
+		r9 <- 11
+		mem rsp -8 <- :ret	
+		mem rsp -16 <- 13	
+		mem rsp -24 <- 12
+		call :printVars 8
+		:ret
+		rbx <- rcx
+		rax <- rbx
+		rbp <- 2
+		r10 <- 4
+		r11 <- 6
+		r12 <- 8
+		r13 <- 10
+		r14 <- 12
+		r15 <- r14
+		r15++
+		mem rsp 0 <- r15
+		rdi <- r15
+		call print 1
+		r15 <- mem rsp 0
+		rbp -= 1
+		r10 += 2
+		r11 *= 3
+		r12 &= 4
+		rax <- 5
+		cjump rdi = 1 :true :false
+		:true
+		goto :false
+		:false
+		r14 >>= 5				
+		return)
+  (:printVars
+    8 0
+    %var1 <- stack-arg 0
+    %var1 += rdi
+    rdi <- %var1
+    call print 1
+    %var2 <- stack-arg 8
+    rdi <- %var2
+    call print 1
+    return
+  )
+)

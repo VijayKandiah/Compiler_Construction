@@ -1,0 +1,221 @@
+// This program attempts to create a queue library for L3
+
+// Args:    %val     : int
+//
+// Return:  %encoded : int
+define :encode(%val) {
+  %almost_encoded <- %val << 1
+  %encoded <- %almost_encoded + 1
+  return %encoded
+}
+
+// Args:    %val     : int
+//
+// Return:  %decoded : int
+define :decode(%val) {
+  %decoded <- %val >> 1
+  return %decoded
+}
+
+// Return:  %queue_ptr : ptr
+define :new_queue() {
+  // This allocates an empty queue, where the "elements" are all 0's
+  %size <- 0
+  %encoded_size <- call :encode(%size)
+  %default <- 0
+  %encoded_default <- call :encode(%default)
+  %queue_ptr <- call allocate(%encoded_size, %encoded_default)
+  return %queue_ptr
+}
+
+// Args:    %old_queue_ptr : ptr
+//          %val           : int
+//
+// Return:  %new_queue_ptr : ptr
+define :enqueue(%old_queue_ptr, %val) {
+
+  // First, allocate a new array that's one element bigger than the old one
+  %old_size <- load %old_queue_ptr // This should load the %size
+  %new_size <- %old_size + 1
+  %encoded_new_size <- call :encode(%new_size)
+  %default <- 0
+  %encoded_default <- call :encode(%default)
+  %new_queue_ptr <- call allocate(%encoded_new_size, %encoded_default)
+
+  // Call a recursive helper function to fill the rest of the array
+  %final_queue_ptr <- call :refill_queue(%new_queue_ptr, %old_queue_ptr, %old_size)
+
+  // Finally, write the new value into the last idx of the new array
+  %encoded_val <- call :encode(%val)
+  %offset <- %new_size * 8
+  %curr_idx <- %new_queue_ptr + %offset
+  store %curr_idx <- %encoded_val
+
+  return %final_queue_ptr
+}
+
+// Args:    %new_queue_ptr   : ptr
+//          %old_queue_ptr   : ptr
+//          %num_remaining   : int
+//
+// Return:  %new_queue_ptr   : ptr
+define :refill_queue(%new_queue_ptr, %old_queue_ptr, %num_remaining) {
+
+  // First, check if we're done
+  %more_to_write <- %num_remaining > 0
+  br %more_to_write :write_another
+  br :base_case
+
+// Base case: queue has been fully reconstructed. Return the pointer
+:base_case
+  return %new_queue_ptr
+
+// Other case: we need to write more into the queue
+:write_another
+  // First, get the element that we need to write
+  %old_size <- load %old_queue_ptr
+  %old_queue_loc <- %old_queue_ptr + 8 // First element in the array
+  %num_elem_offset <- %old_size - %num_remaining
+  %offset <- %num_elem_offset * 8
+  %old_queue_loc <- %old_queue_loc + %offset
+  %val_to_write <- load %old_queue_loc
+
+  // Now, get a pointer to the second element in the new queue
+  // Because we've already pushed the first element
+  %new_queue_loc <- %new_queue_ptr + 8
+
+  // Then, go to the index that we need to write to
+  %new_queue_loc <- %new_queue_loc + %offset
+  store %new_queue_loc <- %val_to_write
+
+  // And finally, recur
+  %new_num_remaining <- %num_remaining - 1
+  %new_queue_ptr <- call :refill_queue(%new_queue_ptr, %old_queue_ptr, %new_num_remaining)
+  return %new_queue_ptr
+}
+
+// Args:    %queue_ptr : ptr
+//
+// Return:  pop_type_ptr : ptr 
+//
+//          Returns a two element array,
+//          Where the first is the element we've popped
+//          And the second is a pointer to the array without the element that has been popped
+define :dequeue(%queue_ptr) {
+  // In C, this would be (assert queue.%size > 0
+  // But this is the best we can do in this language
+  %old_size <- load %queue_ptr // This should load the %size
+  %not_empty <- %old_size > 0
+  br %not_empty :do_dequeue
+  br :abort
+
+:abort
+  call array-error(%queue_ptr, 0)
+  return %queue_ptr
+
+:do_dequeue
+  // Read out the first value from the input queue
+  %dequeue_loc <- %queue_ptr + 8
+  %val <- load %dequeue_loc
+
+  // Write the rest of the values into a new array
+  %queue_ptr <- call :shrink_queue(%queue_ptr)
+
+  // Package the return array
+  // First, allocate a 2 element array where both elements are the popped value
+  %ret_size <- 2
+  %encoded_ret_size <- call :encode(%ret_size)
+  %ret <- call allocate(%encoded_ret_size, %val)
+
+  // Finally, overwrite the second element to be a pointer to the new array, and return
+  %ret_back <- %ret + 16
+  store %ret_back <- %queue_ptr
+  return %ret
+}
+
+// Args:    %old_queue_ptr   : ptr
+//          %num_remaining   : int
+//
+// Return:  %new_queue_ptr   : ptr
+define :shrink_queue(%old_queue_ptr) {
+  // Allocate a new array that's one element smaller than the old one
+  %old_size <- load %old_queue_ptr // This should load the %size
+  %new_size <- %old_size - 1
+  %encoded_new_size <- call :encode(%new_size)
+  %default <- 0
+  %encoded_default <- call :encode(%default)
+  %new_queue_ptr <- call allocate(%encoded_new_size, %encoded_default)
+
+  // Then, populate it
+  %new_queue_ptr <- call :do_shrink_queue(%new_queue_ptr, %old_queue_ptr, %new_size)
+  return %new_queue_ptr 
+}
+
+// Args:    %old_queue_ptr   : ptr
+//          %num_remaining   : int
+//
+// Return:  %new_queue_ptr   : ptr
+define :do_shrink_queue(%new_queue_ptr, %old_queue_ptr, %num_remaining) {
+
+  // First, check if we're done
+  %more_to_write <- %num_remaining > 0
+  br %more_to_write :write_another
+  br :base_case
+
+// Base case: queue has been fully reconstructed. Return the pointer
+:base_case
+  return %new_queue_ptr
+
+// Other case: we need to write more into the queue
+:write_another
+  %old_size <- load %new_queue_ptr
+  %num_elem_offset <- %old_size - %num_remaining
+  %offset <- %num_elem_offset * 8
+  %old_queue_loc <- %old_queue_ptr + 16
+  %old_queue_loc <- %old_queue_loc + %offset
+  %val_to_write <- load %old_queue_loc
+
+  %new_queue_loc <- %new_queue_ptr + 8
+  %new_queue_loc <- %new_queue_loc + %offset
+  store %new_queue_loc <- %val_to_write
+
+  // And finally, recur
+  %new_num_remaining <- %num_remaining - 1
+  %new_queue_ptr <- call :do_shrink_queue(%new_queue_ptr, %old_queue_ptr, %new_num_remaining)
+  return %new_queue_ptr
+}
+
+// Testing: does this queue stuff work?
+define :main() {
+  %queue_ptr <- call :new_queue()
+  %queue_ptr <- call :enqueue(%queue_ptr, 0)
+  %queue_ptr <- call :enqueue(%queue_ptr, 1)
+  %queue_ptr <- call :enqueue(%queue_ptr, 2)
+  %queue_ptr <- call :enqueue(%queue_ptr, 3)
+
+  // Print the original queue
+  call print(%queue_ptr)
+ 
+:dequeue_from_queue
+  %dequeue_package <- call :dequeue(%queue_ptr)
+
+  // Print the dequeueped value, which needs to be %encoded
+  %dequeueped_loc <- %dequeue_package + 8
+  %dequeueped_val <- load %dequeueped_loc
+  call print(%dequeueped_val)
+
+  // Print the queue after dequeueping
+  %dequeueped_queue_ptr_ptr <- %dequeue_package + 16
+  %queue_ptr <- load %dequeueped_queue_ptr_ptr
+  call print(%queue_ptr)
+
+  // Loop until the queue is empty
+  %queue_size <- load %queue_ptr
+  %more_to_dequeue <- %queue_size > 0
+  br %more_to_dequeue :dequeue_from_queue
+  br :out
+
+:out
+
+  return
+}

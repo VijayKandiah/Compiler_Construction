@@ -1,0 +1,46 @@
+(:main
+(:main
+	0 2
+	rdi <- 1900
+	mem rsp 0 <- rdi
+	rdi <- 2000
+	mem rsp 8 <- rdi
+	rdi <- 2000
+	rdi -= 1900
+	rdi >>= 2
+	rdi++
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rcx <- rax
+	:init_loop
+	rdi <- mem rsp 0
+	rsi <- rdi
+	rdx <- rcx
+	:loop_start
+	rdi <- mem rsp 8
+	cjump rsi <= rdi :calc :print_ans
+	:calc
+	rdi <- rsi
+	rdi &= 3
+	cjump 0 < rdi :not_leap :leap
+	:not_leap
+	goto :continue_loop
+	:leap
+	rdi <- rsi
+	rdi <<= 1
+	rdi++
+	rdx += 8
+	mem rdx 0 <- rdi
+	:continue_loop
+	rsi += 1
+	goto :loop_start
+	:print_ans
+	rdi <- rcx
+	call print 1
+	return
+)
+
+)

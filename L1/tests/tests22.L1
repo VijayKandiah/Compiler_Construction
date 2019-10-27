@@ -1,0 +1,16 @@
+(:go
+ (:go
+  0 0
+  mem rsp -8 <- :f_ret
+  call :f 0
+  :f_ret
+  rdi <- rax
+  rsi <- 3
+  call allocate 2
+  rdi <- rax
+  call print 1
+  return)
+ (:f
+  0 0
+  rax <- 5
+  return))

@@ -1,0 +1,9 @@
+define :main ( ){
+  %v1 <- 1
+  %v2 <- 2
+
+  %tempV <- %v1 + %v2
+  call print(%tempV)
+
+  return 0
+}

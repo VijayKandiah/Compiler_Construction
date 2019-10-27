@@ -1,0 +1,101 @@
+define :main () {
+ :entry
+ %newVar1 <- 5 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 5 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %a <- call allocate (%newVar0, 1)
+ %newVar3 <- %a + 8
+ store %newVar3 <- 5
+ %newVar4 <- %a + 16
+ store %newVar4 <- 5
+ %newVar5 <- %a + 24
+ store %newVar5 <- 5
+ call :initArray (%a)
+ call print (%a)
+ call :printE (%a, 0, 0)
+ call :printE (%a, 0, 1)
+ call :printE (%a, 1, 0)
+ call :printE (%a, 1, 1)
+ return 
+}
+
+define :initArray (%A) {
+ :init
+ %newVar1 <- 0
+ %newVar2 <- %A + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- 1
+ %newVar5 <- %newVar4 * %newVar5
+ %newVar6 <- 0 * %newVar5
+ %newVar1 <- %newVar6 + %newVar1
+ %newVar1 <- %newVar1 + 0
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar7 <- %A + %newVar0
+ store %newVar7 <- 1
+ %newVar9 <- 0
+ %newVar10 <- %A + 24
+ %newVar11 <- load %newVar10
+ %newVar12 <- %newVar11 >> 1
+ %newVar13 <- 1
+ %newVar13 <- %newVar12 * %newVar13
+ %newVar14 <- 0 * %newVar13
+ %newVar9 <- %newVar14 + %newVar9
+ %newVar9 <- %newVar9 + 1
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 32
+ %newVar15 <- %A + %newVar8
+ store %newVar15 <- 3
+ %newVar17 <- 0
+ %newVar18 <- %A + 24
+ %newVar19 <- load %newVar18
+ %newVar20 <- %newVar19 >> 1
+ %newVar21 <- 1
+ %newVar21 <- %newVar20 * %newVar21
+ %newVar22 <- 1 * %newVar21
+ %newVar17 <- %newVar22 + %newVar17
+ %newVar17 <- %newVar17 + 0
+ %newVar16 <- %newVar17 * 8
+ %newVar16 <- %newVar16 + 32
+ %newVar23 <- %A + %newVar16
+ store %newVar23 <- 5
+ %newVar25 <- 0
+ %newVar26 <- %A + 24
+ %newVar27 <- load %newVar26
+ %newVar28 <- %newVar27 >> 1
+ %newVar29 <- 1
+ %newVar29 <- %newVar28 * %newVar29
+ %newVar30 <- 1 * %newVar29
+ %newVar25 <- %newVar30 + %newVar25
+ %newVar25 <- %newVar25 + 1
+ %newVar24 <- %newVar25 * 8
+ %newVar24 <- %newVar24 + 32
+ %newVar31 <- %A + %newVar24
+ store %newVar31 <- 7
+ return 
+}
+
+define :printE (%A, %i, %j) {
+ :entry
+ %newVar1 <- 0
+ %newVar2 <- %A + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- 1
+ %newVar5 <- %newVar4 * %newVar5
+ %newVar6 <- %i * %newVar5
+ %newVar1 <- %newVar6 + %newVar1
+ %newVar1 <- %newVar1 + %j
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar7 <- %A + %newVar0
+ %e <- load %newVar7
+ call print (%e)
+ return 
+}
+

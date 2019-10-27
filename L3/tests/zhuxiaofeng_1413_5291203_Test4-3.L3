@@ -1,0 +1,158 @@
+define :main() {
+
+    // Allocate the first array
+    %encoded <- 5
+    %encoded <- %encoded << 1
+    %encoded <- %encoded + 1  
+    %array <- call allocate(%encoded, 3)
+
+    // Store values to the first array
+    %newVar <- %array + 8
+    store %newVar <- 5
+    %newVar2 <- %array + 16
+    store %newVar2 <- 7
+
+    // Print the first array
+    call print(%array)
+
+    // Allocate the second array
+    %array2 <- call allocate(%encoded, 3)
+
+    // Store values to the second array
+    call :storeValueToArray(%array2, 3, 1)
+
+    // Print the second array
+    call print(%array2)
+
+    // Check the arrays
+    %same <- call :isArraySame(%array, %array2)
+    %decoded_same <- call :encode(%same)
+    call print(%decoded_same)          
+
+    return
+}
+define :isAddress (%p1){
+    %p2 <- %p1 & 1
+    %p2 <- %p2 = 0
+    br %p2 :isAddress
+    br :isNumber
+    :isAddress
+    return 1
+    :isNumber
+    return 0
+}
+define :encode (%var) {
+     :entry
+     %var <- %var << 1
+     %var <- %var + 1
+     return %var
+}
+define :increaseOne (%p1){
+    %p5 <- %p1 + 1
+    return %p5
+}
+define :isEqual (%p1, %p2){
+    %p3 <- %p1 = %p2
+    br %p3 :equal
+    br :not_equal
+    :equal
+    return 1
+    :not_equal
+    return 0
+}
+define :getSamller(%p1, %p2) {
+    %sign <- call :isSmallerAndEqual (%p1, %p2)
+    br %sign :p1_smaller
+    br :p2_smaller
+    :p1_smaller
+    return %p1
+    :p2_smaller
+    return %p2   
+}
+define :isSmaller (%p1, %p2){
+    %p3 <- %p1 < 1
+    br %p3 :smaller
+    br :larger
+    :smaller
+    return 1
+    :larger
+    return 0
+}
+define :isSmallerAndEqual (%p1, %p2){
+    %p3 <- %p1 <= 1
+    br %p3 :smaller
+    br :larger
+    :smaller
+    return 1
+    :larger
+    return 0
+}
+define :getArrayElementByIndex(%array, %index) {
+    %index <- call :increaseOne (%index)
+    %offest <- 8 * %index
+    %addr <- %array + %offest
+    %element <- load %addr
+    return %element
+}
+define :storeValueToArray (%A1, %a, %index) {
+    %is_A1_address <- call :isAddress(%A1)
+    br %is_A1_address :is_array_label
+    br :end_label
+    :is_array_label
+    %length <- load %A1
+    %length <- call :getSamller(3, %length)
+    :loop_start
+    %tmp <- %index < %length
+    br %tmp :loop_next
+    br :end_label
+    :loop_next
+    %offest_index <- call :increaseOne (%index)
+    %offest <- 8 * %offest_index
+    %addr <- %A1 + %offest
+    %a <- %a + %index
+    %encoded_a <- call :encode(%a)
+    store %addr <- %encoded_a
+    %index <- %index + 1
+    br :loop_start
+    :end_label
+    return  
+}
+define :isArraySame (%A1, %A2) {
+    %is_A1_address <- call :isAddress(%A1)
+    %is_A2_address <- call :isAddress(%A2)
+    br %is_A1_address :go_ahead_label
+    br :end_label
+    br %is_A2_address :go_ahead_label
+    br :end_label 
+
+    :end_label
+    return 0
+
+    :go_ahead_label
+    %length_A1 <- load %A1
+    %length_A2 <- load %A2
+    %sign <- call :isEqual(%length_A1, %length_A2)
+    br %sign :chek_elements_label
+    br :end_label
+    :chek_elements_label
+    %index <- 0
+    :loop_start
+    %tmp <- %index < %length_A1
+    br %tmp :loop_next
+    br :loop_end
+
+    :loop_next  
+    %element1 <- call :getArrayElementByIndex(%A1, %index)
+    %element2 <- call :getArrayElementByIndex(%A2, %index)
+
+    %sign <- call :isEqual(%element1, %element2)
+    br %sign :continue_checking_label
+    br :end_label
+
+    :continue_checking_label
+    %index <- %index + 1
+    br :loop_start
+
+    :loop_end
+    return 1
+}

@@ -1,0 +1,16 @@
+(:main
+  (:main
+    0 0
+    mem rsp -8 <- :f_ret1
+    call :f 0
+    :f_ret1
+    rsi <- :f
+    mem rsp -8 <- :f_ret2
+    call rsi 0
+    :f_ret2
+    return)
+  (:f
+    0 0
+    rdi <- 3
+    call print 1
+    return))

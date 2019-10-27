@@ -1,0 +1,29 @@
+define :main () {
+ :new_label0
+ %newVar0p0 <- 3
+ %newVar0p1 <- 5
+ %newVar0p2 <- 7
+ %newVar0p3 <- 9
+ %newVar0p4 <- 11
+ %newVar0p5 <- 13
+ %newVar0p6 <- 15
+ %newVar0p7 <- 17
+ %newVar0p8 <- 19
+ call :printValues (%newVar0p0, %newVar0p1, %newVar0p2, %newVar0p3, %newVar0p4, %newVar0p5, %newVar0p6, %newVar0p7, %newVar0p8)
+ return 
+}
+
+define :printValues (%p0, %p1, %p2, %p3, %p4, %p5, %p6, %p7, %p8) {
+ :new_label0
+ call print (%p0)
+ call print (%p1)
+ call print (%p2)
+ call print (%p3)
+ call print (%p4)
+ call print (%p5)
+ call print (%p6)
+ call print (%p7)
+ call print (%p8)
+ return 
+}
+

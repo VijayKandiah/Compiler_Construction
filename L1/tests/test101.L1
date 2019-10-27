@@ -1,0 +1,14 @@
+(:main
+(:main
+	0 0
+	:call_label0
+	rdi <- :myOtherF
+	return
+)
+
+(:myOtherF
+	0 0
+	return
+)
+
+)

@@ -1,0 +1,17 @@
+(:go
+  (:go
+    0 0
+
+    mem rsp -8 <- :retAddr
+    mem rsp -16 <- 5
+    call :myF 7
+    :retAddr
+
+    return
+  )
+
+  (:myF
+    7 3
+    return
+  )
+)

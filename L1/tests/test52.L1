@@ -1,0 +1,34 @@
+(:go
+
+  (:go
+    0 1
+
+    // Set a caller-save register
+    r10 <- 5
+
+    // Save caller-save registers we used before we call another function
+    mem rsp 0 <- r10
+
+    // Call a function
+    mem rsp -8 <- :myF_ret
+    call :myF 0
+    :myF_ret
+
+    // Restore caller-save registers we previously saved
+    r10 <- mem rsp 0
+
+    // Print
+    rdi <- r10
+    call print 1
+
+    return
+  )
+
+  (:myF
+    0 0
+
+    r10 <- 3
+
+    return
+  )
+)

@@ -1,0 +1,75 @@
+(:go
+(:go
+	0 1
+	mem rsp 0 <- 7
+	rdi <- mem rsp 0
+	rdi *= rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rsi <- 18 <= rdi
+	rdi <- rsi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	rdi <- 70
+	rdi++
+	cjump 64 < rdi :true :false
+	:true
+	mem rsp 0 <- -9
+	rdi <- mem rsp 0
+	rdi *= rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi--
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi -= rdi
+	mem rsp 0 <- rdi
+	mem rsp 0 <- 13
+	rdi <- mem rsp 0
+	rdi *= rdi
+	mem rsp 0 <- rdi
+	rsi <- -15
+	rsi *= rsi
+	rdi <- mem rsp 0
+	rdi &= rsi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	goto :done
+	:false
+	rdi <- 9 < 14
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 9
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi *= 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rsi <- rdi = 81
+	rsi += 8432
+	rdi <- mem rsp 0
+	rsi &= rdi
+	cjump rsi < 20 :print :done
+	:print
+	rsi -= 81
+	rdi <- rsi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	:done
+	return
+)
+
+)

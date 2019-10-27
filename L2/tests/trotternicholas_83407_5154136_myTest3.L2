@@ -1,0 +1,70 @@
+(:go
+  (:go
+    0 0
+
+    %var1 <- 7
+    %var1 *= %var1
+    %var2 <- 18 <= %var1
+
+    // Print
+    %varPrint <- %var2
+    %varPrint <<= 1
+    %varPrint++
+    rdi <- %varPrint
+    call print 1
+
+    %var3 <- 70
+    %var3++
+    cjump 64 < %var3 :true :false
+
+    :true
+    %var1 <- -9
+    %var1 *= %var1
+    %var1--
+
+    // Print
+    %varPrint <- %var1
+    %varPrint <<= 1
+    %varPrint++
+    rdi <- %varPrint
+    call print 1
+
+    %var1 -= %var1
+    %var1 <- 13
+    %var1 *= %var1
+    %var2 <- -15
+    %var2 *= %var2
+    %var1 &= %var2
+
+    // Print
+    %varPrint <- %var1
+    %varPrint <<= 1
+    %varPrint++
+    rdi <- %varPrint
+    call print 1
+
+    goto :done
+
+    :false
+    %var1 <- 9 < 14
+    %var1 += 9
+    %var1 *= 8
+    %var2 <- %var1 = 81
+    %var2 += 8432
+    %var2 &= %var1
+    cjump %var2 < 20 :print :done
+
+    :print
+    %var2 -= 81
+
+    // Print
+    %varPrint <- %var2
+    %varPrint <<= 1
+    %varPrint++
+    rdi <- %varPrint
+    call print 1
+
+    :done
+    return
+  )
+)

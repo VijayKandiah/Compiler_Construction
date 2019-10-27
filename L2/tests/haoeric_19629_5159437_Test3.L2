@@ -1,0 +1,89 @@
+// concatenate two arrays
+(:main
+  (:main 0 2
+    rdi <- 11
+    rsi <- 11
+    call allocate 2
+    %a1 <- rax
+
+    rdi <- 7
+    rsi <- 7
+    call allocate 2
+    %a2 <- rax
+
+    rdi <- %a1
+    rsi <- %a2
+    mem rsp -8 <- :ret1
+    call :concatenate 2
+    :ret1
+
+    rdi <- rax
+    call print 1
+
+    rdi <- %a2
+    rsi <- %a1
+    mem rsp -8 <- :ret2
+    call :concatenate 2
+    :ret2
+
+    rdi <- rax
+    call print 1
+    return
+  )
+
+  (:concatenate 2 10
+    %a1 <- rdi
+    %a2 <- rsi
+
+    // get array sizes
+    %s1 <- mem %a1 0
+    %s1 <<= 1
+    %s1 ++
+
+    %s2 <- mem %a2 0
+    %s2 <<= 1
+    %s2 ++
+
+    // add to get new array size
+    %s_new <- %s1
+    %s_new --
+    %s_new += %s2
+
+    // allocate new array
+    rdi <- %s_new
+    rsi <- 1
+    call allocate 2
+    %a_new <- rax
+
+    // fill new array
+    %i <- 1
+    %ptr <- %a1
+    %ptr_new <- %a_new
+    %ptr += 8
+    %ptr_new += 8
+    :loop1
+    %temp <- mem %ptr 0
+    mem %ptr_new 0 <- %temp
+    %i += 2
+    %ptr += 8
+    %ptr_new += 8
+    cjump %s1 <= %i :concatsecondarray :loop1
+
+    :concatsecondarray
+    %ptr <- %a2
+    %ptr += 8
+    %i <- 1
+    :loop2
+    %temp <- mem %ptr 0
+    mem %ptr_new 0 <- %temp
+    %i += 2
+    %ptr += 8
+    %ptr_new += 8
+    cjump %s2 <= %i :done :loop2
+
+    :done
+    rax <- %a_new
+    return
+
+  )
+)

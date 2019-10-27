@@ -1,0 +1,41 @@
+// Test2
+// Goal: Send 7 1's to an add function, return the sum, print it
+
+(:go 
+	(:go
+		0 0
+		rdi<-1
+		rsi<-1				
+		rdx<-1
+		rcx<-1
+		r8<-1
+		r9<-1
+		mem rsp -8 <- :f_ret
+		mem rsp -16 <- 1
+		call :add 7
+		:f_ret
+		// Load sum into rdi for print
+		rdi <- rax
+		call print 1
+		return
+	)
+	(:add
+	// Add values stored in registers/on stack, return sum to caller
+		7 1
+		r10 <- rdi
+		r10 += rsi
+		r10 += rdx
+		r10 += rcx
+		r10 += r8
+		r10 += r9
+		r11 <- mem rsp 8
+		r10 += r11
+		rdi <- r10
+		rdi <<= 1
+		rdi++
+		mem rsp 0 <- rdi
+		call print 1
+		rax <- mem rsp 0
+		return
+	)
+)

@@ -1,0 +1,15 @@
+(:go
+ (:go
+  0 0
+  rdi <- 17
+  rsi <- 25
+  rax <- 1
+  :start_loop
+  rax += rsi
+  rax -= 1
+  rdi -= 2
+  cjump rdi <= 1 :end_loop :start_loop
+  :end_loop
+  rdi <- rax
+  call print 1
+  return))

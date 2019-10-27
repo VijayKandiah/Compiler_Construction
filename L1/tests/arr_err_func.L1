@@ -1,0 +1,50 @@
+(:main
+	(:main
+		0 1
+		rdi <- 15
+		rsi <- 11
+		call allocate 2
+		mem rsp 0 <- rax
+
+		rdi <- mem rsp 0
+		rsi <- 6
+		mem rsp -8 <- :ret1
+		call :check 2
+		:ret1
+
+		rdi <- mem rsp 0
+		rsi <- 7
+		mem rsp -8 <- :ret2
+		call :check 2
+		:ret2
+
+		rdi <- mem rsp 0
+		rsi <- 8
+		mem rsp -8 <- :ret3
+		call :check 2
+		:ret3
+
+		rdi <- mem rsp 0
+		rsi <- 9
+		mem rsp -8 <- :ret4
+		call :check 2
+		:ret4
+
+		rdi <- mem rsp 0
+		rsi <- 10
+		mem rsp -8 <- :ret5
+		call :check 2
+		:ret5
+
+		return)
+
+	(:check 
+		2 0
+		rax <- mem rdi 0
+		cjump rax < rsi :bad :good
+		:bad
+		rsi *= 2
+		rsi += 1
+		call array-error 2
+		:good
+		return))

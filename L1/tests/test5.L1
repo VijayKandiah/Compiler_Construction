@@ -1,0 +1,68 @@
+(:go
+  (:go
+    0 2
+
+    // Compute the data using not optimized code
+    rdi <- 5
+    rsi <- 3
+    mem rsp -8 <- :testFunction_ret
+    call :testFunction 1
+    :testFunction_ret
+    mem rsp 0 <- r14
+    r14 <- rax
+
+    // Compute the data using optimized code
+    rdi <- 5
+    rsi <- 3
+    mem rsp -8 <- :testFunctionFast_ret
+    call :testFunctionFast 1
+    :testFunctionFast_ret
+    mem rsp 8 <- r15
+    r15 <- rax
+
+    // Print the computed data
+    rdi <- r14
+    call print 1
+    rdi <- r15
+    call print 1
+
+    // Restore the callee save registers
+    r14 <- mem rsp 0
+    r15 <- mem rsp 8
+    
+    return
+  )
+
+  (:testFunction
+    1 0
+
+    // Decode the input arguments
+    rsi >>= 1
+    rdi >>= 1
+
+    // Compute the result
+    rdi += rsi
+
+    // Encode the result
+    rdi <<= 1
+    rdi += 1
+
+    // Return
+    rax <- rdi
+    return
+  )
+
+  (:testFunctionFast
+    1 0
+
+    // Compute the result
+    rdi += rsi
+
+    // Adjust the encoded result
+    rdi -= 1
+
+    // Return
+    rax <- rdi
+    return
+  )
+)

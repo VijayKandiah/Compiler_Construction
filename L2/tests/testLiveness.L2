@@ -1,0 +1,27 @@
+(:main
+  (:main
+    0 0
+    %encoded <- 5
+    %encoded <- %encoded
+    %encoded <<= 1
+    %encoded <- %encoded
+    %encoded += 1
+    rdi <- %encoded
+    rsi <- 3
+    call allocate 2
+    %array2 <- rax
+    rdi <- %array2
+    rsi <- 3
+    mem rsp -8 <- :call_label0
+    call :storeValueToArray 2
+    :call_label0
+    return
+  )
+  (:storeValueToArray
+    2 0
+    %A1 <- rdi
+    %a <- rsi
+    %length <- mem %A1 0 
+    return
+  )
+)

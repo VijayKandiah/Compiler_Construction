@@ -1,0 +1,19 @@
+(:go
+  (:go
+    0 2
+
+    // Compute the data using not optimized code
+    rdi <- 5
+    mem rsp -8 <- :testFunction_ret
+    call :testFunction 1
+    :testFunction_ret
+     
+    return
+  )
+
+  (:testFunction
+    1 0
+
+    return
+  )
+)

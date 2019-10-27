@@ -1,0 +1,12 @@
+(:go
+ (:go
+  0 0
+  rdi <- 5
+  goto :loc1
+  :loc2
+  rdi += 2
+  call print 1
+  return
+  :loc1
+  rdi += 2
+  goto :loc2))

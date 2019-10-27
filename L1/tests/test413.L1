@@ -1,0 +1,14 @@
+(:go
+(:go
+	0 0
+	rdi <- 5
+	rsi <- -3
+	rdi <- rdi
+	rdi++
+	rdi += rsi
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

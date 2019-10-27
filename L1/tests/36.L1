@@ -1,0 +1,18 @@
+(:main
+ (:main
+  0
+  0
+  rax <- 2
+  r10 <- 1
+  rax <- rax < r10
+  rcx <- 0
+  cjump rax = rcx :then :else
+  :then
+  rdi <- 3
+  call print 1
+  goto :done
+  :else
+  rdi <- 1
+  call print 1
+  :done
+  return))

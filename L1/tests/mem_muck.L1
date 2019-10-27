@@ -1,0 +1,39 @@
+(:main
+	(:main
+		0 0
+		rdi <- 20
+		mem rsp -8 <- :ret
+		call :mem_muck 1
+		:ret
+		return)
+
+	(:mem_muck
+		1 120
+		cjump rdi = 0 :done :cont
+		:done
+		rax <- 1
+		return
+		:cont
+		mem rsp 800 <- rdi
+		rdi -= 1
+		mem rsp -8 <- :memret
+		call :mem_muck 1
+		:memret
+		rdi <- mem rsp 800
+		rax *= rdi
+
+		mem rsp 16 <- rax
+		rdi <- rax
+		mem rsp -8 <- :pret
+		call :p 1
+		:pret
+
+		rax <- mem rsp 16
+		return)
+
+	(:p
+		1 0
+		rdi *= 2
+		rdi += 1
+		call print 1
+		return))

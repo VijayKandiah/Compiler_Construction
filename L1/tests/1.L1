@@ -1,0 +1,23 @@
+(:main
+ (:main
+  0 1
+  mem rsp 0 <- 1
+  :loop
+  rdi <- mem rsp 0
+  mem rsp -8 <- :ret1
+  call :add1 1
+  :ret1
+  cjump rax = 11 :return :next
+  :next
+  mem rsp 0 <- rax
+  rdi <- rax
+  call print 1
+  goto :loop
+  :return
+  return)
+ (:add1
+  1 0
+  rax <- rdi
+  rax += 2
+  return))
+

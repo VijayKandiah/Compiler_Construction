@@ -1,0 +1,20 @@
+(:myF
+  0 0
+
+  %myVar <- 0
+  %myVar += 3
+  %myVar += 3
+  %myVar += 5
+  cjump %myVar <= 1 :true :false
+
+  :true
+  rdi <- %myVar
+  call :myF2 0
+
+  :false
+  return
+)
+
+%myVar
+
+%S

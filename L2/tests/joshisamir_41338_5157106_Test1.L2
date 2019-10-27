@@ -1,0 +1,54 @@
+// max: find and return the max integer in an array
+// Input: an array of n integers
+// Output: the integer with the greatest value in the array
+
+(:go 
+  (:max 
+    1 0 
+    %curr_value_ptr <- rdi
+    %i <- 0
+    %max_value <- -1
+    %arr_len <- mem %curr_value_ptr 0
+
+    :loop
+    %curr_value_ptr += 8
+    %curr_value <- mem %curr_value_ptr 0
+    cjump %max_value < %curr_value :assign :continue
+
+    :assign
+      %max_value <- %curr_value
+
+    :continue
+      %i += 1
+      cjump %i < %arr_len :loop :after
+
+    :after
+      rax <- %max_value
+
+    return 
+  )
+
+  (:go
+    0 0
+    rdi <- 11
+    rsi <- 3
+    call allocate 2
+    
+    // manually filling the array with values to test max
+    mem rax 8 <- 21
+    mem rax 16 <- 23
+    mem rax 24 <- 19
+    mem rax 32 <- 7
+    mem rax 40 <- 51
+
+    mem rsp -8 <- :max_ret
+    rdi <- rax
+    call :max 1
+    :max_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi ++ 
+    call print 1 // expects 51
+    return 
+  )
+)

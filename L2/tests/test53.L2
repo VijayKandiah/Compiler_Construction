@@ -1,0 +1,135 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %l <- 5
+    %newVar1 <- %l
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 4
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %ar <- rax
+    %newVar2 <- %ar
+    %newVar2 += 8
+    mem %newVar2 0  <- 3
+    %newVar3 <- %ar
+    %newVar3 += 16
+    mem %newVar3 0  <- %l
+    mem rsp -8 <- :call_label1
+    rdi <- %l
+    call :encodedValue 1
+    :call_label1
+    %encodedL <- rax
+    rdi <- %encodedL
+    call print 1
+    mem rsp -8 <- :call_label2
+    rdi <- %ar
+    call :printArrayGT 1
+    :call_label2
+    mem rsp -8 <- :call_label3
+    rdi <- %ar
+    call :printArrayGE 1
+    :call_label3
+    mem rsp -8 <- :call_label4
+    rdi <- %ar
+    call :printArrayE 1
+    :call_label4
+    return
+  )
+  (:printArrayGT
+    1 0
+    %p <- rdi
+    :call_label5
+    %i <- 6
+    goto :call_label6
+    :call_label6
+    %keepExecuting <- 0 < %i
+    
+    cjump %keepExecuting = 1 :call_label7 :call_label9
+    :call_label7
+    mem rsp -8 <- :call_label10
+    rdi <- %i
+    call :encodedValue 1
+    :call_label10
+    %encodedI <- rax
+    rdi <- %encodedI
+    call print 1
+    goto :call_label8
+    :call_label8
+    %i <- %i
+    %i -= 1
+    goto :call_label6
+    :call_label9
+    return
+  )
+  (:printArrayGE
+    1 0
+    %p <- rdi
+    :call_label11
+    %i <- 5
+    goto :call_label12
+    :call_label12
+    %keepExecuting <- 0 <= %i
+    
+    cjump %keepExecuting = 1 :call_label13 :call_label15
+    :call_label13
+    mem rsp -8 <- :call_label16
+    rdi <- %i
+    call :encodedValue 1
+    :call_label16
+    %encodedI <- rax
+    rdi <- %encodedI
+    call print 1
+    goto :call_label14
+    :call_label14
+    %i <- %i
+    %i -= 1
+    goto :call_label12
+    :call_label15
+    return
+  )
+  (:printArrayE
+    1 0
+    %p <- rdi
+    :call_label17
+    %i <- 5
+    goto :call_label18
+    :call_label18
+    %keepExecuting <- 5 = %i
+    
+    cjump %keepExecuting = 1 :call_label19 :call_label21
+    :call_label19
+    mem rsp -8 <- :call_label22
+    rdi <- %i
+    call :encodedValue 1
+    :call_label22
+    %encodedI <- rax
+    rdi <- %encodedI
+    call print 1
+    goto :call_label20
+    :call_label20
+    %i <- %i
+    %i -= 1
+    goto :call_label18
+    :call_label21
+    return
+  )
+  (:encodedValue
+    1 0
+    %v <- rdi
+    :call_label23
+    %v <- %v
+    %v <<= 1
+    %v <- %v
+    %v += 1
+    rax <- %v
+    return
+  )
+)

@@ -1,0 +1,142 @@
+define void :main ( ){
+
+  :entry
+
+  int64[][][] %A
+  int64 %test
+
+  // create test values
+  int64 %test1
+  int64 %test2
+  int64 %test3
+  int64 %test4
+  int64 %test5
+  int64 %test6
+
+  %test1 <- 7
+  %test2 <- 11
+  %test3 <- 3
+  %test4 <- 9
+  %test5 <- 5
+  %test6 <- 1
+
+  // initialize 3D array
+  %A <- new Array(11, 9, 7) // 5 x 4 x 3
+  %A[0][0][1] <- %test1
+  %A[0][0][2] <- %test2
+  %A[0][1][0] <- %test3
+  %A[0][2][2] <- %test4
+  %A[1][0][1] <- %test5
+  %A[2][1][0] <- %test6
+
+  // test program
+  %test <- call :findArrayValue(%A, %test1)
+  call print(%test) // print 1
+  %test <- call :findArrayValue(%A, %test2)
+  call print(%test) // print 1
+  %test <- call :findArrayValue(%A, 13)
+  call print(%test) // print 0
+  %test <- call :findArrayValue(%A, %test3)
+  call print(%test) // print 1
+  %test <- call :findArrayValue(%A, %test4)
+  call print(%test) // print 1
+  %test <- call :findArrayValue(%A, %test5)
+  call print(%test) // print 1
+  %test <- call :findArrayValue(%A, 17)
+  call print(%test) // print 0
+  %test <- call :findArrayValue(%A, 21)
+  call print(%test) // print 0
+  %test <- call :findArrayValue(%A, %test6)
+  call print(%test) // print 1
+  return
+}
+
+define int64 :findArrayValue (int64[][][] %A, int64 %v){
+
+  :get_dimension_length
+
+  // get length of all 3 dimensions of array
+  int64 %first_dimension_length
+  int64 %second_dimension_length
+  int64 %third_dimension_length
+
+  %first_dimension_length <- length %A 0
+  %second_dimension_length <- length %A 1
+  %third_dimension_length <- length %A 2
+
+  %first_dimension_length <- %first_dimension_length >> 1
+  %second_dimension_length <- %second_dimension_length >> 1
+  %third_dimension_length <- %third_dimension_length >> 1
+  br :nested_for_loops
+
+  :nested_for_loops
+  // iterate through first dimension
+  // for (int i = 0; i < first_dimension_length; i++)
+
+  // initalize index for first loop
+  int64 %i
+  %i <- 0
+  br :check_loop_1
+
+  :check_loop_1
+  int64 %check_loop_1
+  %check_loop_1 <- %i < %first_dimension_length
+  br %check_loop_1 :loop_1_body :exit_loop1
+
+  :loop_1_body
+
+  // iterate through second dimension
+  // for (int j = 0; j < second_dimension_length; j++)
+
+  int64 %j
+  %j <- 0
+  br :check_loop_2
+
+  :check_loop_2
+  int64 %check_loop_2
+  %check_loop_2 <- %j < %second_dimension_length
+  br %check_loop_2 :loop_2_body :exit_loop2
+
+  :loop_2_body
+
+  // iterate through third dimension
+  // for (int k = 0; k < third_dimension_length; k++)
+
+  int64 %k
+  %k <- 0
+  br :check_loop_3
+
+  :check_loop_3
+  int64 %check_loop_3
+  %check_loop_3 <- %k < %third_dimension_length
+  br %check_loop_3 :loop_3_body :exit_loop3
+
+  // if(A[i][j][k] == v)
+  :loop_3_body
+  int64 %current_value
+  %current_value <- %A[%i][%j][%k]
+
+  int64 %check_value_equality
+  %check_value_equality <- %current_value = %v
+  br %check_value_equality :return_true :continue
+
+  :continue
+  %k <- %k + 1
+  br :check_loop_3
+
+  :exit_loop3
+  %j <- %j + 1
+  br :check_loop_2
+
+  :exit_loop2
+  %i <- %i + 1
+  br :check_loop_1
+
+  // value not found
+  :exit_loop1
+  return 1
+
+  // value found
+  :return_true
+  return 3
+}

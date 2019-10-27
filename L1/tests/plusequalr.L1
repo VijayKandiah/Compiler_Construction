@@ -1,0 +1,8 @@
+(:go
+(:go
+0 0
+rdi <- 7
+rsi <- 2
+rdi += rsi
+call print 1
+return))

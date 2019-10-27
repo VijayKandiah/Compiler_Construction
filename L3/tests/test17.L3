@@ -1,0 +1,9 @@
+define :main () {
+ :entry
+ %callerFP <- :myOtherF
+ return 
+}
+
+define :myOtherF (){
+  return
+}

@@ -1,0 +1,43 @@
+(:go
+ (:go
+  0 1
+  mem rsp 0 <- 1
+  %int1 <- 31
+  // not sure what to do with other registers, overwrites my vars
+  rdi <- %int1 
+  call print 1
+  rdi <- %int1
+  %int1 &= 3
+  // this could mess something up
+  r14 <- %int1
+  cjump r14 = 3 :odd :even  
+  :even
+  rdi <- %int1 
+  call print 1
+  cjump 1 = 1 :next :whatIsThisUniverse
+  :odd
+  rdi <- r14
+  call print 1
+  cjump 1 = 1 :next :nothingMakesSense
+  :next 
+  %int2 <- 21
+  rdi <- %int2 
+  call print 1
+  r12 <- 21
+  cjump r12 < 0 :negative :positive
+  :negative
+  %negNum <- -1
+  rdi <- %negNum 
+  call print 1
+  cjump 1 = 1 :end :worldIsExploding
+  :positive
+  %posNum <- 3
+  rdi <- %posNum
+  call print 1
+  :whatIsThisUniverse
+  :nothingMakesSense
+  :worldIsExploding
+  :end
+  return
+ )
+)

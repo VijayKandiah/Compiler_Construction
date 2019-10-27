@@ -1,0 +1,107 @@
+define :main (){
+
+  // Allocate the data
+  %array1 <- call allocate(5, 5)
+
+  // Change %array values
+  %el1Address <- %array1 + 8
+  store %el1Address <- 85
+
+  // Print the %array
+  call print(%array1)
+
+  // Print the data
+  call :printArray(%array1)
+
+  // Allocate the data
+  %array2 <- call allocate(5, 5)
+  store %el1Address <- %array2
+
+  // Print the %array
+  call print(%array1)
+
+  // Print the data
+  call :printArray(%array1)
+
+  return
+}
+
+define :printArray (%array){
+
+  // Initialization of variables
+  %index <- 0
+  %arrayLength <- load %array
+
+  // Check if the %array is an actual %array
+  %tempArrayPointer <- %array & 1
+  br %tempArrayPointer :isAnInt 
+  br :isAnArray
+  :isAnInt
+  return 0
+  :isAnArray
+
+  // Header of the loop
+  :check
+  %continueToExecute <- %index < %arrayLength
+  br %continueToExecute :true 
+  br :false
+
+  // Body of the loop
+  :true
+  %encodedIndex <- %index << 1
+  %encodedIndex <- %encodedIndex + 1
+  call :printData(%array, %encodedIndex)
+  %index <- %index + 1
+  br :check
+
+  :false
+  return 1
+}
+
+define :printData (%array, %indexToPrintEncoded){
+
+  // Print the element number
+  call print(%indexToPrintEncoded)
+
+  // Fetch the length of the %array
+  %arrayLength <- load %array
+
+  // Encode the length of the %array
+  %arrayLengthEncoded <- %arrayLength << 1
+  %arrayLengthEncoded <- %arrayLengthEncoded + 1
+
+  // Check that %array is big enough
+  %isArrayBigEnough <- %indexToPrintEncoded < %arrayLengthEncoded
+  br %isArrayBigEnough :correct 
+  br :wrong
+  :wrong
+  call array-error(%array, %indexToPrintEncoded)
+
+  // Compute the %offset of the specified element in the %array given as input
+  :correct
+  %offset <- %indexToPrintEncoded >> 1
+  %offset <- %offset * 8
+  %offset <- %offset + 8
+  %offsetEncoded <- %offset << 1
+  %offsetEncoded <- %offsetEncoded + 1
+
+  // Print the %offset
+  call print(%offsetEncoded)
+
+  // Fetch the %array element to print
+  %arrayElementAddress <- %offset + %array
+  %arrayElement <- load %arrayElementAddress
+
+  // Print the specified element of the %array
+  %isArrayElementAnInt <- %arrayElement & 1
+  br %isArrayElementAnInt :isAnInt2 
+  br :isAnArray2
+  :isAnInt2
+  call print(%arrayElement)
+  br :exitFunction
+  :isAnArray2
+  call :printArray(%arrayElement)
+
+  :exitFunction
+  return 
+}

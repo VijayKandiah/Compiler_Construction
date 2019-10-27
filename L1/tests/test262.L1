@@ -1,0 +1,13 @@
+(:main
+(:main
+	0 0
+	rdi <- 1
+	rsi <- 2
+	rdi <- rdi
+	rdi += rsi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+)

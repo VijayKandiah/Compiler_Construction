@@ -1,0 +1,48 @@
+(:go
+ (:go
+  0 1
+
+  // Save callee save register
+  mem rsp 0 <- r12
+
+  rdi <- 5
+  rsi <- 7
+  call allocate 2
+  r12 <- rax
+  mem r12 8 <- 41
+  rdi <- mem r12 8
+  call print 1
+  rdi <- mem r12 16
+  call print 1
+
+  rdi <- r12
+  rsi <- 1
+  mem rsp -8 <- :g_ret
+  call :g 2
+  :g_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:g
+   2 3
+   mem rsp 0 <- r12
+   mem rsp 8 <- r13
+   mem rsp 16 <- r14
+   r12 <- rdi
+   r13 <- rsi
+   rdi <- r12
+   call print 1
+   rdi <- r13
+   call print 1
+   r14 <- r13
+   r14 >>= 1
+   r14 *= 8
+   r14 += 8
+   r14 <<= 1
+   r14 += 1
+   rdx <- r14
+   rdx >>= 1
+   rdx += r12
+   rdi <- mem rdx 0
+   call print 1
+   return))

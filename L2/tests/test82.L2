@@ -1,0 +1,46 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    rdi <- 7
+    rsi <- 7
+    mem rsp -8 <- :call_label1
+    call :myF 2
+    :call_label1
+    return
+  )
+  (:myF
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    :call_label2
+    %newVar1 <- %p1
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- %p2
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 6
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %ar <- rax
+    %newVar3 <- %ar
+    %newVar3 += 8
+    mem %newVar3 0  <- 5
+    %newVar4 <- %ar
+    %newVar4 += 16
+    mem %newVar4 0  <- %p1
+    %newVar5 <- %ar
+    %newVar5 += 24
+    mem %newVar5 0  <- %p2
+    rax <- %ar
+    return
+  )
+)

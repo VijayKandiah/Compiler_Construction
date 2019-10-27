@@ -1,0 +1,50 @@
+(:LoopyLoop
+	(:LoopyLoop
+		0 4
+        rdi <- 1
+        %myvar0 <- 0
+		%myvar1 <- 0
+		%myvar2 <- 0
+		//Should print 0
+        call print 1
+        goto :outerBegin
+        //begin outermost loop
+        :outerBegin
+		cjump %myvar2 < 3 :true :false
+		:true
+			%myvar1 <- 1
+			goto :middleBegin
+			//middle loop
+			:middleBegin
+			cjump %myvar1 < 3 :true1 :false1
+			:true1
+				%myvar0 <- 1
+				goto :innerBegin
+				//inner loop
+				:innerBegin
+				cjump %myvar0 < 3 :true2 :false2
+				:true2
+					rdi <- %myvar2
+					rdi <<= 1
+					rdi++
+					call print 1
+					rdi <- %myvar1
+					rdi <<= 1
+					rdi++
+					call print 1
+					rdi <- %myvar0
+					rdi <<= 1
+					rdi++
+					call print 1
+					%myvar0++
+					goto :innerBegin
+		:false1
+			%myvar2++
+			goto :outerBegin
+		:false2
+			%myvar1++
+			goto :middleBegin
+		:false
+		return
+	)
+)

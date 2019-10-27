@@ -1,0 +1,94 @@
+// Fibonacci: An iterative program that finds the nth fibonacci number, given some non-negative integer n
+// Input: n, a non-negative integer
+// Output: the nth fibonacci number
+
+(:go 
+  (:fibonacci
+    1 0 
+
+    cjump rdi = 0 :zero :general
+    
+    :zero 
+    rax <- 1
+    return 
+
+    :one
+    rdi <- rbx
+    call print 1
+    rax <- 3
+    return 
+
+    :general 
+    // Prepare and encode arguments, n + 1 and 0 to pass into `allocate`
+    r12 <- rdi
+    r12 += 1
+    rdi <- r12
+    rdi <<= 1
+    rdi ++
+    rsi <- 1
+
+    // Allocate an array of size n + 1, initialized with values of 0
+    call allocate 2
+
+    // Set a[1] = 1
+    mem rax 16 <- 3
+
+    r15 <- rax 
+    rbx <- rax
+
+    // Loop starts at i = 2
+    r13 <- 24
+
+    // Loop terminates before i = n + 1
+    r14 <- r12
+    r14 <<= 3
+    r14 += 8
+
+    cjump r12 = 2 :one :loop
+    
+    :loop
+    // Reset register with pointer to start of array and update it with current index, located in register r13
+    r15 <- rbx 
+    r15 += r13 
+
+    r12 <- mem r15 -8 // a[i - 1]
+    r12 --
+    r12 >>= 1
+
+    r11 <- mem r15 -16 // a[i - 2]
+    r11 -- 
+    r11 >>= 1
+
+    r12 += r11
+    r12 <<= 1
+    r12 ++
+
+    // Set a[i] = a[i - 1] + a[i - 2]
+    mem r15 0 <- r12
+  
+    // Update current index in r13 and check terminating condition
+    r13 += 8
+    cjump r13 < r14 :loop :after  
+
+    :after
+    rdi <- rbx
+    call print 1
+    rax <- mem r15 0
+    rax --
+    rax >>= 1
+    return 
+  )
+
+  (:go
+    0 0
+    mem rsp -8 <- :fibonacci_ret
+    rdi <- 13
+    call :fibonacci 1
+    :fibonacci_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi ++
+    call print 1
+    return 
+  )
+)

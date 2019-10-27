@@ -1,0 +1,10 @@
+(:main
+ (:main
+  0
+  0
+  rax <- -122
+  rax *= 2
+  rax += 1
+  rdi <- rax
+  call print 1
+  return))

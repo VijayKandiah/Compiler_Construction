@@ -1,0 +1,116 @@
+// Fibonacci: An iterative program that finds the nth fibonacci number, given some non-negative integer %n
+// Input: %n, a non-negative integer
+// Output: the nth fibonacci number
+
+(:go 
+  (:fibonacci
+    1 0 
+
+    cjump rdi = 0 :zero :general
+    
+    :zero 
+      rax <- 0
+      return 
+
+    :one
+      rdi <- %original_arr_ptr
+      call print 1
+      rax <- 1
+      return 
+
+    :general 
+      // Prepare and encode arguments, %n + 1 and 0 to pass into `allocate`
+      %n <- rdi
+      %n += 1
+      rdi <- %n
+      rdi <<= 1
+      rdi ++
+      rsi <- 1
+
+      // Allocate an array of size %n + 1, initialized with values of 0
+      call allocate 2
+
+      // Set a[1] = 1
+      mem rax 16 <- 3
+
+      %arr_ptr <- rax 
+      %original_arr_ptr <- rax
+
+      // Loop starts at i = 2
+      %i_offset <- 24
+
+      // Loop terminates before i = %n + 1
+      %arr_len <- %n
+      %arr_len <<= 3
+      %arr_len += 8
+
+      cjump %n = 2 :one :loop
+    
+    :loop
+      // Reset register with pointer to start of array and update it with current index
+      %arr_ptr <- %original_arr_ptr 
+      %arr_ptr += %i_offset 
+
+      %prev_value <- mem %arr_ptr -8 // arr[i - 1]
+      %prev_value --
+      %prev_value >>= 1
+
+      %prev_prev_value <- mem %arr_ptr -16 // arr[i - 2]
+      %prev_prev_value -- 
+      %prev_prev_value >>= 1
+
+      %prev_value += %prev_prev_value
+      %prev_value <<= 1
+      %prev_value ++
+
+      // Set arr[i] = arr[i - 1] + arr[i - 2]
+      mem %arr_ptr 0 <- %prev_value
+    
+      // Update current index and check terminating condition
+      %i_offset += 8
+      cjump %i_offset < %arr_len :loop :after  
+
+    :after
+      rdi <- %original_arr_ptr
+      call print 1
+      rax <- mem %arr_ptr 0
+      rax --
+      rax >>= 1
+
+    return 
+  )
+
+  (:go
+    0 0
+    mem rsp -8 <- :fibonacci_ret
+
+    // General case: %n = 13
+    rdi <- 13
+    call :fibonacci 1
+    :fibonacci_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi ++
+    call print 1   // Expects 233, the 13th fibonacci number
+
+    // Base case: %n = 0
+    // rdi <- 0
+    // call :fibonacci 1
+    // :fibonacci_ret
+    // rdi <- rax 
+    // rdi <<= 1
+    // rdi ++ 
+    // call print 1  // Expects 0
+
+    // Base case: %n = 1
+    // rdi <- 1
+    // call :fibonacci 1
+    // :fibonacci_ret
+    // rdi <- rax 
+    // rdi <<= 1
+    // rdi ++ 
+    // call print 1  // Expects 1
+
+    return 
+  )
+)

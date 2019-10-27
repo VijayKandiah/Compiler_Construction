@@ -1,0 +1,22 @@
+(:main
+ (:main
+  0
+  1
+  mem rsp 0 <- rbx
+  rax <- rsp
+  rbx <- rax
+  mem rsp -8 <- :ret
+  call :f 0
+  :ret
+  cjump rbx < rax :lt :ge
+  :lt
+  rdi <- 3
+  call print 1
+  goto :done
+  :ge
+  rdi <- 1
+  call print 1
+  :done
+  rbx <- mem rsp 0
+  return)
+ (:f 0 0 rax <- rsp return))

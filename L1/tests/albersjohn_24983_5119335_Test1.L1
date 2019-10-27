@@ -1,0 +1,72 @@
+// Specify rdi at the beginning
+// Fill array with increasing uints from 0 to (decoded rdi)
+// Walk array & print
+
+(:go
+ (:go
+  1 0
+  rdi <- 69
+
+  mem rsp -8 <- :populate_ree
+  call :populate 1
+  :populate_ree
+
+  rsi <- rax
+  mem rsp -8 <- :print_arr_ree
+  call :print_arr 2
+  :print_arr_ree
+
+  return
+  )
+
+ (:populate
+  1 0
+  rsi <- 1 // rdi already contains the size
+  call allocate 2
+  r11 <- 0
+  r9 <- rax
+
+  :write_val
+  r9 += 8 // r9 holds write location
+  r10 <- r11
+  r10 <<= 1
+  r10 += 1
+  mem r9 0 <- r11
+  r11 += 1
+  goto :check_count
+
+  :check_count
+  cjump r11 <= rdi :write_val :out
+
+  :out
+  return
+  )
+
+ (:print_arr
+  2 3
+  mem rsp 0 <- r12
+  mem rsp 8 <- r13
+  mem rsp 16 <- r14
+  r12 <- 0
+  r13 <- rdi
+  r14 <- rsi
+
+  :print_val
+  r14 += 8
+  rdi <- mem r14 0
+  rdi <<= 1
+  rdi += 1
+  call print 1
+  r12 += 1
+  goto :count
+
+  :count
+  cjump r12 <= r13 :print_val :get_out
+
+  :get_out
+  r14 <- mem rsp 16
+  r13 <- mem rsp 8
+  r12 <- mem rsp 0
+  return
+  )
+ )

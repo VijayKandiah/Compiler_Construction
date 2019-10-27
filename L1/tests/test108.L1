@@ -1,0 +1,70 @@
+(:main
+(:main
+	0 1
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 3
+	rdi >>= 1
+	rsi <- rdi
+	rdi <- 5
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- 7
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 8
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	mem rsp 0 <- rax
+	rdi <- mem rsp 0
+	rdi += 8
+	mem rdi 0 <- 7
+	rdi <- mem rsp 0
+	rdi += 16
+	mem rdi 0 <- 3
+	rdi <- mem rsp 0
+	rdi += 24
+	mem rdi 0 <- 5
+	rdi <- mem rsp 0
+	rdi += 32
+	mem rdi 0 <- 7
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 16
+	rdi <- mem rsp 0
+	rdi += rsi
+	rdi <- mem rdi 0
+	rdi <- rdi
+	call print 1
+	rdi <- 1
+	rdi *= 8
+	rsi <- rdi
+	rsi += 16
+	rdi <- mem rsp 0
+	rdi += rsi
+	rdi <- mem rdi 0
+	rdi <- rdi
+	call print 1
+	rdi <- 2
+	rdi *= 8
+	rsi <- rdi
+	rsi += 16
+	rdi <- mem rsp 0
+	rdi += rsi
+	rdi <- mem rdi 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

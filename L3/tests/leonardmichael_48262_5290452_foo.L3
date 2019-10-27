@@ -1,0 +1,169 @@
+define :main(){
+%size <- 1
+%var1 <- %size << 1
+%var2 <- %size << 2
+%var3 <- %size << 3
+%var4 <- %size << 4
+%var5 <- %size << 5
+%var6 <- %size << 6
+%var7 <- %size << 7
+%size <- %var2 - %var1
+%size <- %size + %var4
+%size <- %size - %var3
+%size <- %size + %var6
+%size <- %size - %var5
+%size <- %size >> 2
+%size <- %size + 1
+%init <- 1
+
+%x_1 <- call allocate(3,1)
+%x_1 <- call allocate(3,%x_1)
+%x_1 <- call allocate(3,%x_1)
+%x_1 <- call allocate(3,%x_1)
+call print(%x_1)
+
+%start <- call allocate (%size, %init)
+%mapped <- call :map(%start, %size)
+call print(%mapped)
+
+
+
+%which <- 0
+
+%fin <- call :filter(%mapped, %size, %which)
+call print(%fin)
+
+
+%mapped <- call :map(%fin, %size)
+call print(%mapped)
+
+%which <- 1
+%fin <- call :filter(%mapped, %size, %which)
+call print(%fin)
+
+%size <- %size
+%mapped <- call :map(%fin,%size)
+%do <- call :acc(%mapped, %size)
+call print (%do)
+
+return
+}
+
+
+define :acc(%s,%n) {
+%a <- 0
+%refcount <- %n - 2
+%addr <- %s + 8
+
+:acc_comp
+%res <- %refcount <= 0
+br %res :acc_out
+br :in_out
+:in_out
+%val1 <- load %addr
+%a <- %a + %val1
+%refcount <- %refcount - 2
+%addr <- %addr + 8
+br :acc_comp
+:acc_out
+%a <- %a - 2
+%a <- %a - 2
+return %a
+}
+
+define :filter(%s, %n, %w){
+%refcount <- %n - 2
+%addr <- %s + 8
+
+%switch <- %w
+
+:comp
+
+%res <- %refcount <= 0
+br %res :out
+br :in
+:in
+%val1 <- load %addr
+
+%val2 <- %switch = 0
+br %val2 :even
+br :odd
+:even
+%val2 <- call :even_nil(%val1)
+br :out_1
+:odd
+%val2 <- call :odd_nil(%val1)
+:out_1
+
+store %addr <- %val2
+%refcount <- %refcount - 2
+%addr <- %addr + 8
+
+br :comp
+
+:out
+
+return %s
+
+}
+
+define :even_nil(%n) {
+%n <- %n >> 1
+%var <- %n & 1
+return %var
+}
+
+define :odd_nil(%n) {
+%n <- %n >> 1
+%n <- %n - 1
+%var <- %n & 1
+return %var
+
+}
+
+define :map(%s, %n){
+%refcount <- %n - 2
+
+
+%addr <- %s + 8
+
+:compare
+%res <- %refcount <= 0
+br %res :done
+br :another_one
+:another_one
+%val1 <- load %addr
+%val2 <- call :i_wish(%val1, %refcount)
+%val2 <- %val2 << 1
+%val2 <- %val2 + 1
+
+
+store %addr <- %val2
+
+
+%refcount <- %refcount - 2
+%addr <- %addr + 8
+
+br :compare
+
+:done
+return %s
+
+}
+
+define :i_wish(%val, %scaler){
+%out_val <- %scaler << 1
+%out_val <- %scaler + 1
+
+%x <- call :even_nil(%scaler)
+
+%result <- %x = 0
+
+br %result :inc
+br :none
+:inc
+%out_val <- %out_val + 1
+:none
+return %out_val
+
+}

@@ -1,0 +1,15 @@
+(:go
+  (:go
+    0 0
+
+    rdi <- 2
+    rdi++
+    rdi++
+    rdi++
+
+    // Print
+    call print 1
+
+    return
+  )
+)

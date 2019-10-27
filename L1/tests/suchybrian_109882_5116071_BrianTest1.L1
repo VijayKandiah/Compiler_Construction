@@ -1,0 +1,50 @@
+(:LoopyLoop
+	(:LoopyLoop
+		0 4
+        rdi <- 1
+        rbx <- 0
+		rbp <- 0
+		r15 <- 0
+		//Should print 0
+        call print 1
+        goto :outerBegin
+        //begin outermost loop
+        :outerBegin
+		cjump r15 < 3 :true :false
+		:true
+			rbp <- 1
+			goto :middleBegin
+			//middle loop
+			:middleBegin
+			cjump rbp < 3 :true1 :false1
+			:true1
+				rbx <- 1
+				goto :innerBegin
+				//inner loop
+				:innerBegin
+				cjump rbx < 3 :true2 :false2
+				:true2
+					rdi <- r15
+					rdi <<= 1
+					rdi++
+					call print 1
+					rdi <- rbp
+					rdi <<= 1
+					rdi++
+					call print 1
+					rdi <- rbx
+					rdi <<= 1
+					rdi++
+					call print 1
+					rbx++
+					goto :innerBegin
+		:false1
+			r15++
+			goto :outerBegin
+		:false2
+			rbp++
+			goto :middleBegin
+		:false
+		return
+	)
+)

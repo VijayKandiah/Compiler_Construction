@@ -1,0 +1,23 @@
+(:func_8args
+ (:func_8args
+  0 0
+  mem rsp -8 <- :foo_ret
+  rdi <- 0
+  rsi <- 1
+  rdx <- 2
+  rcx <- 3
+  r8 <- 4
+  r9 <- 5
+  mem rsp -16 <- 7
+  mem rsp -24 <- 9
+  call :foo 8
+  :foo_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:foo
+  8 0
+  rax <- mem rsp 8
+  rdi <- mem rsp 0
+  rax *= rdi
+  return))

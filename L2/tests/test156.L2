@@ -1,0 +1,128 @@
+(:main
+  (:make_pos
+    1 0
+    %n <- rdi
+    %increm <- 1
+    %counter <- 0
+    %iterations <- -2
+    %iterations *= %n
+    rdi <- %n
+    call print 1
+    :call_label0
+    %n <- %n
+    %n += %increm
+    %counter <- %counter
+    %counter += 1
+    %check <- %counter < %iterations
+    
+    cjump %check = 1 :call_label0 :call_label1
+    :call_label1
+    rdi <- %n
+    call print 1
+    return
+  )
+  (:make_neg
+    1 0
+    %n <- rdi
+    %increm <- 1
+    %counter <- 0
+    %iterations <- 2
+    %iterations *= %n
+    rdi <- %n
+    call print 1
+    :call_label_ciao_2
+    %n <- %n
+    %n -= %increm
+    %counter <- %counter
+    %counter += 1
+    %check <- %counter < %iterations
+    
+    cjump %check = 1 :call_label_ciao_2 :call_label_ciao_3
+    :call_label_ciao_3
+    rdi <- %n
+    call print 1
+    return
+  )
+  (:pos_or_neg
+    1 0
+    %n <- rdi
+    %check <- %n < 0
+    
+    cjump %check = 1 :call_label_ciao__ciao_4 :call_label_ciao__ciao_5
+    :call_label_ciao__ciao_4
+    rdi <- %n
+    mem rsp -8 <- :call_label_ciao__ciao_6
+    call :make_pos 1
+    :call_label_ciao__ciao_6
+    return
+    :call_label_ciao__ciao_5
+    rdi <- %n
+    mem rsp -8 <- :call_label_ciao__ciao_7
+    call :make_neg 1
+    :call_label_ciao__ciao_7
+    return
+  )
+  (:initialize_array
+    1 0
+    %p <- rdi
+    %index <- 0
+    %ptr <- %p
+    :call_label_ciao__ciao__ciao_8
+    %val <- %index
+    %val += 1
+    %val <- %val
+    %val <<= 1
+    %val <- %val
+    %val += 1
+    mem %ptr 0  <- %val
+    %index <- %index
+    %index += 1
+    %ptr <- %ptr
+    %ptr += 8
+    %check <- %index < 10
+    
+    cjump %check = 1 :call_label_ciao__ciao__ciao_8 :call_label_ciao__ciao__ciao_9
+    :call_label_ciao__ciao__ciao_9
+    return
+  )
+  (:main
+    0 0
+    %arr_size <- 10
+    %arr_size <- %arr_size
+    %arr_size <<= 1
+    %arr_size <- %arr_size
+    %arr_size += 1
+    rdi <- %arr_size
+    rsi <- 0
+    call allocate 2
+    %arr <- rax
+    %ptr <- %arr
+    %ptr += 8
+    rdi <- %ptr
+    mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_12
+    call :initialize_array 1
+    :call_label_ciao__ciao__ciao__ciao_12
+    %new_ptr <- %arr
+    %new_ptr += 8
+    rdi <- %arr
+    call print 1
+    %index <- 0
+    :call_label_ciao__ciao__ciao__ciao_10
+    %num <- mem %new_ptr 0 
+    rdi <- %num
+    call print 1
+    rdi <- %num
+    mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_13
+    call :pos_or_neg 1
+    :call_label_ciao__ciao__ciao__ciao_13
+    %index <- %index
+    %index += 1
+    %new_ptr <- %new_ptr
+    %new_ptr += 8
+    %check <- %index < 10
+    
+    cjump %check = 1 :call_label_ciao__ciao__ciao__ciao_10 :call_label_ciao__ciao__ciao__ciao_11
+    :call_label_ciao__ciao__ciao__ciao_11
+    return
+  )
+)

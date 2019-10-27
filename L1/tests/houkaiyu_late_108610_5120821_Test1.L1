@@ -1,0 +1,25 @@
+//// Is 2018 a leap year?
+(:main
+	(:main
+		0 1
+		r10 <- 2018
+		r10 <<= 1
+		r10++
+		mem rsp 0 <- r10
+		rdi <- r10
+		//// print 2018
+		call print 1
+		r10 <- mem rsp 0
+		r10 &= 6
+		cjump 1 < r10 :no :yes
+		:no
+		rdi <- 1
+		goto :print_result
+		:yes
+		//// question: how could I know, 2018 % 100
+		rdi <- 3
+		:print_result
+		call print 1
+		return
+	)
+)

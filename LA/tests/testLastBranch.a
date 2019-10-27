@@ -1,0 +1,13 @@
+void main () {
+ int64 var
+
+ br :end
+ :start
+
+ print(var)
+ return
+
+ :end
+ var <- 1
+ br :start
+}

@@ -1,0 +1,15 @@
+define :main () {
+ :entry
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %ar <- call allocate (%newVar0, 1)
+ %newVar2 <- %ar + 8
+ store %newVar2 <- 3
+ %newVar3 <- %ar + 16
+ store %newVar3 <- 3
+ return 
+}
+

@@ -1,0 +1,172 @@
+(:main
+(:main
+	0 3
+	rdi <- 1900
+	mem rsp 8 <- rdi
+	rdi <- 2000
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :call_label0
+	call :create_array 2
+	:call_label0
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	rdx <- mem rsp 0
+	rdx <- rdx
+	mem rsp -8 <- :call_label1
+	call :fill_array 3
+	:call_label1
+	rdi <- rax
+	rdi <- mem rsp 16
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(:create_array
+	2 0
+	rdx <- rdi
+	rdi <- rsi
+	rdi <- rdi
+	rdi <- rdi
+	rdi -= rdx
+	rdi <- rdi
+	rdi >>= 2
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_2
+	call :encode 1
+	:call_label_ciao_2
+	rdi <- rax
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	rax <- rdi
+	return
+)
+
+(:encode
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(:encode_print
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_3
+	call :encode 1
+	:call_label_ciao__ciao_3
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(:fill_array
+	3 4
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- rsi
+	mem rsp 16 <- rdi
+	rdi <- rdx
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	:call_label_ciao__ciao__ciao_4
+	rdi <- mem rsp 8
+	rsi <- mem rsp 16
+	rdi <- rsi <= rdi
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_5 :call_label_ciao__ciao__ciao_9
+	:call_label_ciao__ciao__ciao_5
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_10
+	call :is_leap_year 1
+	:call_label_ciao__ciao__ciao_10
+	rdi <- rax
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_7 :call_label_ciao__ciao__ciao_6
+	:call_label_ciao__ciao__ciao_6
+	goto :call_label_ciao__ciao__ciao_8
+	:call_label_ciao__ciao__ciao_7
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_11
+	call :encode 1
+	:call_label_ciao__ciao__ciao_11
+	rdi <- rax
+	rsi <- mem rsp 0
+	mem rsi 0 <- rdi
+	:call_label_ciao__ciao__ciao_8
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	goto :call_label_ciao__ciao__ciao_4
+	:call_label_ciao__ciao__ciao_9
+	rdi <- mem rsp 24
+	rax <- rdi
+	return
+)
+
+(:is_leap_year
+	1 0
+	rdx <- rdi
+	rsi <- rdx
+	rsi <- rsi
+	rsi &= 15
+	rdi <- rsi = 0
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_17 :call_label_ciao__ciao__ciao__ciao_12
+	:call_label_ciao__ciao__ciao__ciao_12
+	rsi <- rdx
+	rsi <- rsi
+	rsi >>= 2
+	:call_label_ciao__ciao__ciao__ciao_13
+	rdi <- rsi = 25
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_18 :call_label_ciao__ciao__ciao__ciao_14
+	:call_label_ciao__ciao__ciao__ciao_14
+	rdi <- 25 < rsi
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_15 :call_label_ciao__ciao__ciao__ciao_16
+	:call_label_ciao__ciao__ciao__ciao_15
+	rsi <- rsi
+	rsi -= 25
+	goto :call_label_ciao__ciao__ciao__ciao_13
+	:call_label_ciao__ciao__ciao__ciao_16
+	rsi <- rdx
+	rsi <- rsi
+	rsi &= 3
+	rdi <- rsi = 0
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_17 :call_label_ciao__ciao__ciao__ciao_18
+	:call_label_ciao__ciao__ciao__ciao_17
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao__ciao_18
+	rax <- 0
+	return
+)
+
+)

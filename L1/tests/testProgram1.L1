@@ -1,0 +1,172 @@
+(:go
+  (:go
+    0 2
+
+    // Save the callee save registers
+    mem rsp 8 <- r13
+    mem rsp 0 <- r12
+
+    // Allocate the data
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    r12 <- rax
+
+    // Change array values
+    mem r12 8 <- 85
+
+    // Print the array
+    rdi <- r12
+    call print 1
+
+    // Print the data
+    rdi <- r12
+    mem rsp -8 <- :printArray_ret
+    call :printArray 1
+    :printArray_ret
+
+    // Allocate the data
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    r13 <- rax
+    mem r12 8 <- r13
+
+    // Print the array
+    rdi <- r12
+    call print 1
+
+    // Print the data
+    rdi <- r12
+    mem rsp -8 <- :printArray_ret2
+    call :printArray 1
+    :printArray_ret2
+
+    // Restore the callee save registers
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+
+    // Return
+    return
+  )
+
+  (:printArray
+    0 3
+
+    // Save the callee save registers
+    mem rsp 16 <- r14
+    mem rsp 8 <- r13
+    mem rsp 0 <- r12
+
+    // Initialization of variables
+    r12 <- 0            // The counter
+    r13 <- mem rdi 0  // The lenght of the array
+    r14 <- rdi          // The array
+
+    // Check if the array is an actual array
+    rdi <- r14
+    rdi &= 1
+    cjump rdi = 0 :isAnArray :isAnInt
+    :isAnInt
+    rax <- 0
+    return
+    :isAnArray
+
+    // Header of the loop
+    :check
+    cjump r12 < r13 :true :false
+
+    // Body of the loop
+    :true
+    rdi <- r14
+    rsi <- r12
+    rsi <<= 1
+    rsi++
+    mem rsp -8 <- :printData_ret
+    call :printData 2
+    :printData_ret
+    r12++
+    goto :check
+
+    // Restore the callee save registers
+    :false
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+    r14 <- mem rsp 16
+
+    // Return
+    rax <- 1
+    return
+  )
+
+  (:printData
+    2 4
+
+    // Save the callee save registers
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+    mem rsp 16 <- r14
+    mem rsp 24 <- r15
+
+    // Store the input
+    r12 <- rdi    // the pointer to the array
+    r13 <- rsi    // the element number to print elements start from 0
+
+    // Print the element number
+    rdi <- r13
+    call print 1
+
+    // Fetch the length of the array
+    r14 <- mem r12 0
+
+    // Encode the length of the array
+    r14 <<= 1
+    r14 += 1
+
+    // Check that array is big enough
+    cjump r13 < r14 :correct :wrong
+    :wrong
+    rdi <- r12
+    rsi <- r13
+    call array-error 2
+
+    // Compute the offset of the specified element in the array given as input
+    :correct
+    r15 <- r13
+    r15 >>= 1
+    r15 *= 8
+    r15 += 8
+    r15 <<= 1
+    r15 += 1
+
+    // Print the offset
+    rdi <- r15
+    call print 1
+
+    // Fetch the specified element of the array given as input
+    rdx <- r15
+    rdx >>= 1
+    rdx += r12
+    rdi <- mem rdx 0
+
+    // Print the specified element of the array
+    rsi <- rdi
+    rsi &= 1
+    cjump rsi = 0 :isAnArray2 :isAnInt2
+    :isAnInt2
+    call print 1
+    goto :exitFunction
+    :isAnArray2
+    mem rsp -8 <- :exitFunction
+    call :printArray 1
+
+    // Restore the callee save registers
+    :exitFunction
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+    r14 <- mem rsp 16
+    r15 <- mem rsp 24
+ 
+    return
+  )
+)

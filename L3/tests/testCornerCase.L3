@@ -1,0 +1,12 @@
+define :main() {
+  %v1 <- 4
+
+  %v2 <- %v1
+  %v1 <- 5
+  %v3 <- %v2 + 1
+
+  call print(%v1)
+  call print(%v3)
+
+  return
+}

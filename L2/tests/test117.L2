@@ -1,0 +1,212 @@
+(:main
+  (:main
+    0 0
+    %a <- 8
+    %b <- 8
+    %c <- 8
+    %d <- 8
+    %e <- 8
+    %f <- 8
+    %g <- 8
+    %h <- 8
+    %size <- 8
+    %size <<= 1
+    %size <- %size
+    %size += 1
+    rdi <- %size
+    rsi <- %size
+    call allocate 2
+    %addr <- rax
+    rdi <- %addr
+    call print 1
+    %x <- 1
+    mem rsp -8 <- :call_label0
+    call :load_stuff 0
+    :call_label0
+    rdi <- %a
+    rsi <- %b
+    rdx <- %c
+    rcx <- %d
+    r8 <- %e
+    r9 <- %x
+    mem rsp -8 <- :call_label1
+    call :fun_f 6
+    :call_label1
+    mem rsp -8 <- :call_label2
+    call :draw 0
+    :call_label2
+    %size <- 8
+    %size <<= 1
+    %size <- %size
+    %size += 3
+    rdi <- %size
+    rsi <- 3
+    call allocate 2
+    %help <- rax
+    rdi <- %help
+    rsi <- %size
+    mem rsp -8 <- :call_label3
+    call :parity 2
+    :call_label3
+    %swag <- rax
+    rdi <- %swag
+    call print 1
+    return
+  )
+  (:parity
+    2 0
+    %addr <- rdi
+    %count <- rsi
+    %count <- %count
+    %idx <- 0
+    %par <- 0
+    :call_label_ciao_4
+    %par_b <- %idx < %count
+    
+    cjump %par_b = 1 :call_label_ciao_5 :call_label_ciao_8
+    :call_label_ciao_5
+    %par_ir <- %idx
+    %par_ir += 8
+    %par_ir <- %addr
+    %par_ir += %idx
+    %par_ir <- mem %par_ir 0 
+    %par_res <- %par_ir = 1
+    
+    cjump %par_res = 1 :call_label_ciao_6 :call_label_ciao_7
+    :call_label_ciao_6
+    %par <- %par
+    %par += 1
+    :call_label_ciao_7
+    %idx <- %idx
+    %idx += 1
+    goto :call_label_ciao_4
+    :call_label_ciao_8
+    %par <- %par
+    %par &= 1
+    rax <- %par
+    return
+  )
+  (:draw
+    0 0
+    rdi <- 17
+    rsi <- 1
+    call allocate 2
+    %addr <- rax
+    mem %addr 32 <- 3
+    %s3 <- %addr
+    %s3 += 48
+    %s4 <- %addr
+    %s4 += 56
+    mem %addr 40 <- 3
+    mem %s3 0  <- 3
+    mem %s4 0  <- 3
+    mem %addr 64 <- 3
+    rdi <- %addr
+    call print 1
+    mem %s3 0  <- 1
+    mem %s4 0  <- 1
+    rdi <- %addr
+    call print 1
+    rdi <- %addr
+    call print 1
+    mem %s3 0  <- 3
+    mem %s4 0  <- 3
+    rdi <- %addr
+    call print 1
+    mem %s3 0  <- 1
+    mem %s4 0  <- 1
+    rdi <- %addr
+    call print 1
+    rdi <- %addr
+    call print 1
+    %s1 <- %addr
+    %s1 += 8
+    %s2 <- %addr
+    %s2 += 16
+    %s3 <- %addr
+    %s3 += 24
+    %s4 <- %addr
+    %s4 += 32
+    mem %s1 0  <- 3
+    mem %s2 0  <- 3
+    mem %s3 0  <- 3
+    mem %s4 0  <- 3
+    rdi <- %addr
+    call print 1
+    return
+  )
+  (:load_stuff
+    0 0
+    rdi <- 9
+    rsi <- 1
+    call allocate 2
+    %addr <- rax
+    %s <- %addr
+    %s += 8
+    %var1 <- mem %s 0 
+    %s <- %s
+    %s += 8
+    %var2 <- mem %s 0 
+    %var3 <- %var2
+    %var3 <- %var3
+    %var3 -= %var2
+    %load_stuff_res <- %var3 = 8
+    
+    cjump %load_stuff_res = 1 :call_label_ciao__ciao_9 :call_label_ciao__ciao_10
+    :call_label_ciao__ciao_9
+    :call_label_ciao__ciao_10
+    %count <- 0
+    %load_stuff_res <- 1 = 1
+    
+    cjump %load_stuff_res = 1 :call_label_ciao__ciao_11 :call_label_ciao__ciao_9
+    :call_label_ciao__ciao_11
+    %count <- %count
+    %count <<= 4
+    rdi <- %addr
+    call print 1
+    %s <- %addr
+    %s += 8
+    mem %s 0  <- 3
+    rdi <- %addr
+    call print 1
+    %bs <- 3
+    %bs *= 8
+    %s <- %s
+    %s += %bs
+    mem %s 0  <- 5
+    rdi <- %addr
+    call print 1
+    %s <- %s
+    %s -= 16
+    mem %s 0  <- 7
+    %s <- %s
+    %s += 8
+    mem %s 0  <- 9
+    rdi <- %addr
+    call print 1
+    return
+  )
+  (:fun_f
+    6 0
+    %a <- rdi
+    %b <- rsi
+    %c <- rdx
+    %d <- rcx
+    %e <- r8
+    %f <- r9
+    :call_label_ciao__ciao__ciao_12
+    %res <- %f = 1
+    
+    cjump %res = 1 :call_label_ciao__ciao__ciao_14 :call_label_ciao__ciao__ciao_13
+    :call_label_ciao__ciao__ciao_13
+    %var1 <- %a
+    %var2 <- %b
+    %var3 <- %c
+    %var4 <- %d
+    %var5 <- %e
+    %var6 <- 1
+    goto :call_label_ciao__ciao__ciao_12
+    :call_label_ciao__ciao__ciao_14
+    return
+  )
+)

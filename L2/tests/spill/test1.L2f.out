@@ -1,0 +1,19 @@
+(:myF
+	0 2
+	%S0 <- 0
+	mem rsp 8 <- %S0
+	%S1 <- mem rsp 8
+	%S1++
+	mem rsp 8 <- %S1
+	%S2 <- mem rsp 8
+	%S2 += 3
+	mem rsp 8 <- %S2
+	%S3 <- mem rsp 8
+	%S3 += 5
+	mem rsp 8 <- %S3
+	%S4 <- mem rsp 8
+	mem rsp 0 <- %S4
+	rdi <- mem rsp 0
+	call :myF2 0
+	return
+)

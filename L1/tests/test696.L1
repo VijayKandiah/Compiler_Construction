@@ -1,0 +1,334 @@
+(:main
+(:main
+	0 15
+	:call_label0
+	rsi <- 1
+	mem rsp 96 <- rsi
+	rsi <- 2
+	mem rsp 104 <- rsi
+	rdx <- mem rsp 96
+	rsi <- mem rsp 104
+	rsi <- rdx = rsi
+	mem rsp 112 <- rsi
+	rsi <- mem rsp 104
+	rsi <- rcx < rsi
+	rsi <- mem rsp 96
+	rsi <- rsi
+	mem rsp 16 <- rsi
+	rdx <- mem rsp 16
+	rsi <- mem rsp 104
+	rdx += rsi
+	mem rsp 16 <- rdx
+	rdi <- rdi
+	rcx <- mem rsp 104
+	rdi <<= rcx
+	rdi <- rdi
+	mem rsp -8 <- :call_label5
+	call :isNumber 1
+	:call_label5
+	rdi <- rax
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp -8 <- :call_label6
+	call :isAddress 1
+	:call_label6
+	rdi <- rax
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	cjump rdi = 1 :call_label4 :call_label1
+	:call_label1
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi *= 3
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi += 2
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp -8 <- :call_label7
+	call :lea 1
+	:call_label7
+	rdi <- rax
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 32
+	rdi <<= 1
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 32
+	rdi += 1
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 32
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 32
+	rdi <- rdi
+	rsi <- 3
+	call allocate 2
+	rdi <- rax
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	mem rdi 8 <- 5
+	rdi <- mem rsp 72
+	rdi <- rdi
+	rdi += 16
+	mem rdi 0 <- 7
+	rsi <- mem rsp 72
+	mem rsi 24 <- 9
+	rdi <- mem rdi 0
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 48
+	rsi <- mem rsp 64
+	rdi <- rsi < rdi
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp -8 <- :call_label8
+	call :decreaseOne 1
+	:call_label8
+	rdi <- rax
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	rsi <- mem rsp 56
+	rsi <- rsi
+	mem rsp -8 <- :call_label9
+	call :aop_plus 2
+	:call_label9
+	rdi <- mem rsp 96
+	rdi <- rdi
+	rsi <- mem rsp 56
+	rsi <- rsi
+	mem rsp -8 <- :call_label10
+	call :aop_minus 2
+	:call_label10
+	rdi <- mem rsp 64
+	rdi <- rdi
+	rsi <- mem rsp 40
+	rsi <- rsi
+	mem rsp -8 <- :call_label11
+	call :aop_and 2
+	:call_label11
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label12
+	call :isAddress 1
+	:call_label12
+	rdi <- rax
+	cjump rdi = 1 :call_label3 :call_label2
+	:call_label2
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp -8 <- :call_label13
+	call :increaseOne 1
+	:call_label13
+	rdi <- mem rsp 104
+	rdi <- rdi
+	rsi <- mem rsp 56
+	rsi <- rsi
+	mem rsp -8 <- :call_label14
+	call :aop_product 2
+	:call_label14
+	rdi <- mem rsp 64
+	rdi <- rdi
+	rsi <- mem rsp 88
+	rsi <- rsi
+	mem rsp -8 <- :call_label15
+	call :isEqual 2
+	:call_label15
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 96
+	rsi <- rsi
+	mem rsp -8 <- :call_label16
+	call :isSmallerAndEqual 2
+	:call_label16
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 104
+	rsi <- rsi
+	mem rsp -8 <- :call_label17
+	call :isSmaller 2
+	:call_label17
+	:call_label3
+	rdi <- mem rsp 72
+	rdi <- rdi
+	rdi <- :otherF
+	mem rsp 0 <- rdi
+	mem rsp -8 <- :call_label18
+	call :otherF 0
+	:call_label18
+	mem rsp -8 <- :call_label19
+	rdi <- mem rsp 0
+	call rdi 0
+	:call_label19
+	rsi <- :otherF2
+	rdi <- 2
+	mem rsp -8 <- :call_label20
+	call rsi 1
+	:call_label20
+	rdi <- mem rsp 112
+	rdi <- rdi
+	mem rsp -8 <- :call_label21
+	call :otherF2 1
+	:call_label21
+	rdi <- rax
+	rdi -= 1
+	rdi <- rdi
+	call print 1
+	:call_label4
+	return
+)
+
+(:isNumber
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi &= 1
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao_22 :call_label_ciao_23
+	:call_label_ciao_22
+	rax <- 0
+	return
+	:call_label_ciao_23
+	rax <- 1
+	return
+)
+
+(:isAddress
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi &= 1
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao__ciao_24 :call_label_ciao__ciao_25
+	:call_label_ciao__ciao_24
+	rax <- 1
+	return
+	:call_label_ciao__ciao_25
+	rax <- 0
+	return
+)
+
+(:lea
+	1 0
+	rdi <- rdi
+	rdi @ rdi rdi 4
+	rax <- rdi
+	return
+)
+
+(:decreaseOne
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi -= 1
+	rax <- rdi
+	return
+)
+
+(:increaseOne
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(:otherF
+	0 0
+	return
+)
+
+(:otherF2
+	1 0
+	rdi <- rdi
+	rdi *= rdi
+	rax <- rdi
+	return
+)
+
+(:aop_minus
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi -= rsi
+	rax <- rdi
+	return
+)
+
+(:aop_plus
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(:aop_and
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi &= rsi
+	rax <- rdi
+	return
+)
+
+(:aop_product
+	2 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(:isSmaller
+	2 0
+	rdi <- rdi
+	rdi <- rdi < 1
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_26 :call_label_ciao__ciao__ciao_27
+	:call_label_ciao__ciao__ciao_26
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao_27
+	rax <- 0
+	return
+)
+
+(:isSmallerAndEqual
+	2 0
+	rdi <- rdi
+	rdi <- rdi <= 1
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_28 :call_label_ciao__ciao__ciao__ciao_29
+	:call_label_ciao__ciao__ciao__ciao_28
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao__ciao_29
+	rax <- 0
+	return
+)
+
+(:isEqual
+	2 0
+	rdi <- rdi
+	rdi <- rdi = rsi
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao__ciao_30 :call_label_ciao__ciao__ciao__ciao__ciao_31
+	:call_label_ciao__ciao__ciao__ciao__ciao_30
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao__ciao__ciao_31
+	rax <- 0
+	return
+)
+
+)

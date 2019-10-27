@@ -1,0 +1,3 @@
+(:main
+ (:main 0 0 rdi <- 3 mem rsp -8 <- :ret call :f 0 :ret return)
+ (:f 0 0 call print 1 return))

@@ -1,0 +1,20 @@
+define :main() {
+
+    // Allocate the first array
+    %encoded <- 5
+    %encoded <- %encoded << 1
+    %encoded <- %encoded + 1  
+
+    // Allocate the second array
+    %array2 <- call allocate(%encoded, 3)
+
+    // Store values to the second array
+    call :storeValueToArray(%array2, 3)
+
+    return
+}
+
+define :storeValueToArray (%A1, %a) {
+    %length <- load %A1
+    return 
+}

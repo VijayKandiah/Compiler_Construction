@@ -1,0 +1,11 @@
+void main ( ){
+
+  br :myLabel1
+
+  :myLabel1
+
+  :true
+   print(1)
+  return
+
+}

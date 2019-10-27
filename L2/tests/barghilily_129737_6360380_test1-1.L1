@@ -1,0 +1,40 @@
+(:go
+  (:go
+    0 0
+    rdi <- 3   //1
+    rdi *= 23 //11*1 = 11
+    cjump rdi <= 101 :true :false
+    :true
+    rdi <- 101 //50
+    rdi *= 5 //100
+    goto :false
+    rdi <- 1 //0
+    :false 
+    %var1 <- rdi
+    mem rsp -8 <- :secondFunction_ret
+    call :secondFunction 1
+    :secondFunction_ret
+    rdi <- %var1
+    %var2 <- rax
+    call print 1
+    rax <- %var2
+    rdi <- rax
+    call print 1
+    rdi <- 1
+    rsi <- 3
+    rdi &= rsi
+    call print 1
+    return
+  )
+  
+  (:secondFunction
+    1 0
+    %var0 <- rdi
+    call print 1
+    rdi <- %var0
+    r10 <- rdi
+    rax <- r10
+    rax *= 9
+    return
+  )
+)

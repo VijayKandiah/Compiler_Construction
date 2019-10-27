@@ -1,0 +1,70 @@
+(:go
+(:go
+	1 1
+	rdi <- 7
+	mem rsp -8 <- :populate_ree
+	mem rsp 0 <- rdi
+	call :populate 1
+	:populate_ree
+	rdi <- mem rsp 0
+	rsi <- rax
+	mem rsp -8 <- :print_arr_ree
+	call :print_arr 2
+	:print_arr_ree
+	return
+)
+
+(:populate
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- 1
+	rsi <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call allocate 2
+	rdx <- 0
+	rdi <- rax
+	:write_val
+	rdi += 8
+	mem rdi 0 <- rdx
+	rdx += 1
+	goto :check_count
+	:check_count
+	rsi <- mem rsp 0
+	cjump rdx <= rsi :write_val :out
+	:out
+	return
+)
+
+(:print_arr
+	2 4
+	mem rsp 0 <- r12
+	mem rsp 8 <- r13
+	mem rsp 16 <- r14
+	rdx <- 0
+	mem rsp 24 <- rdx
+	r12 <- rdi
+	r14 <- rsi
+	:print_val
+	r14 += 8
+	r13 <- r14
+	rdi <- mem r13 0
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 24
+	rdi += 1
+	mem rsp 24 <- rdi
+	goto :count
+	:count
+	rdi <- mem rsp 24
+	cjump rdi <= r12 :print_val :get_out
+	:get_out
+	r14 <- mem rsp 24
+	r13 <- mem rsp 16
+	r12 <- mem rsp 8
+	return
+)
+
+)

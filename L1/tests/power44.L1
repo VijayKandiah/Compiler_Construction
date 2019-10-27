@@ -1,0 +1,31 @@
+(:main
+ (:main
+ 0 0
+ rdi <- 4
+ rsi <- 4
+ mem rsp -8 <- :f_ret
+ call :power 2
+ :f_ret
+ rdi <- rax
+ rdi *= 2
+ rdi += 1
+ call print 1
+ return)
+
+ (:power
+  2 0
+  rdx <- 0
+  rax <- 1
+
+  :loop
+  cjump rdx = rsi :finish :cont
+  :cont
+  rdx += 1
+  rax *= rdi
+  goto :loop
+
+  :finish
+  return))
+
+
+

@@ -1,0 +1,11 @@
+
+(:main
+ (:main
+  0 0
+  rdi <- 3
+  rsi <- 3
+  call allocate 2
+  rdi <- rax
+  rsi <- 5
+  call array-error 2
+  return))

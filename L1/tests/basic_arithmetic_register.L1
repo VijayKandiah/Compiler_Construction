@@ -1,0 +1,22 @@
+(:go
+  (:go
+	0 0
+	rdi <- 5
+	rsi <- 11
+	rdi += rsi
+	rdi -= 1
+	call print 1
+
+	rdi <- 11
+	rsi <- 5
+	rdi -= rsi
+	rdi += 1
+	call print 1
+
+	rdi <- 5
+	rsi <- 11
+	rdi -= rsi
+	rdi += 1
+	call print 1
+	
+	return))

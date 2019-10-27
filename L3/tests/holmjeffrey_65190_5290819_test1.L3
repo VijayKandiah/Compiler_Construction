@@ -1,0 +1,121 @@
+define :main (){
+    %count <- 0
+    :continue
+    %v2 <- call :multiplyStuff (%count)
+    %v3 <- call :subtractStuff (%v2)
+    %v4 <- call :andStuff (%v3)
+    %v5 <- call :compareStuff (%v4, %v2)
+    %v6 <- call :leftShiftStuff (%v5)
+    %v7 <- call :addStuff (%v6)
+    %v8 <- call :rightShiftStuff (%v7)
+    %isEncoded <- %v8 & 1
+    %isEncoded <- %isEncoded = 1
+    br %isEncoded :skip
+    %v8 <- %v8 + 1
+    :skip
+    call print (%v8)
+    %count <- %count + 1
+    %cmp <- %count < 10
+    br %cmp :continue
+    return
+}
+
+define :addStuff (%v1){
+    %v1 <- %v1 + 3
+    %v2 <- %v1 + %v1
+    %v3 <- %v2 + 9
+    %v4 <- %v1 + %v3
+    %v4 <- %v4 + 4
+    %v5 <- %v4 + %v3
+    %v6 <- %v1 + %v5
+    %v7 <- %v6 + %v3
+    %v8 <- 1 + %v7
+    %v8 <- 12 + %v8
+    %v8 <- 13 + %v8
+    %v8 <- 14 + %v8
+    %v8 <- 15 + %v8
+    %v8 <- 16 + %v8
+    %v8 <- 1 + %v8
+    %v8 <- 17 + %v8
+    %v8 <- 1 + %v8
+    %v8 <- 81 + %v8
+    %v8 <- 91 + %v8
+    %v8 <- 11 + %v8
+    %v8 <- 1 + %v8
+    %v8 <- 1 + %v8
+    %v8 <- 1 + %v8
+    %v8 <- 12 + %v8
+    %v8 <- 1 + %v8
+    %v8 <- 12 + %v8
+    %v9 <- 13 + %v8
+    %v9 <- 14 + %v9
+    %v9 <- 1 + %v9
+    %v9 <- 11 + %v9
+    return %v9
+}
+
+define :multiplyStuff (%v1){
+    %v1 <- %v1 * 2
+    %v2 <- 6 * 7
+    %v3 <- %v1 * %v1
+    %v4 <- %v3 * %v2
+    %v5 <- %v2 * %v1
+    %v6 <- %v5 * %v4
+    %v7 <- %v5 * -1
+    %v8 <- %v7 * %v6
+    return %v8
+}
+
+define :subtractStuff (%v1){
+    %v2 <- %v1 - 4
+    %v3 <- %v1 - %v2
+    %v4 <- 7 - %v1
+    %v5 <- 29 - %v4
+    %v6 <- 47 - %v3
+    %v7 <- %v6 - %v3
+    %v8 <- %v7 - 90
+    %v9 <- 10000 - %v8
+    return %v9
+}
+
+define :andStuff (%v1){
+    %v2 <- %v1 & 4
+    %v3 <- %v2 & 8228
+    %v4 <- %v3 & 827
+    %v5 <- %v3 & %v4
+    %v6 <- %v5 & %v1
+    %v7 <- %v6 & %v2
+    %v8 <- %v7 & 120398
+    return %v8
+}
+
+define :leftShiftStuff (%v1){
+    %v2 <- %v1 << 2
+    %v3 <- 3 << 4
+    %v4 <- %v1 << %v2
+    %v5 <- 8 << %v4
+    %v6 <- %v3 << 9
+    %v7 <- %v5 << %v6
+    %v8 <- %v7 << 8
+    return %v8
+}
+
+define :rightShiftStuff (%v1){
+    %v2 <- %v1 >> 3
+    %v3 <- %v2 >> %v1
+    %v4 <- %v2 >> %v1
+    %v5 <- 5 >> 1
+    %v6 <- %v1 >> %v5
+    %v7 <- %v6 >> %v4
+    return %v7
+}
+
+define :compareStuff (%v1, %v2){
+    %v3 <- %v1 < %v2
+    %v4 <- %v3 > 1
+    %v5 <- %v3 = %v2
+    %v6 <- %v5 < 8
+    %v7 <- %v1 >= %v5
+    %v8 <- %v7 <= %v6
+    return %v8
+}

@@ -1,0 +1,8 @@
+(:mult
+ (:mult
+  0 0
+  rdi <- 7
+  rdi *= 3
+  rdi *= 3
+  call print 1
+  return))

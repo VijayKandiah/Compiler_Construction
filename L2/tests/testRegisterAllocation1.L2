@@ -1,0 +1,39 @@
+(:go
+
+  (:go
+    0 0
+
+    mem rsp -8 <- :ret
+    call :myF 0
+    :ret
+
+    return 
+  )
+
+  (:myF
+    0 9
+
+    %myV1 <- 1
+    %myV2 <- 1
+    %myV3 <- 1
+    %myV4 <- 1
+    %myV5 <- 1
+    %myV6 <- 1
+    %myV7 <- 1
+    %myV8 <- 1
+    %myV9 <- 1
+
+    mem rsp 0  <- %myV1
+    mem rsp 8  <- %myV2
+    mem rsp 16 <- %myV3
+    mem rsp 24 <- %myV4
+    mem rsp 32 <- %myV5
+    mem rsp 40 <- %myV6
+    mem rsp 48 <- %myV7
+    mem rsp 56 <- %myV8
+    mem rsp 64 <- %myV9
+
+    return
+  )
+
+)

@@ -1,0 +1,19 @@
+(:func_nest
+ (:func_nest
+  0 0
+  mem rsp -8 <- :foo_ret
+  call :foo 0
+  :foo_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:foo
+  0 0
+  mem rsp -8 <- :bar_ret
+  call :bar 0
+  :bar_ret
+  return)
+ (:bar
+  0 0
+  rax <- 19
+  return))

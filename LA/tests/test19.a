@@ -1,0 +1,17 @@
+void main ( ) {
+ int64[][] newVar0m1
+ newVar0m1 <- new Array (1, 2)
+  initMatrix (newVar0m1, 0)
+ return 
+}
+
+void initMatrix ( int64[][] m, int64 initValue) {
+ int64 newVar0l2
+ int64 newVar0l1
+ newVar0l1 <- length m 0
+ newVar0l2 <- length m 1
+  print (newVar0l1)
+  print (newVar0l2)
+ return 
+}
+

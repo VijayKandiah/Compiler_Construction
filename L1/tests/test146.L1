@@ -1,0 +1,42 @@
+(:go
+(:go
+	1 2
+	mem rsp 0 <- 5
+	mem rsp 8 <- 8
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	rsi += rdi
+	rsi <<= 1
+	rsi++
+	rdi <- rsi
+	call print 1
+	mem rsp -8 <- :f_ret
+	call :f1 0
+	:f_ret
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	rsi += rdi
+	rsi <<= 1
+	rsi++
+	rdi <- rsi
+	call print 1
+	return
+)
+
+(:f1
+	0 2
+	rsi <- 3
+	rdi <- 2
+	mem rsp 8 <- 4
+	rsi <- rsi
+	rsi += rdi
+	rdi <- mem rsp 8
+	rsi += rdi
+	rsi <<= 1
+	rsi++
+	rdi <- rsi
+	call print 1
+	return
+)
+
+)

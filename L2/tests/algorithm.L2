@@ -1,0 +1,93 @@
+(:testing
+  (:testing
+    0 0
+    rdi <- 5
+    rsi <- 85
+
+    mem rsp -8 <- :myfunc_ret
+    call allocate 2
+    :myfunc_ret
+    mem rax 16 <- 5
+
+    rdi <- rax
+    mem rsp -8 <- :rett
+    call :printArray 1
+    :rett
+    return
+  )
+  (:printArray
+    1 0
+    %check <- rdi
+    %check &= 1
+    cjump %check = 0 :isarray :notarray
+    :notarray
+    rax <- 0
+    return
+
+    :isarray 
+    %c <- 0
+    %arr <- rdi
+    %arrlength <- mem rdi 0
+
+    :forloop
+    cjump %c < %arrlength :continue :done
+
+    :continue
+    rdi <- %arr
+    rsi <- %c
+    mem rsp -8 <- :ret
+    call :printArrayElement 2
+    :ret
+    %c++
+    goto :forloop
+
+    :done
+    rax <- 1
+    return
+  )
+
+  (:printArrayElement
+    2 0
+
+    %arr <- rdi
+    %i <- rsi  // rsi input is decoded
+
+    // print the index
+    rdi <- %i
+    rdi <<= 1
+    rdi += 1
+    call print 1
+
+    rdi <- %i
+    rdi *= 8
+    rdi += 8
+
+    // encode result and print 
+    rdi <<= 1
+    rdi += 1
+    %offset <- rdi
+    call print 1
+
+    // get a[%i]
+    %offset >>= 1
+    %arr += %offset
+    %ai <- mem %arr 0
+
+    // %check if a[%i] is an array
+    %check <- %ai
+    %check &= 1
+    rdi <- %ai
+    cjump %check = 0 :isarr :notarr
+
+    :notarr
+    call print 1
+    goto :fnc_ret
+
+    :isarr 
+    mem rsp -8 <- :fnc_ret
+    call :printArray 1
+
+    :fnc_ret
+    return
+  )
+)

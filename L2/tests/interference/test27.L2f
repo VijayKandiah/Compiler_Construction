@@ -1,0 +1,10 @@
+(:go
+  0 0
+  %myV2 <- 1
+  %myV <- 5
+  %myV <<= %myV2
+  %myV++
+  rdi <- %myV
+  call print 1   
+  return
+)

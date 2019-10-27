@@ -1,0 +1,27 @@
+(:go
+  (:go
+	0 0
+	mem rsp -8 <- :n_sum_return
+	rdi <- 21
+	call :n_sum 1
+	:n_sum_return
+	rdi <- rax
+	call print 1
+	return)
+
+  (:n_sum
+	1 1
+	mem rsp 0 <- rdi
+	cjump rdi = 1 :exit :continue
+	:continue
+	rdi -= 2
+	mem rsp -8 <- :return
+	call :n_sum 1
+	:return
+	rdi <- mem rsp 0
+	rax += rdi
+	rax -= 1
+	return
+	:exit
+	rax <- 1
+	return))

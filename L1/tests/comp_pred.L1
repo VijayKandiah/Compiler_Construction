@@ -1,0 +1,76 @@
+(:main
+	(:main
+		0 0
+		rdi <- 15
+		rsi <- 17
+		rdx <- 1
+		mem rsp -8 <- :ret1
+		call :comp_pred 3
+		:ret1
+		rdi <- rax
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 15
+		rsi <- 17
+		rdx <- 0
+		mem rsp -8 <- :ret2
+		call :comp_pred 3
+		:ret2
+		rdi <- rax
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 11
+		rsi <- 11
+		rdx <- 1
+		mem rsp -8 <- :ret3
+		call :comp_pred 3
+		:ret3
+		rdi <- rax
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 11
+		rsi <- 11
+		rdx <- 0
+		mem rsp -8 <- :ret4
+		call :comp_pred 3
+		:ret4
+		rdi <- rax
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 9
+		rsi <- 1
+		rdx <- 1
+		mem rsp -8 <- :ret5
+		call :comp_pred 3
+		:ret5
+		rdi <- rax
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 9
+		rsi <- 1
+		rdx <- 0
+		mem rsp -8 <- :ret6
+		call :comp_pred 3
+		:ret6
+		rdi <- rax
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		return)
+
+	(:comp_pred
+		3 0
+		rdi <- rdi < rsi
+		rax <- rdi = rdx
+		return))

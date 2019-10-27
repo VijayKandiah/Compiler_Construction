@@ -1,0 +1,145 @@
+// Find N Prime Numbers
+
+define :firstNPrimes(%n) {
+  %isLessThanZero <- %n < 1
+  br %isLessThanZero :undefined
+  br :general
+
+  :undefined
+    return -1
+
+  :general
+
+  %arr <- call allocate(%n, 1)
+  %n <- %n - 1
+  %n <- %n << 1
+  %numPrimes <- 0
+  %i <- 2
+  %offset <- 8
+
+  :loop
+    %isNotDone <- %numPrimes < %n
+    br %isNotDone :notDoneYet
+    br :ret
+    :notDoneYet
+      %encodedI <- %i << 1
+      %encodedI <- %encodedI + 1
+      %numIsPrime <- call :isPrime(%encodedI)
+      %numIsPrime <- %numIsPrime - 1
+      %numIsPrime <- %numIsPrime >> 1
+      br %numIsPrime :addToArray
+      br :continue
+
+      :addToArray
+        %address <- %arr + %offset
+        store %address <- %encodedI
+        %offset <- %offset + 8
+        %numPrimes <- %numPrimes + 1
+
+    :continue
+      %i <- %i + 1
+      br :loop
+
+  :ret
+    return %arr
+}
+
+define :isPrime(%n) {
+    // decode %n
+    %n <- %n - 1
+    %n <- %n >> 1
+
+    %isNLessThan2 <- %n < 2
+    br %isNLessThan2 :false
+    br :check
+
+    :false
+        return 1
+
+    :check
+        %i <- 2
+        %end <- %n - 1
+
+        :loop
+            %isIteratorLessThanEnd <- %i < %end
+            br %isIteratorLessThanEnd :continue
+            br :true
+
+            :continue
+                %encodedI <- %i << 1
+                %encodedI <- %encodedI + 1
+                %encodedN <- %n << 1
+                %encodedN <- %encodedN + 1
+                %remainder <- call :modulo(%encodedN, %encodedI)
+                %i <- %i + 1
+                %isDivisible <- %remainder = 1
+                br %isDivisible :false
+                br :loop
+
+    :true
+        return 3
+}
+
+// %a % %b
+define :modulo(%a, %b) {
+    %result <- %a
+
+    %isBLessThanZero <- %b <= 1
+    br %isBLessThanZero :undefined
+    br :defined
+
+    :undefined
+        return -1
+
+    :defined
+        %isALessThanB <- %a < %b
+        br %isALessThanB :terminate
+        br :continue
+
+        :terminate
+            return %result
+
+        :continue
+            %result <- %result - 1
+            %result <- %result >> 1
+
+            %b <- %b - 1
+            %b <- %b >> 1
+
+            %result <- %result - %b
+
+            %result <- %result << 1
+            %result <- %result + 1
+
+            %b <- %b << 1
+            %b <- %b + 1
+
+            %isResultLessThanB <- %result < %b
+            br %isResultLessThanB :terminate
+            br :continue
+}
+
+define :main() {
+  %primes <- call :firstNPrimes(11) // 5
+  call print(%primes)
+
+  %primes <- call :firstNPrimes(41) // 20
+  call print(%primes)
+
+  %primes <- call :firstNPrimes(103) // 51
+  call print(%primes)
+
+  %primes <- call :firstNPrimes(129) // 64
+  call print(%primes)
+
+  %primes <- call :firstNPrimes(1) // 0
+  call print(%primes)
+
+  %primes <- call :firstNPrimes(-5) // -5
+  call print(%primes) // expects -1
+
+   %primes <- call :firstNPrimes(3) // 1
+   call print(%primes)
+
+  return 
+}

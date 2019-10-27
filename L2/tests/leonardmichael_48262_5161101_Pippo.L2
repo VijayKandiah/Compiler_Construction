@@ -1,0 +1,76 @@
+// Specify rdi at the beginning
+// Fill array with increasing uints from 0 to (decoded rdi)
+// Walk array & print
+
+(:go
+ (:go
+  1 0
+  rdi <- 11 // N
+
+  mem rsp -8 <- :populate_ree
+  call :populate 1
+  :populate_ree
+
+  return
+  )
+ (:populate
+  1 5
+
+   // Allocate each row of the 2D array as a separate array
+   // Push each one's address onto the stack
+   %array_position <- rsp // points to where we write the array address (callee save)
+   rsi <- 0 // rdi already contains the %size, initialize with zeros
+
+   :allocate_array
+     %default <- rsi // rsi is caller save
+     %encoded_default <- %default
+     %encoded_default <<= 1
+     %encoded_default += 1
+     rsi <- %encoded_default
+     r14 <- rdi // rdi is caller save
+     call allocate 2
+    
+ 
+     // Push array address onto stack, reload registers, increment
+     r12 <- %array_position
+     mem r12 0 <- rax // Push address onto stack
+     rdi <- r14
+     r14 >>= 1
+     rsi <- %default
+     rsi += 1 // Which array we're populating
+     %array_position += 8 // Where on the stack we're holding things
+     goto :bound_check
+
+   :bound_check
+     cjump rsi < r14 :allocate_array :wrap
+
+   :wrap
+     %size <- rdi // We don't need rsi afterward so don't save it
+     // rsi <- %default
+     call allocate 2
+     rdi <- %size 
+     rdi >>= 1
+     %outer_header <- rax // Head of the 2D array
+     %inner_ptr <- rax
+
+     :populate_outer_array
+       %array_position -= 8	
+       %inner_ptr += 8 // Skip the array header
+       r12 <- %array_position
+       %ptr_array_posn <- mem r12 0 // Pop stack into r15
+       rax <- %inner_ptr
+       mem rax 0 <- %ptr_array_posn // Write to array of ptrs
+
+
+       rdi -= 1
+       goto :outer_bound_check
+
+     :outer_bound_check
+       cjump 0 <= rdi :populate_outer_array :print_array
+
+     :print_array
+       rdi <- %outer_header
+       call print 1
+       return
+ )
+)

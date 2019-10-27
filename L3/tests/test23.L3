@@ -1,0 +1,40 @@
+define :main () {
+ :entry
+ br :myLabel1
+ :myLabel1
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 5 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar3 <- 7 >> 1
+ %newVar0 <- %newVar0 * %newVar3
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 8
+ %ar <- call allocate (%newVar0, 1)
+ %newVar4 <- %ar + 8
+ store %newVar4 <- 7
+ %newVar5 <- %ar + 16
+ store %newVar5 <- 3
+ %newVar6 <- %ar + 24
+ store %newVar6 <- 5
+ %newVar7 <- %ar + 32
+ store %newVar7 <- 7
+ %newVar8 <- 0 * 8
+ %newVar9 <- %newVar8 + 16
+ %newVar10 <- %ar + %newVar9
+ %arLen <- load %newVar10
+ call print (%arLen)
+ %newVar11 <- 1 * 8
+ %newVar12 <- %newVar11 + 16
+ %newVar13 <- %ar + %newVar12
+ %arLen <- load %newVar13
+ call print (%arLen)
+ %newVar14 <- 2 * 8
+ %newVar15 <- %newVar14 + 16
+ %newVar16 <- %ar + %newVar15
+ %arLen <- load %newVar16
+ call print (%arLen)
+ return 
+}
+

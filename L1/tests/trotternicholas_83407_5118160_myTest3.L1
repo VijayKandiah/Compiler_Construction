@@ -1,0 +1,43 @@
+(:main
+  (:main
+  0 0
+  rdi <- 9
+  rsi <- 12
+  rdi *= rdi
+  rsi *= rsi
+  cjump rdi < rsi :true :false
+  :true
+  rdi <- 3
+  call print 1
+  goto :next1
+  :false
+  rdi <- 1
+  call print 1
+  :next1
+  rdi <- -37
+  rsi <- -64
+  rdi *= rdi
+  rsi *= rsi
+  cjump rdi < rsi :true1 :false1
+  :true1
+  rdi <- 3
+  call print 1
+  goto :next2
+  :false1
+  rdi <- 1
+  call print 1
+  :next2
+  rdi <- -133
+  rsi <- 113
+  rdi *= rdi
+  rsi *= rsi
+  cjump rdi < rsi :true2 :false2
+  :true2
+  rdi <- 3
+  call print 1
+  goto :end
+  :false2
+  rdi <- 1
+  call print 1
+  :end
+  return))

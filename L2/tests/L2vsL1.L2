@@ -1,0 +1,127 @@
+(:go
+  (:go
+    0 0
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    %array <- rax
+    
+    rdi <- %array
+    call print 1
+
+    rdi <- %array
+    mem rsp -8 <- :printArray_ret
+    call :printArray 1
+    :printArray_ret
+    return
+  )
+  (:printArray
+    1 0
+
+    %array <- rdi
+    %arraySize <- 2
+
+    mem rsp -8 <- :checkArray_ret
+    call :checkArray 1
+    :checkArray_ret
+    cjump rax = 0 :isInt1 :isAnArray1
+    
+    :isInt1
+    rax <- 0
+    return
+
+    :isAnArray1
+    %i <- 0
+    cjump %i < %arraySize :loop_start :loop_end
+    :loop_start
+
+    rdi <- %array
+    rsi <- %i
+    mem rsp -8 <- :printArrayElement_ret
+    call :printArrayElement 2
+    :printArrayElement_ret
+    %i++
+    cjump %i < %arraySize :loop_start :loop_end
+    :loop_end
+    return
+  )
+  (:printArrayElement
+    2 0
+    %array <- rdi
+    %arrayIndex <- rsi
+
+    // print the index
+    rdi <- rsi
+    mem rsp -8 <- :printValue_ret1
+    call :printValue 1
+    :printValue_ret1
+
+    %arrayIndexOffset <- %arrayIndex
+    %arrayIndexOffset *= 8
+    %arrayIndexOffset += 8
+
+    // print the offset
+    rdi <- %arrayIndexOffset
+    mem rsp -8 <- :printValue_ret2
+    call :printValue 1
+    :printValue_ret2
+
+    %arrayElementAddress <- %arrayIndexOffset
+    %arrayElementAddress += %array
+    %arrayIndexOffset <- mem %arrayElementAddress 0
+
+    rdi <- %arrayIndexOffset
+
+    mem rsp -8 <- :checkArray_ret1
+    call :checkArray 1
+    :checkArray_ret1
+
+    cjump rax = 0 :isInt2 :isAnArray2
+
+    :isInt2
+    rdi <- %arrayIndexOffset
+    mem rsp -8 <- :printValue_ret3
+    call :printValue 1
+    :printValue_ret3
+    return
+
+    :isAnArray2
+    rdi <- %arrayIndexOffset
+    mem rsp -8 <- :printArray_ret1
+    call :printArray 1
+    :printArray_ret1
+    
+    return
+  )
+  (:checkArray
+    1 0
+    //check %array
+    %tempArrayPointer <- rdi
+    %tempArrayPointer &= 1
+    cjump %tempArrayPointer = 0 :isAnArray :isAnInt
+    
+    :isAnInt
+    rax <- 0
+    return
+
+    :isAnArray
+    rax <- 1
+    return
+  )
+  (:printValue
+    1 0
+
+    // Initialization of variables
+    %intToPrint <- rdi
+
+    // Encode the integer
+    %intToPrint <<= 1
+    %intToPrint++
+
+    // Print
+    rdi <- %intToPrint
+    call print 1
+
+    return
+  )
+)

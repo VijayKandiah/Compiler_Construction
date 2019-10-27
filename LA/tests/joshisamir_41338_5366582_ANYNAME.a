@@ -1,0 +1,75 @@
+void main ( ){
+  int64 result
+
+  // Example 0
+  int64[][][] a
+  a <- new Array(2, 2, 2)
+  a[0][0][0] <- 1
+  a[0][0][1] <- 2
+  a[0][1][0] <- 3
+  a[0][1][1] <- 4
+  a[1][0][0] <- 5
+  a[1][0][1] <- 6
+  a[1][1][0] <- 7
+  a[1][1][1] <- 8
+   printMatrixElems(a)
+
+  return
+}
+
+void printMatrixElems (int64[][][] m) {
+  int64 dim0
+  int64 dim1
+  int64 dim2
+  int64 i
+  int64 j
+  int64 k
+
+  int64 val
+  int64 done
+
+  dim0 <- length m 0
+  dim1 <- length m 1
+  dim2 <- length m 2
+   print(dim0)
+   print(dim1)
+   print(dim2)
+
+  i <- 0
+  j <- 0
+  k <- 0
+
+  :loop
+      val <- m[i][j][k]
+       print (val)
+      br :increment
+
+  :increment
+      br :increment_k
+
+  :increment_k
+      k <- k + 1
+      done <- k = dim2
+      br done :reset_k :loop
+
+  :reset_k
+      k <- 0
+      br :increment_j
+
+  :increment_j
+      j <- j + 1
+      done <- j = dim1
+      br done :reset_j :loop
+
+  :reset_j
+      j <- 0
+      br :increment_i
+
+  :increment_i
+      i <- i + 1
+      done <- i = dim0
+      br done :after :loop
+
+  :after
+  return
+}

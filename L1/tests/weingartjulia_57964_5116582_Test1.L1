@@ -1,0 +1,36 @@
+// Test 1
+// Goal: Fill an array of length 10 with even numbers starting at 0
+
+(:go 
+	(:go
+		0 0 
+		// Initialize the array with 0s
+		rdi <- 21
+		rsi <- 1
+		call allocate 2	
+		
+		// Counter 
+		rbx <- 0
+		:loop
+		// r8 is the value to store
+		// r8 encoded? shift by 2 and add 1
+		r8 <- rbx
+		r8 <<= 2
+		r8 ++
+		// r10 is the offset within the array
+		r10 <- rbx
+		r10 <<= 3
+		// Start after the size element
+		r10 += 8
+		r10 += rax
+		mem r10 0 <- r8
+		rbx++
+		
+		cjump rbx < 10 :loop :continue 
+
+		:continue
+		rdi <- rax
+		call print 1
+		return
+	)
+)

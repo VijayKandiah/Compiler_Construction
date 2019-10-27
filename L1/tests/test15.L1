@@ -1,0 +1,120 @@
+(:go
+  (:go
+    0 1
+
+    // Save the callee save registers
+    mem rsp 0 <- r12
+
+    // Allocate the data
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    r12 <- rax
+
+    // Change array values
+    mem r12 8 <- 85
+
+    // Print the array
+    rdi <- mem r12 8
+    call print 1
+    rdi <- mem r12 16
+    call print 1
+
+    // Print the data
+    rdi <- r12
+    rsi <- 1
+    mem rsp -8 <- :printData_ret
+    call :printData 2
+    :printData_ret
+
+    // Print the data
+    rdi <- r12
+    rsi <- 3
+    mem rsp -8 <- :printData2_ret
+    call :printData 2
+    :printData2_ret
+
+    // Print the data
+    rdi <- r12
+    rsi <- 5
+    mem rsp -8 <- :printData3_ret
+    call :printData 2
+    :printData3_ret
+
+    // Restore the callee save registers
+    r12 <- mem rsp 0
+
+    return
+  )
+
+  (:printData
+    2 4
+
+    // Save the callee save registers
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+    mem rsp 16 <- r14
+    mem rsp 24 <- r15
+
+    // Store the input
+    r12 <- rdi    // the pointer to the array
+    r13 <- rsi    // the element number to print elements start from 0
+
+    // Print the array
+    rdi <- r12
+    call print 1
+
+    // Print the element number
+    rdi <- r13
+    call print 1
+
+    // Fetch the length of the array
+    r14 <- mem r12 0
+
+    // Encode the length of the array
+    r14 <<= 1
+    r14 += 1
+
+    // Print the length of the array
+    rdi <- r14
+    call print 1
+
+    // Check that array is big enough
+    cjump r13 < r14 :correct :wrong
+    :wrong
+    rdi <- r12
+    rsi <- r13
+    call array-error 2
+
+    // Compute the offset of the specified element in the array given as input
+    :correct
+    r15 <- r13
+    r15 >>= 1
+    r15 *= 8
+    r15 += 8
+    r15 <<= 1
+    r15 += 1
+
+    // Print the offset
+    rdi <- r15
+    call print 1
+
+    // Fetch the specified element of the array given as input
+    rdx <- r15
+    rdx >>= 1
+    rdx += r12
+    rdi <- mem rdx 0
+
+    // Print the specified element of the array
+    call print 1
+
+    // Restore the callee save registers
+    :exitFunction
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+    r14 <- mem rsp 16
+    r15 <- mem rsp 24
+ 
+    return
+  )
+)

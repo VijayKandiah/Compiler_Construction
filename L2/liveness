@@ -1,0 +1,21 @@
+#!/bin/bash
+
+outputString=`./bin/L2 -g 0 -l 1 -O0 $@` ;
+
+while read -r line ; do
+  lineWithoutPrefix=`echo "$line" | sed "s/^(//"` ;
+  lineWithoutPrefixAndSuffix=`echo "$lineWithoutPrefix" | sed "s/)//"` ;
+
+  if test "$lineWithoutPrefix" = "" ; then
+    echo $line ;
+    continue ;
+  fi
+  if test "$line" = "$lineWithoutPrefix" -o "$lineWithoutPrefixAndSuffix" = "$lineWithoutPrefix" ; then
+    echo $line ;
+    continue ;
+  fi
+
+  echo -n "(";
+  lineToPrint=`echo "$lineWithoutPrefixAndSuffix" | xargs -n1 | sort -u | xargs` ;
+  echo "$lineToPrint)";
+done <<< "$outputString" ;

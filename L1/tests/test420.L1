@@ -1,0 +1,9 @@
+(:go
+(:go
+	0 0
+	rdi @ rdi rsi 4
+	rax <- rdi
+	return
+)
+
+)

@@ -1,0 +1,9 @@
+(:myF
+	0 1
+	%S0 <- 0
+	mem rsp 0 <- %S0
+	%S1 <- mem rsp 0
+	rdi <- %S1
+	call :myF2 0
+	return
+)

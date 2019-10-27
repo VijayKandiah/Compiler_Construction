@@ -1,0 +1,16 @@
+(:func_2arg
+ (:func_2arg
+  0 0
+  rdi <- 11
+  rsi <- 5
+  mem rsp -8 <- :f_ret
+  call :foo 2
+  :f_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:foo
+  2 0
+  rdi *= rsi
+  rax <- rdi
+  return))

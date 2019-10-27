@@ -1,0 +1,83 @@
+(:go
+(:go
+	0 0
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	mem rax 8 <- 85
+	rdi <- rax
+	mem rsp -8 <- :printArray_ret
+	call :printArray 1
+	:printArray_ret
+	return
+)
+
+(:printArray
+	1 3
+	mem rsp 16 <- rdi
+	rsi <- mem rsp 16
+	rsi &= 1
+	cjump rsi = 1 :not_array :array
+	:array
+	mem rsp 8 <- 0
+	rdi <- mem rdi 0
+	mem rsp 0 <- rdi
+	:startLoop
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	cjump rdi < rsi :loopBody :return
+	:loopBody
+	rdi <- mem rsp 16
+	rsi <- mem rsp 8
+	mem rsp -8 <- :printArrayElement_ret
+	call :printArrayElement 2
+	:printArrayElement_ret
+	rdi <- mem rsp 8
+	rdi++
+	mem rsp 8 <- rdi
+	goto :startLoop
+	:return
+	rax <- 1
+	return
+	:not_array
+	rax <- 0
+	return
+)
+
+(:printArrayElement
+	2 3
+	mem rsp 8 <- rdi
+	mem rsp 16 <- rsi
+	rdi <- mem rsp 16
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 16
+	rdi <<= 3
+	rdi += 8
+	mem rsp 0 <- rdi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	rdi += rsi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rsi <- mem rdi 0
+	rdi <- rsi
+	rdi &= 1
+	cjump rdi = 1 :not_an_array :else
+	:not_an_array
+	rdi <- rsi
+	call print 1
+	return
+	:else
+	rdi <- rsi
+	mem rsp -8 <- :printArray_return
+	call :printArray 1
+	:printArray_return
+	return
+)
+
+)

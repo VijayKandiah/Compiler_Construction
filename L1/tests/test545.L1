@@ -1,0 +1,21 @@
+(:go
+(:go
+	0 0
+	goto :begin_work
+	:ret
+	return
+	:begin_work
+	mem rsp -8 <- :ret
+	mem rsp -16 <- 13
+	mem rsp -24 <- 13
+	call :printValues 8
+	goto :ret
+)
+
+(:printValues
+	8 0
+	rdi <- mem rsp 8
+	return
+)
+
+)

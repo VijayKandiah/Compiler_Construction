@@ -1,0 +1,88 @@
+(:main
+  (:insertionSort
+    1 0
+    %array <- rdi
+    %arrayPointer <- %array
+    %arrayLength <- mem %arrayPointer 0 
+    %i <- 2
+    :call_label0
+    %shouldOuterLoopTerminate <- %arrayLength < %i
+    
+    cjump %shouldOuterLoopTerminate = 1 :call_label6 :call_label1
+    :call_label1
+    %j <- %i
+    :call_label2
+    %iteratorHasExhaustedAllPairs <- %j <= 1
+    
+    cjump %iteratorHasExhaustedAllPairs = 1 :call_label5 :call_label3
+    :call_label3
+    %prevValueAddress <- %j
+    %prevValueAddress <- %prevValueAddress
+    %prevValueAddress -= 1
+    %prevValueAddress <- %prevValueAddress
+    %prevValueAddress <<= 3
+    %prevValueAddress <- %prevValueAddress
+    %prevValueAddress += %arrayPointer
+    %currValueAddress <- %j
+    %currValueAddress <- %currValueAddress
+    %currValueAddress <<= 3
+    %currValueAddress <- %currValueAddress
+    %currValueAddress += %arrayPointer
+    %currValue <- mem %currValueAddress 0 
+    %prevValue <- mem %prevValueAddress 0 
+    %isCurrValueLessThanPrevValue <- %currValue < %prevValue
+    
+    cjump %isCurrValueLessThanPrevValue = 1 :call_label4 :call_label5
+    :call_label4
+    mem %currValueAddress 0  <- %prevValue
+    mem %prevValueAddress 0  <- %currValue
+    %j <- %j
+    %j -= 1
+    goto :call_label2
+    :call_label5
+    %i <- %i
+    %i += 1
+    goto :call_label0
+    :call_label6
+    rax <- %arrayPointer
+    return
+  )
+  (:main
+    0 0
+    %size <- 41
+    rdi <- %size
+    rsi <- 1
+    call allocate 2
+    %array <- rax
+    mem %array 8 <- 35
+    mem %array 16 <- 15
+    mem %array 24 <- 13
+    mem %array 32 <- 19
+    mem %array 40 <- 51
+    mem %array 48 <- 27
+    mem %array 56 <- 49
+    mem %array 64 <- 57
+    mem %array 72 <- 9
+    mem %array 80 <- 63
+    mem %array 88 <- 81
+    mem %array 96 <- 97
+    mem %array 104 <- 11
+    mem %array 112 <- 11
+    mem %array 120 <- 13
+    mem %array 128 <- 7
+    mem %array 136 <- 33
+    mem %array 144 <- 37
+    mem %array 152 <- 27
+    mem %array 160 <- 51
+    rdi <- %array
+    call print 1
+    rdi <- %array
+    mem rsp -8 <- :call_label_ciao_7
+    call :insertionSort 1
+    :call_label_ciao_7
+    %sortedArray <- rax
+    rdi <- %sortedArray
+    call print 1
+    return
+  )
+)

@@ -1,0 +1,28 @@
+(:main
+(:main
+	0 0
+	:call_label0
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- 5
+	rdi <- 0
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	rdi <- mem rsi 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

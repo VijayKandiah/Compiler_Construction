@@ -1,0 +1,17 @@
+(:go
+  (:go
+	0 0
+	rdi <- 21
+	rsi <- 3
+	rdx <- 1
+	:loop
+	cjump rsi < rdi :continue :exit
+	:continue
+	rdx += rsi
+	rdx -= 1
+	rsi += 2
+	goto :loop
+	:exit
+	rdi <- rdx
+	call print 1
+	return))

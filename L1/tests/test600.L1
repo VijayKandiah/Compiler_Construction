@@ -1,0 +1,57 @@
+(:main
+(:main
+	0 2
+	rdi <- 1
+	rsi <- 2
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- 3
+	mem rsp -8 <- :call_label0
+	call :myF 3
+	:call_label0
+	rdi <- rax
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- mem rdi 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rax <- 0
+	return
+)
+
+(:myF
+	3 0
+	rdi <- rdi
+	rcx <- rsi
+	rsi <- rdx
+	rdi <- rdi
+	rdi += rcx
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+)

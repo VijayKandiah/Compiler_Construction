@@ -1,0 +1,32 @@
+(:go
+  (:go
+    0 0
+
+    // Compute the data
+    rdi <- 3
+    rsi <- 5
+    rdx <- 7
+    rcx <- 9
+    r8 <- 11
+    mem rsp -16 <- 15
+    mem rsp -8 <- :testFunction_ret
+    call :testFunction 7
+    :testFunction_ret
+
+    // Print the computed data
+    rdi <- rax
+    call print 1
+
+    return
+  )
+
+  (:testFunction
+    7 0
+
+    rdi <- mem rsp 0
+    call print 1
+
+    rax <- 5
+    return
+  )
+)

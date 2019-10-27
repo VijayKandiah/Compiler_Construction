@@ -1,0 +1,22 @@
+(:go
+  (:go
+	0 0
+	mem rsp -8 <- :is_number_return
+	rdi <- 7
+	call :is_number 1
+	:is_number_return
+	rdi <- rax
+	call print 1
+	return)
+
+  (:is_number
+	1 0
+	rsi <- rdi
+	rsi &= 1
+	cjump rsi = 0 :ret_false :ret_true
+	:ret_false
+	rax <- 1
+	return
+	:ret_true
+	rax <- 3
+	return))

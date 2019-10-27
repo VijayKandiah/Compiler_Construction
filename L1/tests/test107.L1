@@ -1,0 +1,157 @@
+(:main
+(:main
+	0 0
+	:call_label0
+	mem rsp -8 <- :call_label1
+	rdi <- 3
+	call :createMyClosure 1
+	:call_label1
+	rdi <- rax
+	return
+)
+
+(:createMyClosure
+	1 2
+	mem rsp 8 <- rdi
+	:call_label2
+	mem rsp 0 <- 21
+	rdi <- 9
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- 0
+	rdi <- 1
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- 1
+	rdi <- 2
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	rdi <- mem rsp 8
+	mem rsi 0 <- rdi
+	rdi <- 3
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	rdi <- mem rsp 0
+	mem rsi 0 <- rdi
+	rax <- rdx
+	return
+)
+
+(:myF
+	2 0
+	r11 <- rdi
+	r10 <- rsi
+	:call_label3
+	r9 <- 0
+	rdi <- rax
+	rdi += 24
+	rdi <- mem rdi 0
+	rcx <- rdi
+	rcx >>= 1
+	rdi <- rax
+	rdi += 32
+	rdi <- mem rdi 0
+	rdx <- rdi
+	rdx >>= 1
+	rdi <- rax
+	rdi += 40
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- r11
+	rdi *= rsi
+	r9 <- r9
+	r9 += rdi
+	rsi <- rsi
+	rsi *= rdx
+	rdi <- rax
+	rdi *= rsi
+	r9 <- r9
+	r9 += rdi
+	rsi <- rsi
+	rsi *= rcx
+	rdi <- rax
+	rdi *= rsi
+	r9 <- r9
+	r9 += rdi
+	r9 <- r9
+	r9 += 2
+	rsi <- r9
+	rsi *= 8
+	rsi <- rsi
+	rsi += 48
+	rdi <- rax
+	rdi += rsi
+	rax <- mem rdi 0
+	r9 <- 0
+	rdi <- r8
+	rdi += 24
+	rdi <- mem rdi 0
+	rcx <- rdi
+	rcx >>= 1
+	rdi <- r8
+	rdi += 32
+	rdi <- mem rdi 0
+	rdx <- rdi
+	rdx >>= 1
+	rdi <- r8
+	rdi += 40
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- r11
+	rdi *= rsi
+	r9 <- r9
+	r9 += rdi
+	rsi <- rsi
+	rsi *= rdx
+	rdi <- r8
+	rdi *= rsi
+	r9 <- r9
+	r9 += rdi
+	rsi <- rsi
+	rsi *= rcx
+	rdi <- r8
+	rdi *= rsi
+	r9 <- r9
+	r9 += rdi
+	r9 <- r9
+	r9 += 3
+	rsi <- r9
+	rsi *= 8
+	rsi <- rsi
+	rsi += 48
+	rdi <- r8
+	rdi += rsi
+	r8 <- mem rdi 0
+	rdi <- rax
+	rdi += r8
+	rdi <- rdi
+	rdi += r10
+	rax <- rdi
+	return
+)
+
+)

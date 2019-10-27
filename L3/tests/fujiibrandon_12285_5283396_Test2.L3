@@ -1,0 +1,110 @@
+// Fibonacci numbers: generates fibonacci sequence and gets nth
+// fibonacci number
+
+define :generateFibonacciSequence(%n) {
+    %isNZero <- %n = 0
+    br %isNZero :zero
+    br :general
+
+    :zero
+        return 1
+
+    :one
+        return %originalTablePointer
+
+    :general
+        %size <- %n + 1
+        %size <- %size << 1
+        %size <- %size + 1
+        %table <- call allocate(%size, 1)
+        %element1Address <- %table + 16
+        store %element1Address <- 3
+
+        %tablePointer <- %table
+        %originalTablePointer <- %table
+
+        %offset <- 24
+        %tableLength <- %n
+        %tableLength <- %tableLength << 3
+        %tableLength <- %tableLength + 8
+
+        %nIsOne <- %n = 2
+        br %nIsOne :one
+        br :loop
+
+     :loop
+        %tablePointer <- %originalTablePointer
+        %tablePointer <- %tablePointer + %offset
+        %j <- %tablePointer - 8 // i - 1
+        %prevValue <- load %j
+        %prevValue <- %prevValue - 1
+        %prevValue <- %prevValue >> 1
+
+        %k <- %tablePointer - 16 // i - 2
+        %prevPrevValue <- load %k
+        %prevPrevValue <- %prevPrevValue - 1
+        %prevPrevValue <- %prevPrevValue >> 1
+
+        %prevValue <- %prevValue + %prevPrevValue
+        %prevValue <- %prevValue << 1
+        %prevValue <- %prevValue + 1
+
+        store %tablePointer <- %prevValue
+
+        %offset <- %offset + 8
+        %isIteratorLessThanLength <- %offset <= %tableLength
+        br %isIteratorLessThanLength :loop
+        br :terminate
+
+      :terminate
+        return %originalTablePointer
+}
+
+define :getNthFibonacciNumber(%n) {
+    %fibonacciSequence <- call :generateFibonacciSequence(%n)
+    %isIntOrArray <- %fibonacciSequence & 1
+    br %isIntOrArray :isAnInt
+    br :isAnArray
+
+    :isAnInt
+        return 3
+
+    :isAnArray
+        %nthAddress <- %n + 1
+        %nthAddress <- %nthAddress * 8
+        %nthAddress <- %fibonacciSequence + %nthAddress
+        %nthFibonacciNumber <- load %nthAddress
+        return %nthFibonacciNumber
+}
+
+define :main() {
+    %n <- 20
+    %fibonacciSequence <- call :generateFibonacciSequence(%n)
+    call print(%fibonacciSequence)
+
+    %nthFibonacciNumber <- call :getNthFibonacciNumber(%n)
+    call print(%nthFibonacciNumber)
+
+    %n <- 40
+    %fibonacciSequence <- call :generateFibonacciSequence(%n)
+    call print(%fibonacciSequence)
+
+    %nthFibonacciNumber <- call :getNthFibonacciNumber(%n)
+    call print(%nthFibonacciNumber)
+
+    %n <- 0 // %n = 0 special case
+    %fibonacciSequence <- call :generateFibonacciSequence(%n)
+    call print(%fibonacciSequence)
+
+    %nthFibonacciNumber <- call :getNthFibonacciNumber(%n)
+    call print(%nthFibonacciNumber)
+
+    %n <- 1 // %n = 1 special case
+    %fibonacciSequence <- call :generateFibonacciSequence(%n)
+    call print(%fibonacciSequence)
+
+    %nthFibonacciNumber <- call :getNthFibonacciNumber(%n)
+    call print(%nthFibonacciNumber)
+
+    return
+}

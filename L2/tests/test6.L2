@@ -1,0 +1,17 @@
+(:go
+  (:go
+    0 0
+
+    %v1 <- 3
+    %v2 <- 5
+    %v3 <- %v2
+    %v3 <<= %v1
+    %v3++
+
+    rdi <- %v3
+    call print 1
+
+    rax <- 0
+    return
+  )
+)

@@ -1,0 +1,24 @@
+(:go
+  (:go
+    0 2
+    rdi <- 5
+    rsi <- 7
+    call allocate 2
+    //// save the address of the inner array
+    mem rsp 8 <- rax
+
+    rdi <- 7
+    rsi <- rax
+    call allocate 2
+    //// save the address of the outer array
+    mem rsp 0 <- rax
+
+    rdi <- rax
+    call print 1
+
+    //// modify the value of the inner array
+    rdi <- mem rsp 8
+    mem rdi 16 <- 11
+    rdi <- mem rsp 0
+    call print 1
+    return))

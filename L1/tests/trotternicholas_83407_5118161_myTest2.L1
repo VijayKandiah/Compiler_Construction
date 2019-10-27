@@ -1,0 +1,33 @@
+(:main
+  (:main
+  0 0
+  rdi <- 6
+  rsi <- 8
+  rdi *= rsi
+  mem rsp -8 <- :retpoint1
+  call :is_even 1
+  :retpoint1
+  rdi <- -15
+  rsi <- -16
+  rdi *= rsi
+  mem rsp -8 <- :retpoint2
+  call :is_even 1
+  :retpoint2
+  rdi <- 33
+  rsi <- -37
+  rdi *= rsi
+  mem rsp -8 <- :retpoint3
+  call :is_even 1
+  :retpoint3
+  return
+  )
+  (:is_even
+    1 1
+    rdi &= 1
+    rdi <- rdi = 1
+    rdi <<= 1
+    rdi += 1
+    mem rsp 0 <- rdi
+    call print 1
+    rax <- mem rsp 0
+    return))

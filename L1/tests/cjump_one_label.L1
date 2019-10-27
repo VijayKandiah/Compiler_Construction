@@ -1,0 +1,38 @@
+//// fills array assumes the size is >= 1
+
+(:go
+    (:fill_seq
+        1 0
+        ////make array
+        rsi <- 1
+        call allocate 2
+
+        ////initialize counters
+        rdi <- rax
+        rdi += 8
+        rcx <- mem rax 0
+	rdx <- rcx
+
+        :loop
+	cjump rcx = 0 :done
+	rsi <- rdx
+	rsi -= rcx
+	rsi *= 2
+	rsi += 1
+	mem rdi 0 <- rsi
+	rcx -= 1
+	rdi += 8
+	goto :loop
+
+	:done
+	return)
+
+    (:go
+        0 0
+        rdi <- 13
+        mem rsp -8 <- :fill_ret
+        call :fill_seq 1
+        :fill_ret
+        rdi <- rax
+        call print 1
+        return))

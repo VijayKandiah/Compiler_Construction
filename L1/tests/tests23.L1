@@ -1,0 +1,8 @@
+(:go
+ (:go
+  0 1
+  rsi <- 5
+  mem rsp 0 <- rsi
+  rdi <- mem rsp 0
+  call print 1
+  return))

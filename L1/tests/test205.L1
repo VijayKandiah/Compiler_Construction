@@ -1,0 +1,16 @@
+(:entry
+(:entry
+	0 1
+	rdi <- 1
+	mem rsp 0 <- rdi
+	rdi <- 1
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

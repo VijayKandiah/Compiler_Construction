@@ -1,0 +1,147 @@
+(:main
+(:main
+	0 2
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 8
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	mem rdi 0 <- 85
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label0
+	call :printArray 1
+	:call_label0
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rdi <- rax
+	rsi <- mem rsp 8
+	mem rsi 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label1
+	call :printArray 1
+	:call_label1
+	return
+)
+
+(:printArray
+	1 3
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- 0
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 8
+	rdi <- mem rdi 0
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi &= 1
+	cjump rdi = 1 :call_label_ciao_2 :call_label_ciao_3
+	:call_label_ciao_2
+	rax <- 0
+	return
+	:call_label_ciao_3
+	:call_label_ciao_4
+	rsi <- mem rsp 0
+	rdi <- mem rsp 16
+	rdi <- rdi < rsi
+	cjump rdi = 1 :call_label_ciao_5 :call_label_ciao_6
+	:call_label_ciao_5
+	rdi <- mem rsp 16
+	rsi <- rdi
+	rsi <<= 1
+	rsi += 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_7
+	call :printData 2
+	:call_label_ciao_7
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	goto :call_label_ciao_4
+	:call_label_ciao_6
+	rax <- 1
+	return
+)
+
+(:printData
+	2 3
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi += 1
+	rsi <- mem rsp 8
+	rdi <- rsi < rdi
+	cjump rdi = 1 :call_label_ciao__ciao_9 :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	call array-error 2
+	:call_label_ciao__ciao_9
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi *= 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 8
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rsi <- rdi
+	rdi <- mem rsp 16
+	rsi += rdi
+	rdi <- mem rsi 0
+	rsi <- rdi
+	rsi &= 1
+	cjump rsi = 1 :call_label_ciao__ciao_10 :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_10
+	rdi <- rdi
+	call print 1
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_11
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_13
+	call :printArray 1
+	:call_label_ciao__ciao_13
+	:call_label_ciao__ciao_12
+	return
+)
+
+)

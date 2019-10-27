@@ -1,0 +1,114 @@
+// leap_year: print leap years from 1900 to 2000
+
+
+void main ( ){
+	code fun_pointer
+	fun_pointer <- :leap_year
+	 fun_pointer ( )
+
+	return 
+}
+
+void leap_year ( ){
+  	int64[] leap_year_array
+
+  	leap_year_array <-  calculate_leap (1900, 2000)
+  	 print (leap_year_array)
+
+  	return
+}
+
+int64[] calculate_leap (int64 start_year, int64 end_year){
+	int64[]	array
+
+	array <-  create_array (start_year, end_year)
+	 fill_array (array, start_year, end_year)
+	
+	return array 		
+}
+
+int64[] create_array (int64 start_year, int64 end_year){
+	int64 	size
+	int64[] array
+
+	size <- end_year - start_year
+	size <- size >> 2
+	size <- size + 1
+
+	array <- new Array(size)
+	
+	return array
+}
+
+void fill_array (int64[] array, int64 current_year, int64 end_year){
+	int64 index
+	int64 is_leap
+	int64 i
+	
+	index <- 0
+	br :loop_start
+	
+	:loop_start
+	i <- current_year <= end_year
+	br i :calc :ret
+
+	:calc
+	is_leap <-  is_leap_year(current_year)
+	br is_leap :leap :not_leap
+
+	:not_leap
+	br :continue_loop
+
+	:leap
+	array[index] <- current_year
+	index <- index + 1
+	br :continue_loop
+
+	:continue_loop
+	current_year <- current_year + 1
+	br :loop_start
+
+	:ret
+	return
+}
+
+int64 is_leap_year (int64 year){
+	int64 flag
+	int64 i
+
+	flag <- year
+	flag <- flag & 15  //// mod 16
+
+	i <- flag = 0
+	br i :yes :may_not_leap  
+
+	:may_not_leap
+	flag <- year
+	flag <- flag >> 2
+	br :loop_mod_25
+
+	:loop_mod_25
+	i <- flag = 25
+	br i :no :minus_25
+
+	:minus_25
+	i <- 25 < flag
+	br i :loop_minus_25 :may_leap
+
+	:loop_minus_25
+	flag <- flag - 25
+	br :loop_mod_25 
+
+	:may_leap
+	flag <- year
+	flag <- flag & 3
+	
+	i <- flag = 0
+	br i :yes :no 
+
+	:yes
+	return 1
+
+	:no
+	return 0
+}

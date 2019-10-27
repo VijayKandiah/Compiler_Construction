@@ -1,0 +1,17 @@
+(:goto_maze
+ (:goto_maze
+  0 0
+  rdi <- 4
+  goto :first
+  :third
+  rdi += 3
+  goto :fourth
+  :second
+  rdi &= 8
+  goto :third
+  :first
+  rdi *= 3
+  goto :second
+  :fourth
+  call print 1
+  return))

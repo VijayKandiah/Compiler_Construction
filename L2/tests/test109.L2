@@ -1,0 +1,245 @@
+(:main
+  (:main
+    0 0
+    rdi <- 20
+    mem rsp -8 <- :call_label0
+    call :loop1 1
+    :call_label0
+    %ret <- rax
+    rdi <- %ret
+    mem rsp -8 <- :call_label1
+    call :encode 1
+    :call_label1
+    %ret <- rax
+    rdi <- %ret
+    call print 1
+    rdi <- -20
+    mem rsp -8 <- :call_label2
+    call :loop2 1
+    :call_label2
+    %ret <- rax
+    rdi <- %ret
+    mem rsp -8 <- :call_label3
+    call :encode 1
+    :call_label3
+    %ret <- rax
+    rdi <- %ret
+    call print 1
+    rdi <- 100
+    mem rsp -8 <- :call_label4
+    call :loop3 1
+    :call_label4
+    %ret <- rax
+    rdi <- %ret
+    mem rsp -8 <- :call_label5
+    call :encode 1
+    :call_label5
+    %ret <- rax
+    rdi <- %ret
+    call print 1
+    rdi <- 20
+    mem rsp -8 <- :call_label6
+    call :loop4 1
+    :call_label6
+    %ret <- rax
+    rdi <- %ret
+    mem rsp -8 <- :call_label7
+    call :encode 1
+    :call_label7
+    %ret <- rax
+    rdi <- %ret
+    call print 1
+    rdi <- 248
+    mem rsp -8 <- :call_label8
+    call :loop5 1
+    :call_label8
+    %ret <- rax
+    rdi <- %ret
+    mem rsp -8 <- :call_label9
+    call :encode 1
+    :call_label9
+    %ret <- rax
+    rdi <- %ret
+    call print 1
+    rdi <- 19
+    mem rsp -8 <- :call_label10
+    call :loop6 1
+    :call_label10
+    %ret <- rax
+    rdi <- %ret
+    mem rsp -8 <- :call_label11
+    call :encode 1
+    :call_label11
+    %ret <- rax
+    rdi <- %ret
+    call print 1
+    rdi <- 15
+    mem rsp -8 <- :call_label12
+    call :loop7 1
+    :call_label12
+    %ret <- rax
+    rdi <- %ret
+    mem rsp -8 <- :call_label13
+    call :encode 1
+    :call_label13
+    %ret <- rax
+    rdi <- %ret
+    call print 1
+    rdi <- -61254
+    mem rsp -8 <- :call_label14
+    call :loop8 1
+    :call_label14
+    %ret <- rax
+    rdi <- %ret
+    mem rsp -8 <- :call_label15
+    call :encode 1
+    :call_label15
+    %ret <- rax
+    rdi <- %ret
+    call print 1
+    return
+  )
+  (:loop1
+    1 0
+    %arg <- rdi
+    %value <- 0
+    :call_label_ciao_16
+    %arg <- %arg
+    %arg -= 1
+    %value <- %value
+    %value += 1
+    %isDone <- %arg = 0
+    
+    cjump %isDone = 1 :call_label_ciao_17 :call_label_ciao_16
+    :call_label_ciao_17
+    rax <- %value
+    return
+  )
+  (:loop2
+    1 0
+    %arg <- rdi
+    %value <- 0
+    :call_label_ciao__ciao_18
+    %arg <- %arg
+    %arg += 2
+    %value <- %value
+    %value += 1
+    %isDone <- %arg = 0
+    
+    cjump %isDone = 1 :call_label_ciao__ciao_19 :call_label_ciao__ciao_18
+    :call_label_ciao__ciao_19
+    rax <- %value
+    return
+  )
+  (:loop3
+    1 0
+    %arg <- rdi
+    %value <- 0
+    :call_label_ciao__ciao__ciao_20
+    %arg <- %arg
+    %arg >>= 1
+    %value <- %value
+    %value += 1
+    %isDone <- %arg = 0
+    
+    cjump %isDone = 1 :call_label_ciao__ciao__ciao_21 :call_label_ciao__ciao__ciao_20
+    :call_label_ciao__ciao__ciao_21
+    rax <- %value
+    return
+  )
+  (:loop4
+    1 0
+    %arg <- rdi
+    %value <- 0
+    :call_label_ciao__ciao__ciao__ciao_22
+    %arg <- %arg
+    %arg *= 0
+    %value <- %value
+    %value += 1
+    %isDone <- %arg = 0
+    
+    cjump %isDone = 1 :call_label_ciao__ciao__ciao__ciao_23 :call_label_ciao__ciao__ciao__ciao_22
+    :call_label_ciao__ciao__ciao__ciao_23
+    rax <- %value
+    return
+  )
+  (:loop5
+    1 0
+    %arg <- rdi
+    %value <- 0
+    :call_label_ciao__ciao__ciao__ciao__ciao_24
+    %arg <- %arg
+    %arg -= 4
+    %value <- %value
+    %value += 1
+    %isDone <- %arg = 0
+    
+    cjump %isDone = 1 :call_label_ciao__ciao__ciao__ciao__ciao_25 :call_label_ciao__ciao__ciao__ciao__ciao_24
+    :call_label_ciao__ciao__ciao__ciao__ciao_25
+    rax <- %value
+    return
+  )
+  (:loop6
+    1 0
+    %arg <- rdi
+    %value <- 0
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+    %arg <- %arg
+    %arg <<= 1
+    %value <- %value
+    %value += 1
+    %isDone <- %arg = 0
+    
+    cjump %isDone = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_27 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao_27
+    rax <- %value
+    return
+  )
+  (:loop7
+    1 0
+    %arg <- rdi
+    %value <- 0
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_28
+    %arg <- 1 < %arg
+    
+    %value <- %value
+    %value += 1
+    %isDone <- %arg = 0
+    
+    cjump %isDone = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_29 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_28
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_29
+    rax <- %value
+    return
+  )
+  (:loop8
+    1 0
+    %arg <- rdi
+    %value <- 0
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_30
+    %arg <- %arg
+    %arg += 3
+    %value <- %value
+    %value += 1
+    %isDone <- %arg = 0
+    
+    cjump %isDone = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_31 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_30
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_31
+    rax <- %value
+    return
+  )
+  (:encode
+    1 0
+    %v1 <- rdi
+    %isEncoded <- %v1
+    %isEncoded &= 1
+    %isEncoded <- %isEncoded = 1
+    
+    cjump %isEncoded = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_33 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_32
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_32
+    %v1 <- %v1
+    %v1 += 1
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_33
+    rax <- %v1
+    return
+  )
+)

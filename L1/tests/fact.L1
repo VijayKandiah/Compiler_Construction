@@ -1,0 +1,18 @@
+(:main
+ (:main
+ 0 0
+ rdi <- 5
+ rsi <- rdi
+
+ :loop
+ rsi -= 1
+ cjump rsi = 1 :finish :cont
+ :cont
+ rdi *= rsi
+ goto :loop
+
+ :finish
+ rdi *= 2
+ rdi += 1
+ call print 1
+ return))

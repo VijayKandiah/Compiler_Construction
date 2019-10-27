@@ -1,0 +1,72 @@
+(:main
+  (:main
+    0 0
+    %len <- 11
+    %init_v <- 5
+    rdi <- %len
+    rsi <- %init_v
+    call allocate 2
+    %ptr <- rax
+    %vec_ptr <- %ptr
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0  <- 3
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0  <- 5
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0  <- 7
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0  <- 9
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0  <- 11
+    rdi <- %vec_ptr
+    mem rsp -8 <- :call_label0
+    call :print_array 1
+    :call_label0
+    rdi <- %vec_ptr
+    call print 1
+    return
+  )
+  (:print_array
+    1 0
+    %vec_ptr <- rdi
+    %size <- mem %vec_ptr 0 
+    rdi <- %size
+    mem rsp -8 <- :call_label_ciao_4
+    call :encode 1
+    :call_label_ciao_4
+    %size_e <- rax
+    rdi <- %size_e
+    call print 1
+    %ptr <- %vec_ptr
+    :call_label_ciao_1
+    %ptr <- %ptr
+    %ptr += 8
+    %over <- %size = 0
+    
+    cjump %over = 1 :call_label_ciao_3 :call_label_ciao_2
+    :call_label_ciao_2
+    %ele <- mem %ptr 0 
+    rdi <- %ele
+    call print 1
+    %size <- %size
+    %size -= 1
+    goto :call_label_ciao_1
+    :call_label_ciao_3
+    return
+  )
+  (:encode
+    1 0
+    %data <- rdi
+    %data <- %data
+    %data <<= 1
+    %data <- %data
+    %data += 1
+    rax <- %data
+    return
+  )
+)

@@ -1,0 +1,48 @@
+// Pippo tests
+// Goal: Play with scope of variables
+// Should get: 13, 9, 13 
+(:go
+	(:go 
+		1 0
+		// Caller saved variable
+		%myVar <- 5
+		// Callee saved variable
+		%myVar2 <- 8
+		// Save and print their %sum
+		%sum <- %myVar
+		%sum += %myVar2
+		%sum <<= 1
+		%sum++
+		rdi <- %sum
+		call print 1
+		// Save %myVar variable on stack
+		mem rsp -8 <- :f_ret
+		call :f1 0
+		:f_ret
+		// Print %sum again, should be the same
+		// R12 prints correctly, their %sum does not
+		%sum2 <- %myVar
+		%sum2 += %myVar2
+		%sum2 <<= 1
+		%sum2++
+		rdi <- %sum2
+		call print 1
+		return
+		)
+	(:f1
+		// Note: callee saved registers = local variables
+		0 2
+		%myVar <- 3
+		%myVar2 <- 2
+		mem rsp 8 <- 4
+		%sumF1 <- %myVar
+		%sumF1 += %myVar2
+		%localArg <- mem rsp 8
+		%sumF1 += %localArg
+		%sumF1 <<= 1
+		%sumF1++
+		rdi <- %sumF1
+		call print 1
+		return	
+	)
+)

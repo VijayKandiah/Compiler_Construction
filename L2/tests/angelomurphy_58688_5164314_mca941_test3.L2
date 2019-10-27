@@ -1,0 +1,53 @@
+(:entry
+
+  (:entry
+    0 0
+
+    %array_size <- 40
+    r12 <- %array_size
+    rdi <- %array_size
+    rdi <<= 1
+    rdi += 1
+    %not_hit_val <- -1
+    rsi <- %not_hit_val
+    call allocate 2
+    %arr_ptr <- rax
+    %loop_val <- 0
+    r11 <- %loop_val
+    :loop_start
+    rdx <- r11
+    rdx <<= 1
+    rdx += 1
+    rcx <- r11
+    rcx <<= 3
+    rcx += %arr_ptr
+    mem rcx 8 <- rdx
+    mem rsp -8 <- :loop_inc
+    %unknownVar <- r11
+    rdi <- r11
+    call :loop_inc_gen 1
+    :loop_inc
+    %inc_amount <- rax
+    %loop_val <- %unknownVar
+    %loop_val += %inc_amount
+    r11 <- %loop_val
+    cjump r11 < r12 :loop_start :loop_end
+    :loop_end
+    rdi <- %arr_ptr
+    call print 1
+
+    return 
+  )
+
+  (:loop_inc_gen
+    1 0
+    %inc_amount <- 1
+    rdi &= 1
+    cjump rdi = 0 :is_dbt :not_dbt
+    :is_dbt
+    %inc_amount <- 3 
+    :not_dbt
+    rax <- %inc_amount
+    return
+  )
+)

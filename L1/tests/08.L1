@@ -1,0 +1,29 @@
+//// swaps two registers
+(:go
+//// learned that this function is useless and not allowed by interp
+    //(:reg_swap
+     //   2 0
+      //  rax <- rsi
+       // rsi <- rdi
+        //rdi <- rax
+        //return)
+//// learned that call invalidates all registers apparently
+    (:go
+        0 0
+	mem rsp -8 <- :ret
+	call :swap 0
+	:ret
+	return)
+
+(:swap
+	0 1
+        rdi <- 7
+        rsi <- 21
+	rax <- rsi
+        rsi <- rdi
+        rdi <- rax
+	mem rsp 0 <- rsi
+        call print 1
+        rdi <- mem rsp 0
+        call print 1
+        return))

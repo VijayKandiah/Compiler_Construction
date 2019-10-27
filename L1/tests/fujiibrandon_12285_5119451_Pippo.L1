@@ -1,0 +1,91 @@
+// Insertion Sort: perform an in-place assertion sort on a given array
+// Input: an array of n integers
+// Output: the input array sorted by increasing value
+
+(:go 
+  (:sort
+    1 0
+    // store input array in r13
+    r13 <- rdi
+  
+    r12 <- mem r13 0 // r12 = input array length
+    r14 <- 2         // outer loop starting iterator, i
+
+    // while loop over the array
+    :outer_loop
+      cjump r12 < r14 :after :outer_step  
+      
+      :outer_step 
+        r15 <- r14 // set j <- i 
+     
+      // inner while loop for inserting a number using swap 
+      :inner_loop
+        cjump r15 <= 1 :after_inner_step :inner_step
+
+        :inner_step
+            r9 <- r15
+            r9 --
+            r9 <<= 3
+            r9 += r13
+            r10 <- r15
+            r10 <<= 3
+            r10 += r13
+            rbx <- mem r9 0   // rbx = array[j - 1]
+            rdx <- mem r10 0  // rdx = array[j]
+            cjump rdx < rbx :swap :after_inner_step
+
+        // swap two numbers if array[j - 1] > array[j]
+        :swap
+            mem r10 0 <- rbx
+            mem r9 0 <- rdx
+            r15 --
+            goto :inner_loop
+
+        :after_inner_step
+            r14 ++ 
+
+      goto :outer_loop 
+
+    :after
+        rax <- r13
+        return 
+  )
+
+  (:go
+    0 0
+
+    // Allocate array of 20 integers to be sorted by sort()
+    rdi <- 41
+    rsi <- 3
+    call allocate 2
+
+    mem rax 8 <- 35
+    mem rax 16 <- 15
+    mem rax 24 <- 13
+    mem rax 32 <- 19
+    mem rax 40 <- 51
+    mem rax 48 <- 27
+    mem rax 56 <- 49
+    mem rax 64 <- 57
+    mem rax 72 <- 9
+    mem rax 80 <- 63
+    mem rax 88 <- 81
+    mem rax 96 <- 97
+    mem rax 104 <- 11
+    mem rax 112 <- 11
+    mem rax 120 <- 13
+    mem rax 128 <- 7
+    mem rax 136 <- 33
+    mem rax 144 <- 37
+    mem rax 152 <- 27
+    mem rax 160 <- 51
+
+    mem rsp -8 <- :sort_ret
+    rdi <- rax
+    call :sort 1
+    :sort_ret
+    rdi <- rax
+    call print 1
+    return 
+  )
+)

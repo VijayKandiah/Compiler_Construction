@@ -1,0 +1,62 @@
+(:go
+  (:go
+    0 0
+
+    // Compute the data using not optimized code
+    rdi <- 5
+    rsi <- 3
+    mem rsp -8 <- :testFunction_ret
+    call :testFunction 1
+    :testFunction_ret
+
+    // Print the computed data
+    rdi <- rax
+    call print 1
+
+    // Compute the data using optimized code
+    rdi <- 5
+    rsi <- 3
+    mem rsp -8 <- :testFunctionFast_ret
+    call :testFunctionFast 1
+    :testFunctionFast_ret
+
+    // Print the computed data
+    rdi <- rax
+    call print 1
+
+    return
+  )
+
+  (:testFunction
+    1 0
+
+    // Decode the input arguments
+    rsi >>= 1
+    rdi >>= 1
+
+    // Compute the result
+    rdi += rsi
+
+    // Encode the result
+    rdi <<= 1
+    rdi += 1
+
+    // Return
+    rax <- rdi
+    return
+  )
+
+  (:testFunctionFast
+    1 0
+
+    // Compute the result
+    rdi += rsi
+
+    // Adjust the encoded result
+    rdi -= 1
+
+    // Return
+    rax <- rdi
+    return
+  )
+)

@@ -1,0 +1,175 @@
+(:go
+  (:go
+    0 0
+
+    // {s:2, 42, 2}
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    mem rax 8 <- 85
+    rdi <- rax
+
+    // {s:3, {s:2, 3, 3}, {s:2, 3, 3}, {s:2, 3, 3}}
+    // rdi <- 5
+    // rsi <- 7
+    // call allocate 2
+    // rdi <- 7
+    // rsi <- rax
+    // call allocate 2
+    // rdi <- rax
+
+    mem rsp -8 <- :printArray_ret
+    call :printArray 1
+    :printArray_ret
+
+    return
+  )
+  (:printArray
+    1 3
+
+    // Value encoding: x & 1 = 0, x is a memory address. x & 1 = 1, x >> 1 is a 63 bit two’s complement integer.
+
+    // Put a[] in a register to test value
+    r9 <- rdi
+
+    // r8 & 1 to check least significant bit of r8
+    r9 &= 1
+
+    // Check if r8 is memory address 0 or encoded two's complement integer 1
+    cjump r9 = 1 :not_array :array
+
+    :array
+    // Initalize the counter to 0
+    r8 <- 0
+
+    // Get the number of elements in the array
+    r10 <- mem rdi 0
+
+    // Check the loop counter
+    :startLoop
+    cjump r8 < r10 :loopBody :return
+
+    :loopBody
+
+    // Save caller-save registers we used before we call another function
+    mem rsp 0 <- rdi
+    mem rsp 8 <- r8
+    mem rsp 16 <- r10
+
+    // printArrayElementa, c//
+    // rdi <- a[] is the argument to printArray
+    rsi <- r8
+    mem rsp -8 <- :printArrayElement_ret
+    call :printArrayElement 2
+    :printArrayElement_ret
+
+    // Restore caller-save registers we previously saved
+    rdi <- mem rsp 0
+    r8 <- mem rsp 8
+    r10 <- mem rsp 16
+
+    // Increment the counter
+    r8++
+
+    // Repeat the loop
+    goto :startLoop
+
+    // return true
+    :return
+    rax <- 1
+    return
+
+    // if a is not an array return false
+    :not_array
+    rax <- 0
+    return
+  )
+  (:printArrayElement
+    2 2
+
+    // Save the original a[] value
+    rdx <- rdi
+
+    // rdi <- i
+    rdi <- rsi
+
+    // Encode the index
+    rdi <<= 1
+    rdi += 1
+
+    // Save caller-save registers we used before we call another function
+    mem rsp 0 <- rdx
+    mem rsp 8 <- rsi
+
+    // Print the index
+    call print 1
+
+    // Restore caller-save registers we previously saved
+    rdx <- mem rsp 0
+    rsi <- mem rsp 8
+
+    // Get the original index value
+    rdi <- rsi
+
+    // Calculate i*8 + 8
+    rdi <<= 3
+    rdi += 8
+
+    // Save the original offset value
+    rsi <- rdi
+
+    // Encode the offset
+    rdi <<= 1
+    rdi += 1
+
+    // Save caller-save registers we used before we call another function
+    mem rsp 0 <- rdx
+    mem rsp 8 <- rsi
+
+    // Print the offset of the array element in the L1 data layout
+    call print 1
+
+    // Restore caller-save registers we previously saved
+    rdx <- mem rsp 0
+    rsi <- mem rsp 8
+
+    // Get the value of a[i]
+    
+    // Add the offset to a[] to move pointer to point at a[i]
+    rdx += rsi
+
+    // Get the value of a[i]
+    rdx <- mem rdx 0
+
+    // Value encoding: x & 1 = 0, x is a memory address. x & 1 = 1, x >> 1 is a 63 bit two’s complement integer.
+
+    // Put a[i] in a register to test value
+    rcx <- rdx
+
+    // rcx & 1 to check least significant bit of rcx
+    rcx &= 1
+
+    // Check if rcx is memory address 0 or encoded two's complement integer 1
+    cjump rcx = 1 :not_an_array :else
+
+    // if a[i] is not an array, print a[i]
+    :not_an_array
+
+    // Get value of a[i]
+    rdi <- rdx
+
+    // Print a[i]
+    call print 1
+    return
+
+    :else
+
+    // printArraya[i]//
+    rdi <- rdx
+    mem rsp -8 <- :printArray_return
+    call :printArray 1
+    :printArray_return
+
+    return
+  )
+)

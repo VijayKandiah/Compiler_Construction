@@ -1,0 +1,20 @@
+define void :main ( ){
+
+  :entry
+  int64 %l
+  int64[][] %ar
+  %ar <- new Array(3, 5)
+  %l <- call :myF(%ar)
+  call print(%l)
+  return 
+
+}
+
+define int64 :myF (int64[][] %a){
+
+  :entry
+  int64 %l
+  %l <- length %a 1
+  return %l
+
+}

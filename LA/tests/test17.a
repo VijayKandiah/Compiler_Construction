@@ -1,0 +1,8 @@
+void main ( ){
+
+  int64 arLen
+  int64[] ar
+  ar[0] <- 0
+  return
+
+}

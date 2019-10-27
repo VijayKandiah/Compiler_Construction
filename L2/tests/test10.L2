@@ -1,0 +1,32 @@
+(:go
+  (:go
+    0 0
+
+    mem rsp -8 <- :ret
+    mem rsp -16 <- 13
+    mem rsp -24 <- 15
+    mem rsp -32 <- 17
+    call :printValues 9
+
+    :ret
+    return
+  )
+
+  (:printValues
+    9 0
+
+    %stackValue <- stack-arg 0
+    rdi <- %stackValue
+    call print 1
+
+    %stackValue2 <- stack-arg 8
+    rdi <- %stackValue2
+    call print 1
+
+    %stackValue3 <- stack-arg 16
+    rdi <- %stackValue3
+    call print 1
+
+    return
+  )
+)

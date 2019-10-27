@@ -1,0 +1,18 @@
+(:extra_labels
+ (:extra_labels
+  0 0
+  :lol
+  :so
+  goto :and
+  :many
+  :useless
+  :labels
+  goto :random
+  :and
+  :this
+  :is
+  goto :many
+  :random
+  rdi <- 3
+  call print 1
+  return))

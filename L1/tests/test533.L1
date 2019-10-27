@@ -1,0 +1,71 @@
+(:printArray
+(:printArray
+	1 3
+	rdx <- rdi
+	rdx <<= 63
+	cjump rdx = 0 :isarr :isnotarr
+	:isnotarr
+	rax <- 1
+	goto :end
+	:isarr
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- mem rdi 0
+	mem rsp 8 <- rdi
+	rdi <- 0
+	mem rsp 16 <- rdi
+	:loop
+	rdx <- mem rsp 8
+	rdi <- mem rsp 16
+	cjump rdi < rdx :body :end
+	:body
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdx <- r12
+	mem rsp 16 <- rdx
+	mem rsp -8 <- :printArrayElement_ret
+	call :printArrayElement 2
+	:printArrayElement_ret
+	rdi <- mem rsp 16
+	rdi++
+	mem rsp 16 <- rdi
+	goto :loop
+	:end
+	rax <- 3
+	return
+)
+
+(:printArrayElement
+	2 3
+	rdi <- rdi
+	rdi <- rsi
+	rdi++
+	rdi <- rdi
+	rdi--
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- r13
+	rdi *= 8
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 16
+	rsi <- rsi
+	rsi <<= 63
+	cjump rsi = 0 :isarr_2 :isnotarr_2
+	:isnotarr_2
+	call print 1
+	goto :exit_2
+	:isarr_2
+	mem rsp -8 <- :printArray_ret
+	call :printArray 1
+	:printArray_ret
+	:exit_2
+	return
+)
+
+)

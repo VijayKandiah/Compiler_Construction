@@ -1,0 +1,6 @@
+  (:go
+    0 0
+    rdi @ rdi rsi 4
+    call print 1
+    return
+  )

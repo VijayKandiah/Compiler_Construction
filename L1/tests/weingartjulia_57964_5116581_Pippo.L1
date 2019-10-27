@@ -1,0 +1,52 @@
+// Pippo tests
+// Goal: Use local, save registers
+// Should get: 13, 9, 13 
+(:go
+	(:go 
+		0 2
+		mem rsp 8 <- r12
+		// Caller saved variable
+		r10 <- 5
+		// Callee saved variable
+		r12 <- 8
+		// Save and print their sum
+		rdi <- r10
+		rdi += r12
+		rdi <<= 1
+		rdi++
+		mem rsp 0 <- r10
+		call print 1
+		// Save r10 variable on stack
+		mem rsp -8 <- :f_ret
+		call :f1 0
+		:f_ret
+		r10 <- mem rsp 0
+		// Print sum again, should be the same
+		// R10 IS NOT BEING SAVED CORRECTLY, printing junk
+		// R12 prints correctly, their sum does not
+		rdi <- r10
+		rdi += r12
+		rdi <<= 1
+		rdi++
+		call print 1
+		r12 <- mem rsp 8
+		return
+		)
+	(:f1
+		// Note: callee saved registers = local variables
+		0 2
+		mem rsp 0 <- r12
+		r10 <- 3
+		r12 <- 2
+		mem rsp 8 <- 4
+		rdi <- r10
+		rdi += r12
+		r11 <- mem rsp 8
+		rdi += r11
+		rdi <<= 1
+		rdi++
+		call print 1
+		r12 <- mem rsp 0
+		return	
+	)
+)

@@ -1,0 +1,70 @@
+// This test will cover loops and conditionals 
+// and check calling convention for r12
+// Output should be as follows:
+//   0
+//   1
+//   2
+//   3
+//   4
+//
+// If it outputs a -1, the calling convention was not followed
+
+
+(:go
+  (:go
+    0 1
+    
+    // Save r12
+    mem rsp 0 <- r12
+
+    // Give r12 a canary
+    r12 <- 7
+
+    rdi <- 1
+    rsi <- 11
+    mem rsp -8 <- :printLoop_ret
+    call :print_n_thru_m 2
+    :printLoop_ret
+
+    // Make sure r12 was not overwritten
+    cjump r12 = 7 :true :false
+    :false
+    rdi <- -1
+    call print 1
+    :true
+
+    // Restore r12
+    r12 <- mem rsp 0
+
+    return
+  )
+
+  (:print_n_thru_m
+    2 2
+    // Save callee saved registers needed
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+
+    // Save the current value in r12, max value in r13
+    r12 <- rdi
+    r13 <- rsi
+    
+    :loop_start
+    // Print current value
+    rdi <- r12
+    call print 1
+
+    // Increment current value
+    r12 += 2
+
+    // Jump less than max to loop start
+    cjump r12 < r13 :loop_start :end_loop
+
+    :end_loop
+    
+    // Restore callee saved registers
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+    return
+  )
+)

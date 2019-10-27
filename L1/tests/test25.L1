@@ -1,0 +1,44 @@
+(:go
+(:go
+	0 2
+	mem rsp 0 <- 1
+	mem rsp 8 <- 31
+	rdi <- mem rsp 8
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- mem rsp 8
+	rdi &= 3
+	mem rsp 8 <- rdi
+	r14 <- mem rsp 8
+	cjump r14 = 3 :odd :even
+	:even
+	rdi <- mem rsp 8
+	call print 1
+	cjump 1 = 1 :next :whatIsThisUniverse
+	:odd
+	rdi <- r14
+	call print 1
+	cjump 1 = 1 :next :nothingMakesSense
+	:next
+	rdi <- 21
+	rdi <- rdi
+	call print 1
+	r12 <- 21
+	cjump r12 < 0 :negative :positive
+	:negative
+	rdi <- -1
+	rdi <- rdi
+	call print 1
+	cjump 1 = 1 :end :worldIsExploding
+	:positive
+	rdi <- 3
+	rdi <- rdi
+	call print 1
+	:whatIsThisUniverse
+	:nothingMakesSense
+	:worldIsExploding
+	:end
+	return
+)
+
+)

@@ -1,0 +1,17 @@
+(:go
+  (:go
+	0 0
+	rdi <- 1
+	mem rsp -8 <- :f_return
+	call :f 1
+	:f_return
+	rdi <- rax
+	call print 1
+	return)
+
+  (:f
+	1 512
+	mem rsp 0 <- rdi
+	rax <- rdi
+	return))
+	

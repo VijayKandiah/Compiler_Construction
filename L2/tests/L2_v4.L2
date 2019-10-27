@@ -1,0 +1,101 @@
+(:go
+    //// This is the main function that runs
+    //// the {s:2, 42, 2} example
+    (:go
+      0 0
+      rdi <- 5
+      rsi <- 5
+      call allocate 2
+      rbx <- 85
+      mem rax 8 <- rbx
+
+
+      %array <- rax
+      rdi <- %array
+      mem rsp -8 <- :ret
+      call :printArray 1
+      :ret
+      return
+    )
+
+    (:printArray
+      1 0
+      %array <- rdi
+      %lowestBit <- %array
+      %lowestBit &= 1
+      cjump %lowestBit = 1 :retFalse :continue
+      :continue
+      %i <- 0
+      goto :loopCheck
+
+      :loop
+      rdi <- %array
+      rsi <- %i
+      mem rsp -8 <- :printArRet
+      call :printArrayElement 2
+      :printArRet
+      rdi <- %array
+      %i += 1
+
+      :loopCheck
+      rax <- mem rdi 0
+      rax >>= 1
+      rbx <- %i
+      cjump rax < rbx :retTrue :loop
+
+      :retFalse
+      rax <- 0
+      return
+
+      :retTrue
+      rax <- 1
+      return
+    )
+
+
+    (:printArrayElement
+      2 0
+      %array <- rdi
+      %i <- rsi
+
+      rsi <<= 1
+      rsi++
+      rdi <- rsi
+      call print 1
+
+      %L1DataLayout <- %i
+      %L1DataLayout <<= 3
+      %L1DataLayout += 8
+      %L1DataLayout <<= 1
+      %L1DataLayout += 1
+      rdi <- %L1DataLayout
+      call print 1
+
+      rax <- %i
+      rax++
+      rax <<= 3
+      %arrayI <- %array
+      %arrayI += rax
+      rax <- %arrayI
+
+      %lowestBit <- mem rax 0
+      %lowestBit &= 1
+      cjump %lowestBit = 1 :notArray :array
+
+      :notArray
+      rdi <- mem rax 0
+      call print 1
+      goto :r
+
+      :array
+      rdi <- mem rax 0
+      mem rsp -8 <- :r
+      call :printArray 1
+
+
+      :r
+      return
+    )
+
+
+)

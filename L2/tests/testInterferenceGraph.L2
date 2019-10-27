@@ -1,0 +1,19 @@
+(:entry
+
+  (:entry
+    0 0
+
+    %my_var_1 <- 1
+
+    rdi <- 1
+    rdi <<= 1
+    rdi += 1
+    call print 1
+
+    rdi <- %my_var_1
+    call print 1
+
+    return
+  )
+
+)

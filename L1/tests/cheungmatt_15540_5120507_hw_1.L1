@@ -1,0 +1,39 @@
+(:go
+ (:go
+  0 0
+  rdi <- 5
+  rsi <- 7
+  mem rsp -8 <- :g_ret
+  r10 <- rdi
+  r11 <- rsi
+  call :g 2
+  :g_ret
+  rdi <- rax
+  call print 1
+  rdi <- 5
+  rsi <- 7
+  mem rsp -8 <- :add_ret
+  call :add 1
+  :add_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:g
+  2 0
+  cjump rdi < rsi :true :false
+  :true
+  rax <- rsi
+  goto :end
+  :false
+  rax <- rdi
+  :end
+  return)
+ (:add
+  1 0
+  rdi >>= 1
+  rsi >>= 1
+  rdi += rsi
+  rdi <<= 1
+  rdi += 1
+  rax <- rdi
+  return))

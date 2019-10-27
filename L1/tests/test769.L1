@@ -1,0 +1,78 @@
+(:main
+(:main
+	0 0
+	:call_label0
+	rdi <- 3
+	rsi <- 5
+	rdx <- 7
+	rcx <- 9
+	r8 <- 11
+	r9 <- 13
+	r10 <- 15
+	r11 <- 17
+	rax <- 19
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	r8 <- r8
+	r9 <- r9
+	mem rsp -32 <- r10
+	mem rsp -24 <- r11
+	mem rsp -16 <- rax
+	mem rsp -8 <- :call_label1
+	call :printValues 9
+	:call_label1
+	return
+)
+
+(:printValues
+	9 8
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp 0 <- rsi
+	rsi <- rdx
+	mem rsp 8 <- rsi
+	rsi <- rcx
+	mem rsp 40 <- rsi
+	rsi <- r8
+	mem rsp 24 <- rsi
+	rsi <- r9
+	mem rsp 32 <- rsi
+	rsi <- mem rsp 64
+	mem rsp 48 <- rsi
+	rsi <- mem rsp 72
+	mem rsp 16 <- rsi
+	rsi <- mem rsp 80
+	mem rsp 56 <- rsi
+	:call_label2
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 40
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 24
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 32
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 48
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 56
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

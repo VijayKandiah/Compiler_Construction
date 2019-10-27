@@ -1,0 +1,53 @@
+define :main () { 
+
+    %len <- 11
+    %init_v <- 5
+    %ptr <- call allocate (%len, %init_v)
+
+    %vec_ptr <- %ptr
+    %ptr <- %ptr + 8
+    store %ptr <- 3
+    %ptr <- %ptr + 8
+    store %ptr <- 5
+    %ptr <- %ptr + 8
+    store %ptr <- 7
+    %ptr <- %ptr + 8
+    store %ptr <- 9
+    %ptr <- %ptr + 8
+    store %ptr <- 11
+
+    call :print_array (%vec_ptr)
+
+    call print (%vec_ptr)
+
+    return
+}
+
+define :print_array (%vec_ptr) {
+    %size <- load %vec_ptr
+    %size_e <- call :encode(%size)
+    call print(%size_e)
+
+    %ptr <- %vec_ptr
+
+    :loop
+    %ptr <- %ptr + 8
+    %over <- %size = 0
+    br %over :finish 
+    br :cont
+
+    :cont
+    %ele <- load %ptr
+    call print (%ele)
+    %size <- %size - 1
+    br :loop
+
+    :finish
+    return
+}
+
+define :encode (%data) {
+    %data <- %data << 1
+    %data <- %data + 1
+    return %data
+}

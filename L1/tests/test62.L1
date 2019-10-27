@@ -1,0 +1,56 @@
+(:go
+(:go
+	0 0
+	rax <- 2
+	rbx <- 3
+	rsi <- rax
+	rdi <- rbx
+	cjump rsi <= rdi :true :false
+	:true
+	mem rsp -8 <- :loopy_ret
+	call :loopy 0
+	:loopy_ret
+	goto :ret
+	:false
+	mem rsp -8 <- :false_loopy_ret
+	call :false_loopy 0
+	:false_loopy_ret
+	goto :ret
+	:ret
+	return
+)
+
+(:loopy
+	0 1
+	rbx <- 1
+	:start
+	cjump rbx = 11 :done :notdone
+	:notdone
+	rdi <- rbx
+	mem rsp 0 <- rbx
+	call print 1
+	rbx <- mem rsp 0
+	rbx += 2
+	goto :start
+	:done
+	return
+)
+
+(:false_loopy
+	0 1
+	rbx <- 1
+	:false_start
+	cjump rbx = 11 :false_done :false_notdone
+	:false_notdone
+	rdi <- rbx
+	rdi *= 5
+	mem rsp 0 <- rbx
+	call print 1
+	rbx <- mem rsp 0
+	rbx += 2
+	goto :false_start
+	:false_done
+	return
+)
+
+)

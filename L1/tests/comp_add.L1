@@ -1,0 +1,25 @@
+(:main
+	(:main
+		0 0
+		rdi <- 0
+		rsi <- 71 <= 117
+		rdi += rsi
+		rsi <- 7 <= 7
+		rdi += rsi		
+		rsi <- 701 <= 117
+		rdi += rsi
+		rsi <- 1 = 117
+		rdi += rsi
+		rsi <- 1 < 2
+		rdi += rsi
+		rsi <- 1 = 2
+		rdi += rsi
+		rsi <- 0 = 0
+		rdi += rsi
+
+
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		return))

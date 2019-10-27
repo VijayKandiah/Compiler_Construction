@@ -1,0 +1,30 @@
+define :main () {
+ :entry
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 5 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %ar <- call allocate (%newVar0, 1)
+ %newVar3 <- %ar + 8
+ store %newVar3 <- 5
+ %newVar4 <- %ar + 16
+ store %newVar4 <- 3
+ %newVar5 <- %ar + 24
+ store %newVar5 <- 5
+ %l <- call :myF (%ar)
+ call print (%l)
+ return 
+}
+
+define :myF (%a) {
+ :entry
+ %newVar0 <- 1 * 8
+ %newVar1 <- %newVar0 + 16
+ %newVar2 <- %a + %newVar1
+ %l <- load %newVar2
+ return %l
+}
+

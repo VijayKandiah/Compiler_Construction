@@ -1,0 +1,131 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    rdi <- 3
+    mem rsp -8 <- :call_label1
+    call :createTuple 1
+    :call_label1
+    %t <- rax
+    rdi <- %t
+    rsi <- 4
+    mem rsp -8 <- :call_label2
+    call :myF 2
+    :call_label2
+    %v <- rax
+    rdi <- %v
+    mem rsp -8 <- :call_label3
+    call :encodeValue 1
+    :call_label3
+    %v <- rax
+    rdi <- %v
+    call print 1
+    return
+  )
+  (:createTuple
+    1 0
+    %p1 <- rdi
+    :call_label4
+    %x2 <- 21
+    rdi <- 9
+    rsi <- 1
+    call allocate 2
+    %p <- rax
+    %newVar1 <- 0
+    %newVar1 *= 8
+    %newVar0 <- %newVar1
+    %newVar0 += 8
+    %newVar2 <- %p
+    %newVar2 += %newVar0
+    mem %newVar2 0  <- 0
+    %newVar4 <- 1
+    %newVar4 *= 8
+    %newVar3 <- %newVar4
+    %newVar3 += 8
+    %newVar5 <- %p
+    %newVar5 += %newVar3
+    mem %newVar5 0  <- 1
+    %newVar7 <- 2
+    %newVar7 *= 8
+    %newVar6 <- %newVar7
+    %newVar6 += 8
+    %newVar8 <- %p
+    %newVar8 += %newVar6
+    mem %newVar8 0  <- %p1
+    %newVar10 <- 3
+    %newVar10 *= 8
+    %newVar9 <- %newVar10
+    %newVar9 += 8
+    %newVar11 <- %p
+    %newVar11 += %newVar9
+    mem %newVar11 0  <- %x2
+    rax <- %p
+    return
+  )
+  (:myF
+    2 0
+    %c <- rdi
+    %p1 <- rsi
+    :call_label5
+    %newVar1 <- 2
+    %newVar1 *= 8
+    %newVar0 <- %newVar1
+    %newVar0 += 8
+    %newVar2 <- %c
+    %newVar2 += %newVar0
+    %x1 <- mem %newVar2 0 
+    %newVar4 <- 3
+    %newVar4 *= 8
+    %newVar3 <- %newVar4
+    %newVar3 += 8
+    %newVar5 <- %c
+    %newVar5 += %newVar3
+    %x2 <- mem %newVar5 0 
+    rdi <- %x1
+    mem rsp -8 <- :call_label6
+    call :encodeValue 1
+    :call_label6
+    %encodedX1 <- rax
+    rdi <- %encodedX1
+    call print 1
+    rdi <- %x2
+    mem rsp -8 <- :call_label7
+    call :encodeValue 1
+    :call_label7
+    %encodedX2 <- rax
+    rdi <- %encodedX2
+    call print 1
+    rdi <- %p1
+    mem rsp -8 <- :call_label8
+    call :encodeValue 1
+    :call_label8
+    %encodedP1 <- rax
+    rdi <- %encodedP1
+    call print 1
+    %r1 <- %x1
+    %r1 += %x2
+    rdi <- %r1
+    mem rsp -8 <- :call_label9
+    call :encodeValue 1
+    :call_label9
+    %encodedR1 <- rax
+    rdi <- %encodedR1
+    call print 1
+    %r2 <- %r1
+    %r2 += %p1
+    rax <- %r2
+    return
+  )
+  (:encodeValue
+    1 0
+    %v <- rdi
+    :call_label10
+    %encodedV <- %v
+    %encodedV <- %encodedV
+    %encodedV <<= 1
+    %encodedV <- %encodedV
+    %encodedV += 1
+    rax <- %encodedV
+    return
+  )
+)

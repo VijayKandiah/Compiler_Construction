@@ -1,0 +1,44 @@
+(:go
+  (:go
+    0 0
+    rdi <- 7
+    rsi <- 5
+    %var1 <- rsi
+    call allocate 2
+    rdi <- mem rax 0
+    rdi <<= 1
+    rdi += 1
+    rsi <- %var1
+    rdi <- mem rax 24
+    rdi += mem rax 16
+    rdi += mem rax 8
+    rsi *= 5
+    %var2 <- rdi
+    %var3 <- rsi
+    call print 1
+    rdi <- %var2
+    rsi <- %var3
+    rdi <- 1
+    rsi <- 3
+    mem rsp -8 <- :functionTwo_ret
+    call :functionTwo 2
+    :functionTwo_ret
+    rdi <- 3
+    call print 1
+    rdi <- 13
+    call print 1
+    return
+  )
+
+  (:functionTwo
+    2 0
+    rax <- 3
+    rax += 11
+    rax *= 5
+    rdi <- 9
+    %var1 <- rax
+    call print 1 
+    rax <- %var1
+    return
+  )
+)

@@ -1,0 +1,63 @@
+define :main () {
+ :entry
+ %newVar1 <- 5 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 5 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %a <- call allocate (%newVar0, 1)
+ %newVar3 <- %a + 8
+ store %newVar3 <- 5
+ %newVar4 <- %a + 16
+ store %newVar4 <- 5
+ %newVar5 <- %a + 24
+ store %newVar5 <- 5
+ call print (%a)
+ call :initArray (%a)
+ call print (%a)
+ call :printE (%a, 0, 0)
+ call :printE (%a, 0, 1)
+ call :printE (%a, 1, 0)
+ call :printE (%a, 1, 1)
+ return 
+}
+
+define :initArray (%A) {
+ :init
+ %newVar1 <- 0
+ %newVar2 <- %A + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- 1
+ %newVar5 <- %newVar4 * %newVar5
+ %newVar6 <- 1 * %newVar5
+ %newVar1 <- %newVar6 + %newVar1
+ %newVar1 <- %newVar1 + 0
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar7 <- %A + %newVar0
+ store %newVar7 <- 9
+ return 
+}
+
+define :printE (%A, %i, %j) {
+ :entry
+ %newVar1 <- 0
+ %newVar2 <- %A + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- 1
+ %newVar5 <- %newVar4 * %newVar5
+ %newVar6 <- %i * %newVar5
+ %newVar1 <- %newVar6 + %newVar1
+ %newVar1 <- %newVar1 + %j
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar7 <- %A + %newVar0
+ %e <- load %newVar7
+ call print (%e)
+ return 
+}
+

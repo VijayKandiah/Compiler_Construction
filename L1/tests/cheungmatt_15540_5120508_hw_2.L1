@@ -1,0 +1,34 @@
+(:go
+ (:go
+  0 0
+  mem rsp -8 <- :gen_array_ret
+  call :gen_array 0
+  :gen_array_ret
+  rdi <- rax
+  rcx <- rax
+  mem rsp -8 <- :last_array_ret
+  call :last_array 1
+  :last_array_ret
+  r13 <- rax
+  rdi <- rcx
+  call print 1
+  rdi <- r13
+  call print 1
+  return)
+  (:gen_array
+   0 0
+   rdi <- 9
+   rsi <- 9
+   call allocate 2
+   mem rax 8 <- 11
+   mem rax 16 <- 11
+   mem rax 24 <- 11
+   mem rax 32 <- 11
+   return 
+  )
+  (:last_array
+   1 0
+   r11 <- mem rdi 32
+   rax <- r11
+   return)
+)

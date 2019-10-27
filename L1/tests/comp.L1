@@ -1,0 +1,39 @@
+(:main
+	(:main
+		0 0
+		rdi <- 71 <= 117
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 7 <= 7
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 701 <= 117
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 1 = 117
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 1 < 2
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 1 = 2
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		rdi <- 0 = 0
+		rdi *= 2
+		rdi += 1
+		call print 1
+
+		return))

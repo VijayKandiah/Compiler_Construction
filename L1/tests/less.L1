@@ -1,0 +1,25 @@
+(:main
+ (:main
+  0 0
+  rdi <- 10
+  rsi <- 13
+  mem rsp -8 <- :f_ret
+  call :less 2
+  :f_ret
+  rdi <- rax
+  rdi *= 2
+  rdi += 1
+  call print 1
+  return)
+ 
+ (:less 
+  2 0
+  cjump rdi < rsi :yes :no
+
+  :yes
+  rax <- 1
+  return
+
+  :no
+  rax <- 0
+  return))

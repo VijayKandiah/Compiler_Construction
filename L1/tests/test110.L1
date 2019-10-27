@@ -1,0 +1,14 @@
+(:main
+(:main
+	0 0
+	:call_label0
+	rdi <- 7
+	rdi <- rdi
+	call print 1
+	rdi <- 9
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

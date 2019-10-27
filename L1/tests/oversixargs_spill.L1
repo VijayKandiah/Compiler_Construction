@@ -1,0 +1,17 @@
+(:go
+(:go
+0 0
+mem rsp -8 <- :funct_ret
+rdi <- 3 rsi <- 5 rdx <- 7 rcx <- 9 r8 <- 11 r9 <- 13
+mem rsp -16 <- 15 mem rsp -24 <- 17
+call :funct 8
+:funct_ret
+rdi <- rax
+call print 1
+return)
+(:funct 
+8 1
+rdi <- mem rsp 8
+mem rsp 0 <- rdi
+rax <- mem rsp 0
+return))

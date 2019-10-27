@@ -1,0 +1,11 @@
+(:main
+  (:main
+    0 0
+    %src2 <- 2
+    %src1 <- 1
+    %finalV @ %src1 %src2 4
+    rdi <- %finalV
+    call print 1
+    return
+  )
+)

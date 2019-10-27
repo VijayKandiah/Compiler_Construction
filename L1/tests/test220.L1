@@ -1,0 +1,67 @@
+(:go
+(:go
+	0 3
+	mem rsp 0 <- 1
+	rdi <- mem rsp 24
+	rcx <- 3
+	rdx <- 5
+	rdi <- 1
+	mem rsp 8 <- rdi
+	rdi <- 31
+	mem rsp 16 <- rdi
+	:loop
+	rdi <- rcx
+	rsi <- rdx
+	mem rsp -8 <- :ret1
+	call :fib_add 2
+	:ret1
+	rdx <- mem rsp 8
+	rdx += 2
+	mem rsp 8 <- rdx
+	rcx <- rdi
+	rdx <- rsi
+	rdi <- :loop
+	rdi <- :end
+	rsi <- mem rsp 8
+	rdi <- mem rsp 16
+	cjump rsi < rdi :loop :end
+	:end
+	return
+)
+
+(:fib_add
+	2 2
+	rdx <- rsi
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	rsi += rdi
+	mem rsp 0 <- rsi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- rdx
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi <- mem rsp 0
+	rsi <- rdi
+	return
+)
+
+)

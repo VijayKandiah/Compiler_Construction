@@ -1,0 +1,27 @@
+(:go
+ (:go
+  0 0
+  mem rsp -8 <- :g_ret
+  rdi <- 3 rsi <- 9 rdx <- 7
+  rcx <- 13 r8 <- 5 r9 <- 11
+  mem rsp -16 <- 15
+  mem rsp -24 <- 17
+  mem rsp -32 <- 19
+  call :g 9
+  :g_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:g
+  9 1
+  rax <- mem rsp 8
+  mem rsp 0 <- rdi
+  rdi <- mem rsp 16
+  rax += rdi
+  rax -= 1
+  rdi <- mem rsp 0
+  rdi += rsi
+  rdi -= 1
+  rax += rdi
+  rax -= 1
+  return))

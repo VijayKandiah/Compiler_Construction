@@ -1,0 +1,9 @@
+(:main
+  (:main
+    0 0
+    rdi <- 9
+    rsi <- 21
+    call allocate 2
+    rdi <- rax
+    call print 1
+    return))

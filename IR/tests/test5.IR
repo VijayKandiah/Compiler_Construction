@@ -1,0 +1,24 @@
+define void :main ( ){
+
+  :entry
+  int64 %v1
+  int64 %v2
+  %v1 <- 1
+  %v2 <- 2
+  br :myLabel1
+
+  :myLabel1
+  int64 %check
+  int64 %v3
+  %v3 <- %v1 + %v2
+  %check <- %v3 > 1
+  br %check :true :false
+
+  :true
+  call print(%v3)
+  return
+
+  :false
+  return
+
+}

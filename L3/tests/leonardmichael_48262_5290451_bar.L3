@@ -1,0 +1,152 @@
+define :main () {
+       %a <- 8
+       %b <- 8
+       %c <- 8
+       %d <- 8
+       %e <- 8
+       %f <- 8
+       %g <- 8
+       %h <- 8
+       %size <- 8 << 1
+       %size <- %size + 1
+       %addr <- call allocate(%size,%size)
+       call print(%addr)
+       %x <- 1
+
+       call :load_stuff()
+
+       call :fun_f(%a,%b,%c,%d,%e,%x)
+
+       call :draw()
+
+       %size <- 8 << 1
+       %size <- %size + 3
+       %help <- call allocate(%size, 3)
+       %swag <- call :parity(%help,%size)
+       call print(%swag)
+       return
+}
+
+define :parity(%addr, %count){
+
+       %count <- %count
+       %idx <- 0
+       %par <- 0
+       :par_c
+      %par_b <- %idx < %count
+       br %par_b :par_i
+       br :par_o
+      :par_i
+       %par_ir <- %idx + 8
+       %par_ir <- %addr + %idx
+       %par_ir <- load %par_ir
+       %par_res <- %par_ir = 1
+       br %par_res :par_y
+       br :par_n
+       :par_y
+	%par <- %par + 1
+       :par_n
+       %idx <- %idx + 1
+       br :par_c
+       :par_o
+        %par <- %par & 1
+       return %par
+
+}
+
+define :draw(){
+      %addr <- call allocate(17,1)
+      %s1 <- %addr + 32
+      store %s1 <- 3
+
+      %s2 <- %addr + 40
+      %s3 <- %addr + 48
+      %s4 <- %addr + 56
+      %s5 <- %addr + 64
+      store %s2 <- 3
+      store %s3 <- 3
+      store %s4 <- 3
+      store %s5 <- 3
+      call print(%addr)
+      store %s3 <- 1
+      store %s4 <- 1
+      call print(%addr)
+      call print(%addr)
+      store %s3 <- 3
+      store %s4 <- 3
+      call print(%addr)
+      store %s3 <- 1
+      store %s4 <- 1
+      call print(%addr)
+      call print(%addr)
+      %s1 <- %addr + 8
+      %s2 <- %addr + 16
+      %s3 <- %addr + 24
+      %s4 <- %addr + 32
+      store %s1 <- 3
+      store %s2 <- 3
+      store %s3 <- 3
+      store %s4 <- 3
+      call print(%addr)
+
+      
+      return
+}
+
+define :load_stuff(){       
+       %addr <- call allocate(9,1)
+       %s <- %addr + 8
+       %var1 <- load %s
+       %s <- %s + 8
+       %var2 <- load %s
+       %var3 <- %var2
+       %var3 <- %var3 - %var2
+       %load_stuff_res <- %var3 = 8
+       br %load_stuff_res :load_stuff_1
+       br :load_stuff_2
+       :load_stuff_1
+       :load_stuff_2
+
+       %count <- 0
+       %load_stuff_res <- 1 = 1
+       br %load_stuff_res :jk
+       br :load_stuff_1
+       :jk
+       %count <- %count << 4       
+       call print(%addr)
+       %s <- %addr + 8
+       store %s <- 3
+       call print(%addr)       
+       %bs <- 3 * 8
+       %s <- %s + %bs
+       store %s <- 5
+       call print(%addr)       
+       %s <- %s - 16
+       store %s <- 7
+       %s <- %s + 8
+       store %s <- 9
+       call print(%addr)
+
+       return
+
+}
+
+
+define :fun_f(%a,%b,%c,%d,%e,%f){
+       :fun_fun_compare
+       %res <- %f = 1
+       br %res :fun_fun_out
+       br :fun_fun_in
+       :fun_fun_in
+       %var1 <- %a
+       %var2 <- %b
+       %var3 <- %c
+       %var4 <- %d
+       %var5 <- %e
+       %var6 <- 1
+       br :fun_fun_compare
+       :fun_fun_out
+       return       
+       
+
+}

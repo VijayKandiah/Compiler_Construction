@@ -1,0 +1,219 @@
+// This program attempts to create a stack library for L3
+
+// Args:    %val     : int
+//
+// Return:  %encoded : int
+define :encode(%val) {
+  %almost_encoded <- %val << 1
+  %encoded <- %almost_encoded + 1
+  return %encoded
+}
+
+// Args:    %val     : int
+//
+// Return:  %decoded : int
+define :decode(%val) {
+  %decoded <- %val >> 1
+  return %decoded
+}
+
+// Return:  %stack_ptr : ptr
+define :new_stack() {
+  // This allocates an empty stack, where the "elements" are all 0's
+  %size <- 0
+  %encoded_size <- call :encode(%size)
+  %default <- 0
+  %encoded_default <- call :encode(%default)
+  %stack_ptr <- call allocate(%encoded_size, %encoded_default)
+  return %stack_ptr
+}
+
+// Args:    %old_stack_ptr : ptr
+//          %val           : int
+//
+// Return:  %new_stack_ptr : ptr
+define :push(%old_stack_ptr, %val) {
+
+  // First, allocate a new array that's one element bigger than the old one
+  %old_size <- load %old_stack_ptr // This should load the %size
+  %new_size <- %old_size + 1
+  %encoded_new_size <- call :encode(%new_size)
+  %default <- 0
+  %encoded_default <- call :encode(%default)
+  %new_stack_ptr <- call allocate(%encoded_new_size, %encoded_default)
+
+  // Next, write the new value into the first idx of the new array
+  %encoded_val <- call :encode(%val)
+  %curr_idx <- %new_stack_ptr + 8
+  store %curr_idx <- %encoded_val
+
+  // Finally, call a recursive helper function to fill the rest of the array
+  %final_stack_ptr <- call :refill_stack(%new_stack_ptr, %old_stack_ptr, %old_size)
+  return %final_stack_ptr
+}
+
+// Args:    %new_stack_ptr   : ptr
+//          %old_stack_ptr   : ptr
+//          %num_remaining   : int
+//
+// Return:  %new_stack_ptr   : ptr
+define :refill_stack(%new_stack_ptr, %old_stack_ptr, %num_remaining) {
+
+  // First, check if we're done
+  %more_to_write <- %num_remaining > 0
+  br %more_to_write :write_another
+  br :base_case
+
+// Base case: stack has been fully reconstructed. Return the pointer
+:base_case
+  return %new_stack_ptr
+
+// Other case: we need to write more into the stack
+:write_another
+  // First, get the element that we need to write
+  %old_size <- load %old_stack_ptr
+  %old_stack_loc <- %old_stack_ptr + 8 // First element in the array
+  %num_elem_offset <- %old_size - %num_remaining
+  %offset <- %num_elem_offset * 8
+  %old_stack_loc <- %old_stack_loc + %offset
+  %val_to_write <- load %old_stack_loc
+
+  // Now, get a pointer to the second element in the new stack
+  // Because we've already pushed the first element
+  %new_stack_loc <- %new_stack_ptr + 16
+
+  // Then, go to the index that we need to write to
+  %new_stack_loc <- %new_stack_loc + %offset
+  store %new_stack_loc <- %val_to_write
+
+  // And finally, recur
+  %new_num_remaining <- %num_remaining - 1
+  %new_stack_ptr <- call :refill_stack(%new_stack_ptr, %old_stack_ptr, %new_num_remaining)
+  return %new_stack_ptr
+}
+
+// Args:    %stack_ptr : ptr
+//
+// Return:  pop_type_ptr : ptr 
+//
+//          Returns a two element array,
+//          Where the first is the element we've popped
+//          And the second is a pointer to the array without the element that has been popped
+define :pop(%stack_ptr) {
+  // In C, this would be (assert stack.%size > 0
+  // But this is the best we can do in this language
+  %old_size <- load %stack_ptr // This should load the %size
+  %not_empty <- %old_size > 0
+  br %not_empty :do_pop
+  br :abort
+
+:abort
+  call array-error(%stack_ptr, 0)
+  return %stack_ptr
+
+:do_pop
+  // Read out the first value from the input stack
+  %pop_loc <- %stack_ptr + 8
+  %val <- load %pop_loc
+
+  // Write the rest of the values into a new array
+  %stack_ptr <- call :shrink_stack(%stack_ptr)
+
+  // Package the return array
+  // First, allocate a 2 element array where both elements are the popped value
+  %ret_size <- 2
+  %encoded_ret_size <- call :encode(%ret_size)
+  %ret <- call allocate(%encoded_ret_size, %val)
+
+  // Finally, overwrite the second element to be a pointer to the new array, and return
+  %ret_back <- %ret + 16
+  store %ret_back <- %stack_ptr
+  return %ret
+}
+
+// Args:    %old_stack_ptr   : ptr
+//          %num_remaining   : int
+//
+// Return:  %new_stack_ptr   : ptr
+define :shrink_stack(%old_stack_ptr) {
+  // Allocate a new array that's one element smaller than the old one
+  %old_size <- load %old_stack_ptr // This should load the %size
+  %new_size <- %old_size - 1
+  %encoded_new_size <- call :encode(%new_size)
+  %default <- 0
+  %encoded_default <- call :encode(%default)
+  %new_stack_ptr <- call allocate(%encoded_new_size, %encoded_default)
+
+  // Then, populate it
+  %new_stack_ptr <- call :do_shrink_stack(%new_stack_ptr, %old_stack_ptr, %new_size)
+  return %new_stack_ptr 
+}
+
+// Args:    %old_stack_ptr   : ptr
+//          %num_remaining   : int
+//
+// Return:  %new_stack_ptr   : ptr
+define :do_shrink_stack(%new_stack_ptr, %old_stack_ptr, %num_remaining) {
+
+  // First, check if we're done
+  %more_to_write <- %num_remaining > 0
+  br %more_to_write :write_another
+  br :base_case
+
+// Base case: stack has been fully reconstructed. Return the pointer
+:base_case
+  return %new_stack_ptr
+
+// Other case: we need to write more into the stack
+:write_another
+  %old_size <- load %new_stack_ptr
+  %num_elem_offset <- %old_size - %num_remaining
+  %offset <- %num_elem_offset * 8
+  %old_stack_loc <- %old_stack_ptr + 16 // Skip the first element in the old array
+  %old_stack_loc <- %old_stack_loc + %offset
+  %val_to_write <- load %old_stack_loc
+
+  %new_stack_loc <- %new_stack_ptr + 8
+  %new_stack_loc <- %new_stack_loc + %offset
+  store %new_stack_loc <- %val_to_write
+
+  // And finally, recur
+  %new_num_remaining <- %num_remaining - 1
+  %new_stack_ptr <- call :do_shrink_stack(%new_stack_ptr, %old_stack_ptr, %new_num_remaining)
+  return %new_stack_ptr
+}
+
+// Testing: does this stack stuff work?
+define :main() {
+  %stack_ptr <- call :new_stack()
+  %stack_ptr <- call :push(%stack_ptr, 0)
+  %stack_ptr <- call :push(%stack_ptr, 1)
+  %stack_ptr <- call :push(%stack_ptr, 2)
+  %stack_ptr <- call :push(%stack_ptr, 3)
+
+  // Print the original stack
+  call print(%stack_ptr)
+ 
+:pop_from_stack
+  %pop_package <- call :pop(%stack_ptr)
+
+  // Print the popped value, which needs to be %encoded
+  %popped_loc <- %pop_package + 8
+  %popped_val <- load %popped_loc
+  call print(%popped_val)
+
+  // Print the stack after popping
+  %popped_stack_ptr_ptr <- %pop_package + 16
+  %stack_ptr <- load %popped_stack_ptr_ptr
+  call print(%stack_ptr)
+
+  // Loop until the stack is empty
+  %stack_size <- load %stack_ptr
+  %more_to_pop <- %stack_size > 0
+  br %more_to_pop :pop_from_stack
+  br :out
+
+:out
+
+  return
+}

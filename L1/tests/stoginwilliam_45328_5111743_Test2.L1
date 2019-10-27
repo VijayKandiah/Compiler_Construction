@@ -1,0 +1,103 @@
+// This test will cover heap operations
+//
+// Expected output:
+//  {s:3, 3, 3, 3}
+//  {s:2, {s:3, 3, 3, 3}, {s:3, 3, 3, 3}}
+//  {s:3, 3, 3, 3}
+//  3
+//  6
+//  9
+//  9
+//
+
+
+
+
+(:go
+  (:go
+    0 5
+    // Create and print an array of size 3 3s
+    rdi <- 7
+    rsi <- 7
+    call allocate 2
+    
+    // Save pointer to array of size 3 1s
+    mem rsp 0 <- rax
+
+    rdi <- rax
+    call print 1
+
+    // Create and print an array of size 2 arrays of size 3 3s    
+    rdi <- 5
+    rsi <- mem rsp 0
+    call allocate 2
+    // Save pointer to array of arrays
+    mem rsp 8 <- rax
+    
+    rdi <- rax
+    call print 1
+
+    // Loop through the elements and print the sum
+    r8 <- mem rsp 0
+
+    // Save r8, r9, and r10
+    mem rsp 16 <- r8
+    mem rsp 24 <- r9
+    mem rsp 32 <- r10
+
+    // Print array before iterating
+    rdi <- r8
+    call print 1
+
+    // Restore r8,9,10
+    r8 <- mem rsp 16
+    r9 <- mem rsp 24
+    r10 <- mem rsp 32
+
+    // Get and decode number of elements
+    r9 <- mem r8 0
+    r9 <<= 1
+    r9 += 1
+
+
+    // Accumulator
+    r10 <- 1
+    
+    :loop_start
+
+    // Next element
+    r8 += 8
+
+    // Add next element to accumulator
+    r11 <- mem r8 0
+    r11 -= 1
+    r10 += r11
+    
+    // Save r8, r9, and r10
+    mem rsp 16 <- r8
+    mem rsp 24 <- r9
+    mem rsp 32 <- r10
+
+    rdi <- r10
+    call print 1
+
+    // Restore r8,9,10
+    r8 <- mem rsp 16
+    r9 <- mem rsp 24
+    r10 <- mem rsp 32
+
+
+    // Decrement number of elements
+    r9 -= 2
+
+    cjump 2 <= r9 :loop_start :loop_end
+    :loop_end
+
+    // Print result
+    rdi <- r10
+    call print 1
+    
+
+    return
+  )
+)

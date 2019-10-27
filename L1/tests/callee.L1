@@ -1,0 +1,10 @@
+(:callee
+ (:callee
+  0 0
+  mem rsp -8 <- rbx
+  rbx <- 5
+  rdi <- 3
+  rdi *= rbx
+  rbx <- mem rsp -8
+  call print 1
+  return))

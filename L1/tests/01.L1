@@ -1,0 +1,6 @@
+(:go
+    (:go
+    0 0
+    rdi <- 43
+    call print 1
+    return))

@@ -1,0 +1,127 @@
+void main ( ){
+  int64[][] m
+  int64 r
+  int64 v
+  v <- 21
+  m <- new Array(4, 4)
+
+   initMatrix(m, 0)
+  r <-  checkMatrix(m, v)
+   print(r)
+
+   initMatrix(m, 0)
+  m[0][0] <- v
+  r <-  checkMatrix(m, v)
+   print(r)
+
+   initMatrix(m, 0)
+  m[0][1] <- v
+  r <-  checkMatrix(m, v)
+   print(r)
+
+   initMatrix(m, 0)
+  m[1][0] <- v
+  r <-  checkMatrix(m, v)
+   print(r)
+
+   initMatrix(m, 0)
+  m[3][0] <- v
+  r <-  checkMatrix(m, v)
+   print(r)
+
+   initMatrix(m, 0)
+  m[3][1] <- v
+  r <-  checkMatrix(m, v)
+   print(r)
+
+   initMatrix(m, 0)
+  m[3][3] <- v
+  r <-  checkMatrix(m, v)
+   print(r)
+  return
+}
+
+void initMatrix (int64[][] m, int64 initValue){
+  int64 l1
+  int64 l2
+  l1 <- length m 0
+  l2 <- length m 1
+  int64 index
+  index <- 0
+
+  :header
+  int64 check
+  check <- index < l1
+  br check :outerBody :leave
+
+  :outerBody
+  int64 index2
+  index2 <- 0
+  br :header2
+
+  :header2
+  int64 check2
+  check2 <- index2 < l2
+  br check2 :innerBody :endOuterBody
+
+  :innerBody
+  m[index][index2] <- initValue
+  index2 <- index2 + 1
+  br :header2
+
+  :endOuterBody
+  index <- index + 1
+  br :header
+
+  :leave
+  return
+}
+
+int64 checkMatrix (int64[][] m, int64 v){
+  int64 l1
+  int64 l2
+  l1 <- length m 0
+  l2 <- length m 1
+  int64 index
+  int64 found
+  found <- 0
+  index <- 0
+   print(m)
+   print(v)
+
+  :header
+  int64 check
+  check <- index < l1
+  br check :outerBody :leave
+
+  :outerBody
+  int64 index2
+  index2 <- 0
+  br :header2
+
+  :header2
+  int64 check2
+  check2 <- index2 < l2
+  br check2 :innerBody :endOuterBody
+
+  :innerBody
+  int64 e
+  int64 sameE
+  e <- m[index][index2]
+  sameE <- e = v
+  br sameE :setAndLeave :endInnerBody
+
+  :endInnerBody
+  index2 <- index2 + 1
+  br :header2
+
+  :endOuterBody
+  index <- index + 1
+  br :header
+
+  :setAndLeave
+  found <- 1
+
+  :leave
+  return found
+}

@@ -1,0 +1,18 @@
+(:main
+ (:main
+  0 0
+  rdi <- 10
+  mem rsp -8 <- :f_ret
+  call :is_odd 1
+  :f_ret
+  rdi <- rax
+  rdi *= 2
+  rdi += 1
+  call print 1
+  return)
+ 
+ (:is_odd
+  1 0
+  rdi &= 1
+  rax <- rdi  
+  return))

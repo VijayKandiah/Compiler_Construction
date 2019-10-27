@@ -1,0 +1,9 @@
+define void :main ( ){
+
+  :entry
+  tuple %p
+  %p <- new Tuple(5)
+  call print(%p)
+  return 
+
+}

@@ -1,0 +1,102 @@
+(:go
+  (:go
+    0 0
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    mem rax 8 <- 85
+    rdi <- rax
+    mem rsp -8 <- :go_done
+    call :printArray 1
+    :go_done
+    return
+  )
+
+  (:printArray
+    1 3
+    // store r12 and rbx
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+    mem rsp 16 <- rbx
+
+    r13 <- rdi
+
+    // check if a in rdi is a memory address
+    r12 <- rdi
+    r12 &= 1
+
+    cjump r12 = 0 :is_array_1 :not_array_1
+  :not_array_1
+    goto :done_1
+
+  :is_array_1
+    // r12 is the length
+    r12 <- mem rdi 0
+    // rbx is the index
+    rbx <- 0
+
+  :repeat_loop
+    cjump rbx < r12 :loop :done_1
+    rdi <- rbx
+    rdi <<= 1
+    rdi++
+    call print 1
+  :loop
+    rsi <- rbx
+    rdi <- r13
+    mem rsp -8 <- :print_ret
+    call :printArrayElement 2
+  :print_ret
+    rbx++
+    goto :repeat_loop
+  :done_1
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+    rbx <- mem rsp 16
+    return
+  )
+
+  (:printArrayElement
+    2 2
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+
+    // store these things so life is easier
+    r12 <- rdi
+    r13 <- rsi
+
+    // print the index
+    rdi <- r13
+    rdi <<= 1
+    rdi++
+    call print 1
+
+    // print the offset into the array
+    rdi <- 8
+    rdi @ rdi r13 8
+    rdi <<= 1
+    rdi++
+    call print 1
+
+    // check if a[i] is an array
+    rax @ r12 r13 8
+    rax <- mem rax 8
+    rax &= 1
+
+    cjump rax = 0 :is_array_2 :not_array_2
+    :not_array_2
+    rdi @ r12 r13 8
+    rdi <- mem rdi 8
+    call print 1
+    goto :done_2
+    :is_array_2
+    rdi @ r12 r13 8
+    rdi <- mem rdi 8
+    mem rsp -8 <- :done_2
+    call :printArray 1
+    :done_2
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+    return
+  )
+)

@@ -1,0 +1,7 @@
+(:stack
+ (:stack
+  0 1
+  mem rsp -8 <- 101
+  rdi <- mem rsp -8
+  call print 1
+  return))

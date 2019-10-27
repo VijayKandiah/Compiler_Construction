@@ -1,0 +1,58 @@
+(:go
+  (:go
+	0 0
+	rdi <- 21
+	rsi <- 1
+	call allocate 2
+	mem rsp -8 <- :array_init_return
+	rdi <- rax
+	call :array_init 1
+	:array_init_return
+	mem rsp -8 <- :array_sum_return
+	rdi <- rax
+	call :array_sum 1
+	:array_sum_return
+	rdi <- rax
+	call print 1
+	return)
+
+  (:array_init
+	1 0
+	rax <- rdi
+	rsi <- mem rdi 0
+	rcx <- rdi
+	rcx += 8
+	rdx <- 0
+	:loop_1
+	cjump rdx < rsi :continue_1 :exit_1
+	:continue_1
+	rdi <- rdx
+	rdi <<= 1
+	rdi += 1
+	mem rcx 0 <- rdi
+	rdx += 1
+	rcx += 8
+	goto :loop_1
+	:exit_1
+	return)
+
+  (:array_sum
+	1 0
+	rax <- rdi
+	rsi <- mem rdi 0
+	rcx <- rdi
+	rcx += 8
+	rdx <- 0
+	rdi <- 1
+	:loop_2
+	cjump rdx < rsi :continue_2 :exit_2
+	:continue_2
+	r8 <- rdx
+	r8 <<= 1
+	rdi += r8
+	mem rcx 0 <- rdi
+	rdx += 1
+	rcx += 8
+	goto :loop_2
+	:exit_2
+	return))

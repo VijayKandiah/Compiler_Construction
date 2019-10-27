@@ -1,0 +1,50 @@
+(:main
+	(:main
+		0 2
+		rdi <- 5
+		rsi <- 5
+		call allocate 2
+		mem rsp 8 <- rax
+
+		rdi <- 5
+		rsi <- 7
+		call allocate 2
+		mem rsp 0 <- rax
+
+		rdi <- mem rsp 8
+		rsi <- mem rsp 0
+
+		mem rsp -8 <- :ret1
+		call :join 2
+		:ret1
+
+		mem rsp 8 <- rax
+
+		rdi <- 5
+		rsi <- mem rsp 0
+		call allocate 2
+
+		rdi <- mem rsp 8
+		rsi <- rax
+
+		mem rsp -8 <- :ret2
+		call :join 2
+		:ret2
+
+		rdi <- rax
+
+		call print 1
+		return)
+
+	(:join
+		2 2
+		mem rsp 8 <- rdi
+		mem rsp 0 <- rsi
+		rdi <- 5
+		rsi <- 1
+		call allocate 2
+		rdi <- mem rsp 8
+		rsi <- mem rsp 0
+		mem rax 8 <- rdi
+		mem rax 16 <- rsi
+		return))

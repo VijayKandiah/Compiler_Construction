@@ -1,0 +1,49 @@
+(:main
+	(:main
+		0 0
+		rdi <- 5
+		rsi <- 5
+		cjump rdi = rsi :choice1 :choice2
+		:choice1
+		call allocate 2
+		%arrayPointer <- rax
+		%arrayPointer &= 1
+		cjump %arrayPointer = 0 :isArray :isnotArray
+		:isArray
+		%arrayPointer <- rax
+		mem %arrayPointer 8 <- 7
+		mem %arrayPointer 16 <- 9
+		rdi <- %arrayPointer
+		call print 1	
+		rdi <- mem %arrayPointer 0
+		mem rsp -8 <- :encodeArraySize_ret
+		call :encodeArraySize 1
+		:encodeArraySize_ret
+		rdi <- rax
+		call print 1
+		:choice2
+		rdi <- 5
+		rsi <- 7		
+		mem rsp -8 <- :generate3Darray_ret
+		call :generate3Darray 2
+		:generate3Darray_ret
+		:isnotArray						
+		return)
+		(:encodeArraySize
+			1 0
+			rdi <<= 1
+			rdi += 1
+			rax <- rdi
+			return)
+		(:generate3Darray
+			2 0
+			call allocate 2
+			rdi <- 5
+			rsi <- rax
+			call allocate 2
+			rdi <- 5
+			rsi <- rax
+			call allocate 2			
+			rdi <- rax
+			call print 1
+			return))

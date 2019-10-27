@@ -1,0 +1,27 @@
+(:main
+ (:main
+  0 0
+  rcx <- 1
+  rcx <<= rcx
+  rcx += 1
+  rdi <- rcx
+  call print 1
+
+  rcx <- 1
+  rcx <<= 1
+  rcx += 1
+  rdi <- rcx
+  call print 1
+
+  rcx <- 1
+  rcx >>= rcx
+  rcx += 1
+  rdi <- rcx
+  call print 1
+
+  rcx <- 1
+  rcx >>= 1
+  rcx += 1
+  rdi <- rcx
+  call print 1
+  return))

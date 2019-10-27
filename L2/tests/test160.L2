@@ -1,0 +1,302 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %var1 <- 1
+    %var2 <- 2
+    %var3 <- %var1 = %var2
+    
+    %var4 <- %var1 < %var2
+    
+    %var5 <- %var1
+    %var5 += %var2
+    %var6 <- %var
+    %var6 <<= %var2
+    rdi <- %var6
+    mem rsp -8 <- :call_label2
+    call :addOne 1
+    :call_label2
+    %var7 <- rax
+    rdi <- %var6
+    rsi <- %var7
+    mem rsp -8 <- :call_label3
+    call :sum2 2
+    :call_label3
+    %var8 <- rax
+    %var9 <- %var8
+    %var9 *= 3
+    %var9 <- %var9
+    %var9 += 2
+    rdi <- %var7
+    rsi <- %var8
+    rdx <- %var9
+    mem rsp -8 <- :call_label4
+    call :sum3 3
+    :call_label4
+    %var10 <- rax
+    %encoded <- 7
+    %encoded <- %encoded
+    %encoded <<= 1
+    %encoded <- %encoded
+    %encoded += 1
+    rdi <- %encoded
+    call print 1
+    rdi <- %encoded
+    rsi <- 3
+    call allocate 2
+    %array <- rax
+    mem %array 8 <- 5
+    %newVar2 <- %array
+    %newVar2 += 16
+    mem %newVar2 0  <- 7
+    mem %array 24 <- 9
+    %var11 <- mem %newVar2 0 
+    %var12 <- %var11 < %var10
+    
+    rdi <- %var9
+    rsi <- %var10
+    rdx <- %var11
+    rcx <- %var12
+    mem rsp -8 <- :call_label5
+    call :sum4 4
+    :call_label5
+    %var13 <- rax
+    rdi <- %var12
+    rsi <- %var13
+    mem rsp -8 <- :call_label6
+    call :substract 2
+    :call_label6
+    %var14 <- rax
+    rdi <- %var1
+    rsi <- %var13
+    rdx <- %var14
+    mem rsp -8 <- :call_label7
+    call :substract3 3
+    :call_label7
+    %var15 <- rax
+    rdi <- %var11
+    rsi <- %var12
+    rdx <- %var13
+    rcx <- %var9
+    mem rsp -8 <- :call_label8
+    call :substract4 4
+    :call_label8
+    %var16 <- rax
+    rdi <- %var9
+    rsi <- %var10
+    rdx <- %var11
+    rcx <- %var12
+    mem rsp -8 <- :call_label9
+    call :sum4 4
+    :call_label9
+    %var17 <- rax
+    rdi <- %var2
+    rsi <- %var13
+    mem rsp -8 <- :call_label10
+    call :product 2
+    :call_label10
+    %var18 <- rax
+    rdi <- %var1
+    rsi <- %var2
+    rdx <- %var7
+    mem rsp -8 <- :call_label11
+    call :product3 3
+    :call_label11
+    %var19 <- rax
+    rdi <- %var11
+    rsi <- %var8
+    rdx <- %var5
+    rcx <- %var9
+    mem rsp -8 <- :call_label12
+    call :product4 4
+    :call_label12
+    %var20 <- rax
+    rdi <- %var20
+    rsi <- %var1
+    mem rsp -8 <- :call_label13
+    call :left_shift 2
+    :call_label13
+    %var21 <- rax
+    rdi <- %var20
+    rsi <- %var2
+    mem rsp -8 <- :call_label14
+    call :right_shift 2
+    :call_label14
+    %var22 <- rax
+    %newVar3 <- %array
+    %newVar3 += 32
+    %var13 <- %var13
+    %var13 += 8
+    %callFL <- :otherF
+    mem rsp -8 <- :call_label15
+    call :otherF 0
+    :call_label15
+    mem rsp -8 <- :call_label16
+    call %callFL 0
+    :call_label16
+    %callerFP <- :otherF2
+    rdi <- 2
+    mem rsp -8 <- :call_label17
+    call %callerFP 1
+    :call_label17
+    %res1 <- rax
+    rdi <- %var3
+    mem rsp -8 <- :call_label18
+    call :otherF2 1
+    :call_label18
+    %res2 <- rax
+    %res2 <- %res2
+    %res2 -= 1
+    rdi <- %res2
+    call print 1
+    :call_label1
+    return
+  )
+  (:addOne
+    1 0
+    %p1 <- rdi
+    %p2 <- %p1
+    %p2 += 1
+    rax <- %p2
+    return
+  )
+  (:sum2
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1
+    %p3 += %p2
+    rax <- %p3
+    return
+  )
+  (:sum3
+    3 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- rdx
+    %p4 <- %p1
+    %p4 += %p2
+    %p5 <- %p4
+    %p5 += %p3
+    rax <- %p5
+    return
+  )
+  (:sum4
+    4 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- rdx
+    %p4 <- rcx
+    %p5 <- %p1
+    %p5 += %p2
+    %p6 <- %p5
+    %p6 += %p3
+    %p7 <- %p6
+    %p7 += %p4
+    rax <- %p7
+    return
+  )
+  (:otherF
+    0 0
+    %p1 <- 11
+    return
+  )
+  (:otherF2
+    1 0
+    %var <- rdi
+    %var <- %var
+    %var *= %var
+    rax <- %var
+    return
+  )
+  (:substract
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1
+    %p3 -= %p2
+    rax <- %p3
+    return
+  )
+  (:substract3
+    3 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- rdx
+    %p4 <- %p1
+    %p4 -= %p2
+    %p5 <- %p4
+    %p5 -= %p3
+    rax <- %p5
+    return
+  )
+  (:substract4
+    4 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- rdx
+    %p4 <- rcx
+    %p5 <- %p1
+    %p5 -= %p2
+    %p6 <- %p5
+    %p6 -= %p3
+    %p7 <- %p6
+    %p7 -= %p4
+    rax <- %p7
+    return
+  )
+  (:product
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1
+    %p3 *= %p2
+    rax <- %p3
+    return
+  )
+  (:product3
+    3 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- rdx
+    %p4 <- %p1
+    %p4 *= %p2
+    %p5 <- %p4
+    %p5 *= %p3
+    rax <- %p5
+    return
+  )
+  (:product4
+    4 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- rdx
+    %p4 <- rcx
+    %p5 <- %p1
+    %p5 *= %p2
+    %p6 <- %p5
+    %p6 *= %p3
+    %p7 <- %p6
+    %p7 *= %p4
+    rax <- %p7
+    return
+  )
+  (:left_shift
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1
+    %p3 <<= %p2
+    rax <- %p3
+    return
+  )
+  (:right_shift
+    2 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %p3 <- %p1
+    %p3 >>= %p2
+    rax <- %p3
+    return
+  )
+)

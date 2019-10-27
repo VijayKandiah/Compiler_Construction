@@ -1,0 +1,101 @@
+(:go
+(:go
+	0 0
+	rdi <- 25
+	rsi <- 21
+	mem rsp -8 <- :collatz_ret1
+	call :collatz 2
+	:collatz_ret1
+	rdi <- rax
+	call print 1
+	rdi <- 39
+	rsi <- 43
+	mem rsp -8 <- :collatz_ret2
+	call :collatz 2
+	:collatz_ret2
+	rdi <- rax
+	call print 1
+	rdi <- 55
+	rsi <- 225
+	mem rsp -8 <- :collatz_ret3
+	call :collatz 2
+	:collatz_ret3
+	rdi <- rax
+	call print 1
+	rdi <- 1743
+	rsi <- 241
+	mem rsp -8 <- :collatz_ret4
+	call :collatz 2
+	:collatz_ret4
+	rdi <- rax
+	call print 1
+	return
+)
+
+(:collatz
+	2 7
+	rdi <- rdi
+	mem rsp 48 <- rdi
+	rdi <- rsi
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 48
+	cjump rdi <= 1 :done :next
+	:next
+	rdi <- mem rsp 40
+	cjump rdi <= 1 :done :allocate
+	:allocate
+	rdi <- mem rsp 40
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rsi <- rax
+	rsi += 8
+	rdi <- mem rsp 40
+	rdi *= 8
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 40
+	rdi += rdx
+	mem rsp 40 <- rdi
+	:loop
+	rdi <- mem rsp 48
+	mem rsi 0 <- rdi
+	rsi += 8
+	rdi <- mem rsp 40
+	cjump rdi < rsi :done :check
+	:check
+	rdi <- mem rsp 48
+	cjump rdi <= 3 :done :continue
+	:continue
+	rdi <- mem rsp 48
+	rdi <- rdi
+	rdi &= 3
+	cjump rdi = 1 :even :odd
+	:even
+	rdi <- mem rsp 48
+	rdi >>= 2
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rdi <<= 1
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rdi += 1
+	mem rsp 48 <- rdi
+	goto :loop
+	:odd
+	rdi <- mem rsp 48
+	rdi--
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rdi *= 3
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rdi += 3
+	mem rsp 48 <- rdi
+	goto :loop
+	:done
+	rax <- rdx
+	return
+)
+
+)

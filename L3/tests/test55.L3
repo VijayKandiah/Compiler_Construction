@@ -1,0 +1,11 @@
+define :main () {
+ %src1 <- 1
+ %src2 <- 2
+
+ %tmp <- %src2 * 4
+ %finalV <- %src1 + %tmp
+
+ call print (%finalV)
+
+ return 
+}

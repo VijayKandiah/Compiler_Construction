@@ -1,0 +1,14 @@
+(:go
+ (:go
+  0 0
+  rdi <- 5
+  mem rsp -8 <- :g_ret
+  call :g 1
+  :g_ret
+  return)
+ (:g
+  1 0
+  rdi += 7
+  rdi -= 1
+  call print 1
+  return))

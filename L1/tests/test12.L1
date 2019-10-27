@@ -1,0 +1,26 @@
+(:go
+  (:go
+    0 1
+
+    // Save the callee save registers
+    mem rsp 0 <- r12
+
+    rdi <- 7
+    rsi <- 7
+    call allocate 2
+    r12 <- rax
+
+    rdi <- mem r12 0
+    rdi <<= 1
+    rdi += 1
+    call print 1
+
+    rdi <- r12
+    call print 1
+
+    // Restore the callee save registers
+    r12 <- mem rsp 0
+
+    return
+  )
+)

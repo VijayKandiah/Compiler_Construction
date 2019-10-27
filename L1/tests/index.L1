@@ -1,0 +1,92 @@
+(:main
+	(:main
+		0 0
+		rdi <- 19
+		rsi <- 1
+		call allocate 2
+		mem rax 8 <- 19
+		mem rax 16 <- 17
+		mem rax 24 <- 15
+		mem rax 32 <- 13
+		mem rax 40 <- 11
+		mem rax 48 <- 9
+		mem rax 56 <- 7
+		mem rax 64 <- 5
+		mem rax 72 <- 3
+
+		rdi <- rax
+		rsi <- 6
+		mem rsp -8 <- :ret1
+		call :index 2
+		:ret1
+		rdi <- rax
+		call print 1
+
+		return)
+
+	(:index
+		2 0
+		cjump rsi = 1 :_1 :__1
+		:_1
+		rax <- mem rdi 8
+		return
+		:__1
+
+		cjump rsi = 2 :_2 :__2
+		:_2
+		rax <- mem rdi 16
+		return
+		:__2
+
+		cjump rsi = 3 :_3 :__3
+		:_3
+		rax <- mem rdi 24
+		return
+		:__3
+
+		cjump rsi = 4 :_4 :__4
+		:_4
+		rax <- mem rdi 32
+		return
+		:__4
+
+		cjump rsi = 5 :_5 :__5
+		:_5
+		rax <- mem rdi 40
+		return
+		:__5
+
+		cjump rsi = 6 :_6 :__6
+		:_6
+		rax <- mem rdi 48
+		return
+		:__6
+
+		cjump rsi = 7 :_7 :__7
+		:_7
+		rax <- mem rdi 56
+		return
+		:__7
+
+		cjump rsi = 8 :_8 :__8
+		:_8
+		rax <- mem rdi 64
+		return
+		:__8
+
+		cjump rsi = 9 :_9 :__9
+		:_9
+		rax <- mem rdi 72
+		return
+		:__9
+
+		cjump rsi = 10 :_10 :__10
+		:_10
+		rax <- mem rdi 80
+		return
+		:__10
+
+
+
+
+		return))

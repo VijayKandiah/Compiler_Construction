@@ -1,0 +1,14 @@
+(:go
+    0 0
+    rax <- 3
+    %x <- 5
+    cjump %x <= 3 :jump
+    return
+
+    :jump
+    %y <- %x
+    %z <- %x
+    rdi <- %z
+    call print 1
+    return 
+)

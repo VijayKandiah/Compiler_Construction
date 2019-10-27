@@ -1,0 +1,23 @@
+(:func_argmath
+ (:func_argmath
+  0 0
+  rdi <- 0
+  rsi <- 0
+  rdx <- 0
+  rcx <- 0
+  r8 <- 0
+  r9 <- 0
+  mem rsp -16 <- 5
+  mem rsp -24 <- 0
+  mem rsp -8 <- :foo_ret
+  call :foo 8
+  :foo_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:foo
+  8 0
+  rdi <- rsp
+  rdi += 8
+  rax <- mem rdi 0
+  return))

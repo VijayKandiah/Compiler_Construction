@@ -1,0 +1,16 @@
+(:main
+(:main
+	0 0
+	rdi <- 1
+	rsi <- 2
+	rdi <- rdi < rsi
+	cjump rdi = 1 :call_label0 :call_label1
+	:call_label0
+	rax <- 0
+	return
+	:call_label1
+	rax <- rdi
+	return
+)
+
+)

@@ -1,0 +1,60 @@
+void main ( ){
+
+  tuple t
+  int64 v
+  t <-  createMyClosure(3)
+  v <-  MyClosure(t, 4)
+   print(v)
+  return 
+
+}
+
+tuple createMyClosure (int64 p1){
+
+  :entry
+  int64 x2
+  tuple p
+  x2 <- 21
+  p <- new Tuple(9)
+  p[0] <- :myF
+  p[1] <- 1
+  p[2] <- p1
+  p[3] <- x2
+  return p
+
+}
+
+int64  MyClosure (tuple c, int64 argClosure){
+
+  code fp
+  fp <- c[0]
+  int64 arityOfC
+  arityOfC <- c[1]
+  int64 checkArgs
+  checkArgs <- arityOfC = 1
+  br checkArgs :true :false
+
+  :true
+  int64 finalResult
+  int64 finalResultEncoded
+  finalResult <-  fp(c, argClosure)
+   print(finalResult)
+  return finalResult
+
+  :false
+  return 0
+}
+
+int64  myF (tuple c, int64 p1){
+
+  int64 x1
+  int64 x2
+  x1 <- c[2]
+  x2 <- c[3]
+  int64 r1
+  int64 r2
+  r1 <- x1 + x2
+  r2 <- r1 + p1
+  return r2
+
+}

@@ -1,0 +1,9 @@
+//// tests out addition :D fixes the encoding issue as well
+(:go
+    (:go
+    0 0
+    rdi <- 9
+    rdi += 11
+    rdi -= 1
+    call print 1
+    return))

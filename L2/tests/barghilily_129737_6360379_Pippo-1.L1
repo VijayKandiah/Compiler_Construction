@@ -1,0 +1,47 @@
+(:go
+  (:go
+    0 0
+    %firstVar <- r12
+    r12 <- 15
+    r12 <<= 1
+    r12 += 1
+    r10 <- 5
+    r10 *= r12
+    rdi <- 7
+    %secondVar <- r10
+    call print 1
+    r10 <- %secondVar
+    rdi <- 7
+    rsi <- 21
+    rdx <- 5
+    rcx <- 9
+    r8 <- 11
+    r9 <- 13
+    %thirdVar <- r10
+    mem rsp -8 <- :function2_ret
+    mem rsp -16 <- 1
+    call :secondFunction 7
+    :function2_ret
+    rdi <- rax
+    call print 1 
+    r10 <- %thirdVar
+    rdi <- r10
+    call print 1
+    r12 <- %firstVar
+    return
+  )
+
+  (:secondFunction
+    7 0
+    %fourthVar <- rbp
+    r11 <- stack-arg 0
+    rbp <- rdi
+    rbp *= rsi
+    rbp *= rdx
+    rbp *= r11
+    r10 <- 1
+    rax <- rbp 
+    rbp <- %fourthVar
+    return 
+  )
+)

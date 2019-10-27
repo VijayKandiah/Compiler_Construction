@@ -1,0 +1,27 @@
+(:go
+ (:go
+  0 0
+  rdi <- 11
+  rsi <- 1
+  call allocate 2
+  rdi <- mem rax 0
+  rdi *= 2
+  rdi += 1
+  rsi <- rax
+  rsi += 8
+  :loop
+  cjump rdi <= 1 :end_loop :more
+  :more
+  mem rsi 0 <- rdi
+  rdi -= 2
+  rsi += 8
+  goto :loop
+  :end_loop
+  rdi <- mem rax 0
+  rdi *= 2
+  rdi += 1
+  rsi <- rax
+  call allocate 2
+  rdi <- rax
+  call print 1
+  return))

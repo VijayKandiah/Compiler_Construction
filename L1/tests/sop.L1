@@ -1,0 +1,17 @@
+(:main
+	(:main
+		0 0
+		rdi <- 19
+		mem rsp -8 <- :ret
+		call :times4 1
+		:ret
+		rdi <- rax
+		call print 1
+		return)
+	(:times4
+		1 0
+		rdi >>= 1
+		rdi <<= 3
+		rdi += 1
+		rax <- rdi
+		return))

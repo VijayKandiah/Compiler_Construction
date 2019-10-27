@@ -1,0 +1,68 @@
+(:rabbitHole
+(:rabbitHole
+	0 0
+	rdi <- 3
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :ret0
+	call :myF0 1
+	:ret0
+	rdi <- 32
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(:myF0
+	1 1
+	rdi <- 2
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :ret1
+	call :myF1 1
+	:ret1
+	return
+)
+
+(:myF1
+	1 1
+	rdi <- 4
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :ret2
+	call :myF2 1
+	:ret2
+	return
+)
+
+(:myF2
+	1 1
+	rdi <- 8
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :ret3
+	call :myF3 1
+	:ret3
+	return
+)
+
+(:myF3
+	1 1
+	rdi <- 16
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	rax <- rdi
+	return
+)
+
+)

@@ -1,0 +1,12 @@
+
+(:main
+ (:main
+  0 0
+  rdi <- 7
+  goto :test
+  call print 1
+  return
+  :test
+  rdi <- 9
+  call print 1
+  return))

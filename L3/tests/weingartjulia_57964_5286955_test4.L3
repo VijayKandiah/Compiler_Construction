@@ -1,0 +1,88 @@
+// Creates an array containing the fibonacci numbers
+// Size of the array is determined by the variable "%size"
+
+define :main() {
+	%size <- 20
+	
+	// get an array filled with "%size" fibonacci numbers
+	%arr <- call :fibSeq(%size)
+
+	// move %ptr to the last index in fib array
+        %ind <- %size 
+        %ind <- %ind*8
+        %ptr <- %arr + %ind
+	
+	// retrive last value aka value of fib at %size
+	%fibVal <- load %ptr
+	
+	// print value
+	call print (%fibVal)
+
+	return
+}
+
+// print fibonacci sequence
+define :fibSeq(%max) {
+	%prev <- 1
+	%pprev <- 1
+
+	// create array
+	%max <- %max << 1
+	%max <- %max + 1
+	%arr <- call allocate (%max, 1)
+	%max <- %max - 1
+	%max <- %max >> 1
+
+	%ptr <- %arr + 8
+
+	// input %prev in array
+	%pprev <- %pprev << 1
+	%pprev <- %pprev + 1
+	store %ptr <- %pprev
+	%pprev <- %pprev - 1
+	%pprev <- %pprev >> 1
+
+	%ptr <- %ptr + 8
+	
+	// input cur in array
+	%prev <- %prev << 1
+	%prev <- %prev + 1
+	store %ptr <- %prev
+	%prev <- %prev -  1
+	%prev <- %prev >> 1
+  
+	// set helper variables for filling array
+	%ptr <- %ptr + 8
+	%count <- 2
+	%tmpMax <- %max - 1	
+
+	// loop through array filling it with fib sequence 
+	:loop
+	%sum <- %pprev + %prev
+
+	// store %sum of previous two variables into array
+	%sum <- %sum << 1
+	%sum <- %sum + 1
+	store %ptr <- %sum
+	%sum <- %sum - 1
+	%sum <- %sum >> 1
+
+	// restore %pprev and %prev
+	%pprev <- %prev
+	%prev <- %sum
+	%checkCont <- %count < %tmpMax
+	br %checkCont :cont 
+    br :done
+	
+	// inc values
+	:cont
+	%ptr <- %ptr + 8	
+	%count <- %count + 1
+	br :loop
+
+	// print and return array	
+	:done
+	call print (%arr)	
+	return %arr
+}
+

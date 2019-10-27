@@ -1,0 +1,17 @@
+(:printlocal
+ (:printlocal 0 1
+  rdi <- 11
+  mem rsp 0 <- rdi
+  rdi <- 7
+  mem rsp -8 <- :f_ret
+  call :f 1
+  :f_ret
+  rdi <- mem rsp 0
+  call print 1
+  return)
+ (:f 1 3
+  mem rsp 0 <- rdi
+  mem rsp 8 <- 3
+  mem rsp 16 <- 5
+  return
+))

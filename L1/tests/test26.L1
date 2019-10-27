@@ -1,0 +1,22 @@
+(:go
+  (:go
+    0 1
+
+    // Initialize the counter
+    rax <- 0
+
+    // Check the counter
+    :startLoop
+    cjump rax <= 5 :loopBody :exitLoop
+
+    :loopBody
+    rdi <- 5
+    call print 1
+
+    :exitLoop
+    rdi <- 7
+    call print 1
+
+    return
+  )
+)

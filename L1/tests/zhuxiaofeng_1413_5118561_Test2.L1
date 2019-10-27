@@ -1,0 +1,37 @@
+(:main
+	(:main
+		0 1
+		rdi <- 11
+		rsi <- 9
+		rdx <- 7
+		rcx <- 5
+		r8 <- 3
+		r9 <- 1
+		mem rsp 0 <- rdi
+		mem rsp -8 <- :f1_ret
+		mem rsp -16 <- 15
+		call :f1 7
+		:f1_ret
+		rdi <- mem rsp 0
+		call print 1
+		rbx <- 13
+		r12 <- 15
+		mem rsp -8 <- :f2_ret
+		call :f2 2
+		:f2_ret					
+		return)
+
+		(:f1
+			7 0
+			rdi <- rdx
+			call print 1
+			return)
+		(:f2
+			2 1
+			mem rsp 0 <- r12
+			r12 <- rbx
+			rdi <- r12
+			call print 1
+			r12 <- mem rsp 0
+			return)
+			)

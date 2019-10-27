@@ -1,0 +1,60 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %newVar0p0 <- 3
+    %newVar0p1 <- 5
+    %newVar0p2 <- 7
+    %newVar0p3 <- 9
+    %newVar0p4 <- 11
+    %newVar0p5 <- 13
+    %newVar0p6 <- 15
+    %newVar0p7 <- 17
+    %newVar0p8 <- 19
+    rdi <- %newVar0p0
+    rsi <- %newVar0p1
+    rdx <- %newVar0p2
+    rcx <- %newVar0p3
+    r8 <- %newVar0p4
+    r9 <- %newVar0p5
+    mem rsp -32 <- %newVar0p6
+    mem rsp -24 <- %newVar0p7
+    mem rsp -16 <- %newVar0p8
+    mem rsp -8 <- :call_label1
+    call :printValues 9
+    :call_label1
+    return
+  )
+  (:printValues
+    9 0
+    %p0 <- rdi
+    %p1 <- rsi
+    %p2 <- rdx
+    %p3 <- rcx
+    %p4 <- r8
+    %p5 <- r9
+    %p6 <- stack-arg 0
+    %p7 <- stack-arg 8
+    %p8 <- stack-arg 16
+    :call_label2
+    rdi <- %p0
+    call print 1
+    rdi <- %p1
+    call print 1
+    rdi <- %p2
+    call print 1
+    rdi <- %p3
+    call print 1
+    rdi <- %p4
+    call print 1
+    rdi <- %p5
+    call print 1
+    rdi <- %p6
+    call print 1
+    rdi <- %p7
+    call print 1
+    rdi <- %p8
+    call print 1
+    return
+  )
+)

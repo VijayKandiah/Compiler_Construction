@@ -1,0 +1,17 @@
+(:go
+(:go
+	0 0
+	mem rsp -8 <- :ret
+	mem rsp -16 <- 13
+	mem rsp -24 <- 13
+	call :printValues 8
+	:ret
+	return
+)
+
+(:printValues
+	8 0
+	return
+)
+
+)

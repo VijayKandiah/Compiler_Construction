@@ -1,0 +1,48 @@
+//// Is 2100 a leap year? No!
+(:main
+	(:main
+		0 1
+		r10 <- 2100
+		r10 <<= 1
+		r10++
+		mem rsp 0 <- r10
+		rdi <- r10
+		call print 1
+		r10 <- mem rsp 0
+		rdi <- r10
+		mem rsp -8 <- :foo_ret
+		call :foo 1
+		:foo_ret
+		rdi <- rax
+		call print 1
+		return		
+	)
+	(:foo
+		1 0
+		rdi >>= 1 //// back to 2100
+		r10 <- rdi
+		r10 &= 15 //// can 2100 mod 16?
+		cjump r10 = 0 :yes :may_no
+		:may_no
+		r10 <- rdi
+		r10 >>= 2
+		:loop
+		cjump 25 = r10 :no :mod_25
+		:mod_25
+		cjump 25 < r10 :minus_25 :may_yes 
+		:minus_25
+		r10 -= 25
+		goto :loop
+		:may_yes
+		r10 <- rdi
+		r10 &= 3
+		cjump r10 = 0 :yes :no
+		:no
+		rax <- 1
+		goto :ret
+		:yes
+		rax <- 3
+		:ret 
+		return
+	)
+)

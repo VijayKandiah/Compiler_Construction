@@ -1,0 +1,85 @@
+define :main () {
+ :entry
+ %l <- 5
+ %newVar1 <- %l >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %ar <- call allocate (%newVar0, 1)
+ %newVar2 <- %ar + 8
+ store %newVar2 <- 3
+ %newVar3 <- %ar + 16
+ store %newVar3 <- %l
+ %encodedL <- call :encodedValue (%l)
+ call print (%encodedL)
+ call :printArrayGT (%ar)
+ call :printArrayGE (%ar)
+ call :printArrayE (%ar)
+ return 
+}
+
+define :printArrayGT (%p) {
+ :entry
+ %i <- 6
+ br :begin_loop
+ :begin_loop
+ %keepExecuting <- 0 < %i
+ br %keepExecuting :body
+ br :exit 
+ :body
+ %encodedI <- call :encodedValue (%i)
+ call print (%encodedI)
+ br :latch
+ :latch
+ %i <- %i - 1
+ br :begin_loop
+ :exit
+ return 
+}
+
+define :printArrayGE (%p) {
+ :entry
+ %i <- 5
+ br :begin_loop
+ :begin_loop
+ %keepExecuting <- 0 <= %i
+ br %keepExecuting :body
+ br :exit 
+ :body
+ %encodedI <- call :encodedValue (%i)
+ call print (%encodedI)
+ br :latch
+ :latch
+ %i <- %i - 1
+ br :begin_loop
+ :exit
+ return 
+}
+
+define :printArrayE (%p) {
+ :entry
+ %i <- 5
+ br :begin_loop
+ :begin_loop
+ %keepExecuting <- 5 = %i
+ br %keepExecuting :body
+ br :exit 
+ :body
+ %encodedI <- call :encodedValue (%i)
+ call print (%encodedI)
+ br :latch
+ :latch
+ %i <- %i - 1
+ br :begin_loop
+ :exit
+ return 
+}
+
+define :encodedValue (%v) {
+ :entry
+ %v <- %v << 1
+ %v <- %v + 1
+ return %v
+}
+

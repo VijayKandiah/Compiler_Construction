@@ -1,0 +1,8 @@
+(:right_shift
+ (:right_shift
+  0 0
+  rdi <- 7
+  rdi <<= 1
+  rdi += 1
+  call print 1
+  return))

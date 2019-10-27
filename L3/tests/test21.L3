@@ -1,0 +1,29 @@
+define :main () {
+ :entry
+ %t <- call :createTuple (3)
+ return 
+}
+
+define :createTuple (%p1) {
+ :entry
+ %x2 <- 21
+ %p <- call allocate (5, 1)
+ %newVar1 <- 0 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %p + %newVar0
+ store %newVar2 <- 0
+ %newVar4 <- 1 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %p + %newVar3
+ store %newVar5 <- 1
+ %newVar7 <- 2 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %p + %newVar6
+ store %newVar8 <- %p1
+ %newVar10 <- 3 * 8
+ %newVar9 <- %newVar10 + 8
+ %newVar11 <- %p + %newVar9
+ store %newVar11 <- %x2
+ return %p
+}
+

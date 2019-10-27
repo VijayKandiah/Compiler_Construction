@@ -1,0 +1,83 @@
+(:main
+    (:main
+        0 1
+        rdi <- 5
+        rsi <- 201
+        call allocate 2
+        mem rsp 0 <- rax
+        rdi <- 5
+        rsi <- 401
+        call allocate 2
+        rdi <- mem rsp 0
+        mem rdi 16 <- rax
+        mem rsp -8 <- :ret
+        call :print_array 1
+        :ret
+        return
+    )
+    (:print_array
+        1 4
+        rsi <- rdi
+        rsi &= 1
+        cjump rsi = 0 :is_array_pa :not_array_pa
+        :is_array_pa
+        rdx <- mem rdi 0
+        rcx <- 0
+        :loop_start
+        cjump rcx < rdx :next :loop_end
+        :next
+        rsi <- rcx
+        mem rsp 24 <- rdi
+        mem rsp 16 <- rsi
+        mem rsp 8 <- rdx
+        mem rsp 0 <- rcx
+        mem rsp -8 <- :ret_print_array_element
+        call :print_array_element 2
+        :ret_print_array_element
+        rcx <- mem rsp 0
+        rdx <- mem rsp 8
+        rsi <- mem rsp 16
+        rdi <- mem rsp 24
+        rcx++
+        goto :loop_start
+        :loop_end
+        rax <- 1
+        return
+        :not_array_pa
+        rax <- 0
+        return
+    )
+    (:print_array_element
+        2 2
+        rdx <- rdi
+        rdi <- rsi
+        rdi <<= 1
+        rdi++
+        mem rsp 0 <- rdx
+        mem rsp 8 <- rsi
+        call print 1
+        rsi <- mem rsp 8
+        rsi <<= 3
+        rsi += 8
+        rdi <- rsi
+        rdi <<= 1
+        rdi++
+        mem rsp 8 <- rsi
+        call print 1
+        rsi <- mem rsp 8
+        rdx <- mem rsp 0
+        rdx += rsi
+        rdi <- mem rdx 0
+        rsi <- rdi
+        rsi &= 1
+        cjump rsi = 0 :is_array_pae :not_array_pae
+        :is_array_pae
+        mem rsp -8 <- :ret_print_array
+        call :print_array 1
+        :ret_print_array
+        return
+        :not_array_pae
+        call print 1
+        return
+    )
+)

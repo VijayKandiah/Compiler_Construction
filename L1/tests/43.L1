@@ -1,0 +1,11 @@
+(:main
+ (:main
+  0
+  0
+  rax <- 3
+  rax *= 4
+  rax += rax
+  rax += 1
+  rdi <- rax
+  call print 1
+  return))

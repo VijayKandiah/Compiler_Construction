@@ -1,0 +1,98 @@
+define void :main() {
+	:start
+	int64[][][] %matrix
+	int64 %result
+	int64 %test_value
+
+	%test_value <- 1234
+	%matrix <- new Array(9, 9, 9)
+
+	%result <- call :find(%matrix, %test_value)
+	call print(%result)
+
+	%matrix[2][1][0] <- %test_value
+
+	%result <- call :find(%matrix, %test_value)
+	call print(%result)
+
+	return
+}
+
+define int64 :find(int64[][][] %A, int64 %v) {
+	:start
+	int64 %length1
+	int64 %length2
+	int64 %length3
+
+	%length1 <- length %A 0
+	call print(%length1)
+	%length1 <- %length1 >> 1
+
+	%length2 <- length %A 1
+	call print(%length2)
+	%length2 <- %length2 >> 1
+
+	%length3 <- length %A 2
+	call print(%length3)
+	%length3 <- %length3 >> 1
+	br :init	
+
+	:init
+	int64 %i
+	int64 %j
+	int64 %k
+	int64 %found
+	int64 %check_index
+	int64 %check_value
+	int64 %equal
+
+	%found <- 1
+	%i <- 0
+	%j <- 0
+	%k <- 0
+	br :first_cond
+
+	:first_inc
+	%i <- %i + 1
+	br :first_body
+
+	:second_inc
+	%j <- %j + 1
+	br :second_body
+
+	:third_inc
+	%k <- %k + 1
+	br :third_cond
+
+	:first_body
+	%j <- 0
+	br :first_cond
+
+	:second_body
+	%k <- 0
+	br :second_cond
+
+	:third_body
+	%check_value <- %A[%i][%j][%k]
+	%equal <- %check_value = %v
+	br %equal :did_find :third_inc
+
+	:third_cond
+	%check_index <- %k < %length3
+	br %check_index :third_body :second_inc
+
+	:second_cond
+	%check_index <- %j < %length2
+	br %check_index :third_cond :first_inc
+
+	:first_cond
+	%check_index <- %i < %length1
+	br %check_index :second_cond :end
+
+	:did_find
+	%found <- 3
+	br :end
+
+	:end
+	return %found
+}

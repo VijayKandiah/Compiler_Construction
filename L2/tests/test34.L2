@@ -1,0 +1,89 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %newVar1 <- 7
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- 7
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar3 <- 7
+    %newVar3 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar3
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 8
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %a <- rax
+    %newVar4 <- %a
+    %newVar4 += 8
+    mem %newVar4 0  <- 7
+    %newVar5 <- %a
+    %newVar5 += 16
+    mem %newVar5 0  <- 7
+    %newVar6 <- %a
+    %newVar6 += 24
+    mem %newVar6 0  <- 7
+    %newVar7 <- %a
+    %newVar7 += 32
+    mem %newVar7 0  <- 7
+    mem rsp -8 <- :call_label1
+    rdi <- %a
+    rsi <- 1
+    rdx <- 2
+    rcx <- 3
+    call :storeV 4
+    :call_label1
+    return
+  )
+  (:storeV
+    4 0
+    %A <- rdi
+    %k <- rsi
+    %i <- rdx
+    %j <- rcx
+    :call_label2
+    %newVar1 <- 0
+    %newVar2 <- %A
+    %newVar2 += 24
+    %newVar3 <- mem %newVar2 0 
+    %newVar4 <- %newVar3
+    %newVar4 >>= 1
+    %newVar5 <- %A
+    %newVar5 += 32
+    %newVar6 <- mem %newVar5 0 
+    %newVar7 <- %newVar6
+    %newVar7 >>= 1
+    %newVar8 <- 1
+    %newVar8 <- %newVar8
+    %newVar8 *= %newVar7
+    %newVar9 <- %i
+    %newVar9 *= %newVar8
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar9
+    %newVar8 <- %newVar8
+    %newVar8 *= %newVar4
+    %newVar10 <- %k
+    %newVar10 *= %newVar8
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar10
+    %newVar1 <- %newVar1
+    %newVar1 += %j
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 40
+    %newVar11 <- %A
+    %newVar11 += %newVar0
+    mem %newVar11 0  <- 5
+    return
+  )
+)

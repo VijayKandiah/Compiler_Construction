@@ -1,0 +1,69 @@
+(:go
+(:go
+	0 1
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 0
+	mem rsp -8 <- :checkArray_ret
+	call :checkArray 2
+	:checkArray_ret
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :printValue_ret
+	call :printValue 1
+	:printValue_ret
+	rdi <- 5
+	rsi <- 0
+	mem rsp -8 <- :checkArray_ret2
+	call :checkArray 2
+	:checkArray_ret2
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :printValue_ret2
+	call :printValue 1
+	:printValue_ret2
+	return
+)
+
+(:checkArray
+	2 0
+	rdx <- rdi
+	rsi <- rsi
+	rdi <- rdx
+	rdi &= 1
+	cjump rdi = 0 :isAnArray :isAnInt
+	:isAnInt
+	rax <- 1
+	return
+	:isAnArray
+	rdi <- rsi
+	rdi *= 8
+	rdi += 8
+	rdi <- rdi
+	rdi += rdx
+	rdi <- mem rdi 0
+	rdi <- rdi
+	call print 1
+	rax <- 0
+	return
+)
+
+(:printValue
+	1 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

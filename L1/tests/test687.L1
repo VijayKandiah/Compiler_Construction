@@ -1,0 +1,117 @@
+(:main
+(:main
+	0 1
+	rsi <- 20
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi *= 8
+	mem rsp 0 <- rdi
+	rdi <- rsi
+	mem rsp -8 <- :call_label0
+	call :fibSeq 1
+	:call_label0
+	rdi <- rax
+	rsi <- rdi
+	rdi <- mem rsp 0
+	rsi += rdi
+	rdi <- mem rsi 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(:fibSeq
+	1 4
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- 1
+	mem rsp 16 <- rdi
+	rdi <- 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdx <- rdi
+	rdx += 8
+	rdi <- mem rsp 24
+	rdi <<= 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi += 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	mem rdx 0 <- rdi
+	rdi <- mem rsp 24
+	rdi -= 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi >>= 1
+	mem rsp 24 <- rdi
+	rdx += 8
+	rdi <- mem rsp 16
+	rdi <<= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	mem rdx 0 <- rdi
+	rdi <- mem rsp 16
+	rdi -= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi >>= 1
+	mem rsp 16 <- rdi
+	rdx += 8
+	rsi <- 2
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi -= 1
+	:call_label_ciao_1
+	rcx <- mem rsp 24
+	r8 <- rcx
+	rcx <- mem rsp 16
+	r8 += rcx
+	r8 <<= 1
+	r8 += 1
+	mem rdx 0 <- r8
+	r8 -= 1
+	r8 >>= 1
+	rcx <- mem rsp 16
+	rcx <- rcx
+	mem rsp 24 <- rcx
+	rcx <- r8
+	mem rsp 16 <- rcx
+	rcx <- rsi < rdi
+	cjump rcx = 1 :call_label_ciao_2 :call_label_ciao_3
+	:call_label_ciao_2
+	rdx += 8
+	rsi += 1
+	goto :call_label_ciao_1
+	:call_label_ciao_3
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rax <- rdi
+	return
+)
+
+)

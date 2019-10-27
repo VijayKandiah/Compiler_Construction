@@ -1,0 +1,23 @@
+void main ( ){
+	int64 var1
+	var1 <- 7
+	 print(var1)
+	int64 var2
+	var2 <-  encode (var1)
+	 print(var2)
+	int64 var3
+	var3 <-  decode (var2)
+	 print(var3)
+	return
+}
+
+int64 encode (int64 var) {
+     var <- var << 1
+     var <- var + 1
+     return var
+}
+
+int64 decode (int64 var) {
+     var <- var >> 1
+     return var
+}

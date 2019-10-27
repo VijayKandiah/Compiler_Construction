@@ -1,0 +1,24 @@
+#!/bin/bash
+
+outputString=`./bin/L2 -g 0 -i -O0 $@` ;
+
+tmpOutFile=`mktemp` ;
+while read -r line ; do
+
+  # Fetch the columns
+  var=`echo $line | awk '{print $1}'` ;
+  vars=`echo $line | awk '{$1="" ; print$0}'` ;
+
+  # Sort the columns excluding the first one
+  lineToPrint=`echo "$vars" | xargs -n1 | sort -u | xargs` ;
+
+  # Print the current row
+  echo "$var $lineToPrint" >> $tmpOutFile ;
+
+done <<< "$outputString" ;
+
+# Sort the rows
+sort $tmpOutFile ;
+
+# Clean
+rm $tmpOutFile ;

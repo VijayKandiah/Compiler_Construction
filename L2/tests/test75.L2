@@ -1,0 +1,24 @@
+(:main
+  (:main
+    0 0
+    %v1 <- 1
+    %v2 <- 5
+    %v2 <- %v2
+    %v2 += 1
+    rdi <- %v1
+    mem rsp -8 <- :call_label0
+    call :myF 1
+    :call_label0
+    %v4 <- rax
+    %v5 <- %v2
+    rax <- 0
+    return
+  )
+  (:myF
+    1 0
+    %p1 <- rdi
+    %newVar <- 3
+    rax <- %newVar
+    return
+  )
+)

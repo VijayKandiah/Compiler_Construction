@@ -1,0 +1,64 @@
+(:main
+(:main
+	0 3
+	rdi <- 21
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- 7
+	rdx <- mem rsp 16
+	rdx >>= 1
+	mem rsp 16 <- rdx
+	call allocate 2
+	rdi <- 0
+	mem rsp 8 <- rdi
+	rdi <- rax
+	mem rsp 0 <- rdi
+	:true
+	rdi <- mem rsp 0
+	rdi += 8
+	mem rsp 0 <- rdi
+	rdi <- 2
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :power_ret
+	call :power 2
+	:power_ret
+	rdi <- rax
+	mem rsp -8 <- :encode_ret
+	call :encode 1
+	:encode_ret
+	rdi <- mem rsp 0
+	r14 <- rdi
+	mem r14 0 <- rax
+	rdi <- rax
+	call print 1
+	rdi <- mem rsp 8
+	rdi++
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rsi <- mem rsp 16
+	cjump rdi < rsi :true :done
+	:done
+	return
+)
+
+(:power
+	2 0
+	rdi <- rdi
+	rcx <- rsi
+	rdi <<= rcx
+	rax <- rdi
+	return
+)
+
+(:encode
+	1 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+)

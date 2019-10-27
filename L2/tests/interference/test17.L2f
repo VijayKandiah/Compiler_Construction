@@ -1,0 +1,9 @@
+(:myF
+  7 0
+
+  rdi <- stack-arg 0
+
+  call print 1
+
+  return
+)

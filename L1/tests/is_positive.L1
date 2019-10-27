@@ -1,0 +1,35 @@
+(:main
+ (:main
+ 0 0
+ rdi <- 10
+ mem rsp -8 <- :f_ret_1
+ call :is_positive 1
+ :f_ret_1
+ rdi <- rax
+ rdi *= 2
+ rdi += 1
+ call print 1
+ rdi <- -10
+ mem rsp -8 <- :f_ret_2
+ call :is_positive 1
+ :f_ret_2
+ rdi <- rax
+ rdi *= 2
+ rdi += 1
+ call print 1
+ return)
+
+ (:is_positive
+  1 0
+  cjump rdi < 0 :yes :no
+
+  :no
+  rax <- 1
+  return
+
+  :yes
+  rax <- 0
+  return))
+
+
+

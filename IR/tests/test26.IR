@@ -1,0 +1,35 @@
+define void :main ( ){
+
+  :entry
+  int64[][] %a
+  %a <- new Array(5,5)
+  call :initArray(%a)
+  call print(%a)
+  call :printE(%a, 0, 0)
+  call :printE(%a, 0, 1)
+  call :printE(%a, 1, 0)
+  call :printE(%a, 1, 1)
+  return 
+
+}
+
+define void :initArray (int64[][] %A){
+
+  :init
+  %A[0][0] <- 1
+  %A[0][1] <- 3
+  %A[1][0] <- 5
+  %A[1][1] <- 7
+  return
+
+}
+
+define void :printE (int64[][] %A, int64 %i, int64 %j){
+
+  :entry
+  int64 %e
+  %e <- %A[%i][%j]
+  call print(%e)
+  return 
+
+}

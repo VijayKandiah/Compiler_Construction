@@ -1,0 +1,53 @@
+(:myGo
+(:myGo
+	0 0
+	rdi <- 1
+	rsi <- 1
+	rdx <- 1
+	rcx <- 1
+	r8 <- 1
+	r9 <- 1
+	mem rsp -8 <- :f_ret
+	mem rsp -16 <- 1
+	call :add 7
+	:f_ret
+	rdi <- rax
+	call print 1
+	return
+)
+
+(:add
+	7 2
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += rsi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += rdx
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += rcx
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += r8
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += r9
+	mem rsp 8 <- rdi
+	rsi <- mem rsp 16
+	rdi <- mem rsp 8
+	rdi += rsi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <<= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi++
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	call print 1
+	rax <- mem rsp 8
+	return
+)
+
+)

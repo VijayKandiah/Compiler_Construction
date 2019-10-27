@@ -1,0 +1,13 @@
+(:go
+ (:go
+  0 0
+  rdi <- 9
+  rsi <- 17
+  cjump rdi <= rsi :true :false
+  :true
+  call print 1
+  return
+  :false
+  rdi <- rsi
+  call print 1
+  return))

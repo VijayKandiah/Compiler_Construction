@@ -1,0 +1,29 @@
+define void :main ( ){
+
+  :entry
+  code %callerFP
+  %callerFP <- call :myF()
+  int64 %v
+  %v <- call %callerFP(2)
+  call print(%v)
+  return 
+
+}
+
+define code :myF (){
+
+  :entry
+  code %fp
+  %fp <- :myOtherF
+  return %fp
+
+}
+
+define int64 :myOtherF (int64 %p){
+
+  :entry
+  int64 %r
+  %r <- %p + 1
+  return %r
+
+}

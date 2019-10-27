@@ -1,0 +1,78 @@
+(:go
+(:go
+	0 2
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- rax
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi += 8
+	mem rdi 0 <- 5
+	rdi <- 5
+	rsi <- 11
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :f_ret
+	call :extend_array 1
+	:f_ret
+	rdi <- rax
+	call print 1
+	return
+)
+
+(:extend_array
+	2 2
+	mem rsp 0 <- r12
+	mem rsp 8 <- r13
+	r12 <- rdi
+	r13 <- rsi
+	r8 <- mem rdi 0
+	rdi <- mem rsi 0
+	rdi += r8
+	rdi <<= 1
+	rdi += 1
+	rsi <- 0
+	call allocate 2
+	rdx <- rax
+	rcx <- mem r12 0
+	:loop1
+	r12 += 8
+	rdx += 8
+	cjump rcx = 0 :finish1 :cont1
+	:cont1
+	rdi <- mem r12 0
+	mem rdx 0 <- rdi
+	rcx -= 1
+	goto :loop1
+	:finish1
+	rcx <- mem r13 0
+	:loop2
+	r13 += 8
+	cjump rcx = 0 :finish2 :cont2
+	:cont2
+	rdi <- mem r13 0
+	mem rdx 0 <- rdi
+	rdx += 8
+	rcx -= 1
+	goto :loop2
+	:finish2
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

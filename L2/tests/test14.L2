@@ -1,0 +1,32 @@
+(:go
+  (:go
+    0 1
+
+    // Use r12
+    mem rsp 0 <- r12
+    r12 <- 1
+
+    // Print r12
+    rdi <- r12
+    call print 1
+
+    %var1 <- 5
+    mem rsp -8 <- :myF_ret
+    call :myF 0
+    :myF_ret
+
+    %var1++
+
+    // Restore r12
+    r12 <- mem rsp 0
+
+    return
+  )
+
+  (:myF
+    0 0
+
+    return
+  )
+
+)

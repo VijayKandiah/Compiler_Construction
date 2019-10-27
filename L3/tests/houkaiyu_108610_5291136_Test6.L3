@@ -1,0 +1,169 @@
+//find greatest common %divisor of two numbers
+//instead of Euclid's algorithm, now we use division recursively.
+
+define :main (){
+	%v1 <- 64
+	%v2 <- 72
+	%v3 <- 27
+	%v4 <- 54
+	%v5 <- 37
+	%v6 <- 53
+
+	call :encode_print (%v1)
+	call :encode_print (%v2)
+	%cd12 <- call :common_divisor (%v1,%v2)
+	call :encode_print (%cd12)
+	call :encode_print (%v3)
+	call :encode_print (%v4)
+	%cd34 <- call :common_divisor (%v3,%v4)
+	call :encode_print (%cd34)
+	call :encode_print (%v5)
+	call :encode_print (%v6)
+	%cd56 <- call :common_divisor (%v5,%v6)
+	call :encode_print (%cd56)
+
+	return 0
+}
+
+define :encode (%num_to_encode){
+	%num_to_encode <- %num_to_encode << 1
+	%num_to_encode <- %num_to_encode + 1
+	return %num_to_encode
+}
+
+define :encode_print (%unencode_to_print){
+	%unencode_to_print <- call :encode (%unencode_to_print)
+	call print (%unencode_to_print)
+	return
+}
+
+define :sqrt (%var){
+	%i <- 0
+
+	:start_label
+	%i <- %i + 1
+	%i2 <- %i * %i
+	%sqrt_flag <- %i2 <= %var
+	br %sqrt_flag :start_label
+  br :ret_label
+	
+	:ret_label
+	return %i
+}
+
+define :divisible (%dividend, %divisor){
+	//ratio <- %dividend / %divisor
+
+	//expect_dividend <- ratio * %divisor
+	//div_flag <- expect_dividend = %dividend
+	//br div_flag :div_true
+  //br :div_false
+
+	//:div_true
+	//return 1
+
+	//:div_false
+	//return 0
+
+	:div_loop_start
+	%i <- %dividend < %divisor
+	br %i :div_ret_no
+  br :div_to_equal
+
+	:div_ret_no
+	return 0
+
+	:div_to_equal
+	%i <- %divisor = %dividend
+	br %i :div_ret_true
+  br :div_to_loop
+
+	:div_ret_true
+	return 1
+
+	:div_to_loop
+	%dividend <- %dividend - %divisor
+	br :div_loop_start
+
+	
+}
+
+define :greater (%foo, %bar){
+	%flag <- %foo >= %bar
+	br %flag :foogeqbar
+  br :nfoogeqbar
+	:nfoogeqbar
+	return %bar
+	:foogeqbar
+	return %foo
+}
+
+define :customer_divide(%dividend, %divisor){
+	%ret <- 0
+	:cus_start
+	%dividend <- %dividend - %divisor
+	%ret <- %ret + 1
+	%flg <- %dividend = 0
+	br %flg :cus_ret
+  br :cus_start
+
+	:cus_ret
+	return %ret
+
+}
+
+
+define :common_divisor (%foo,%bar){
+	%com_div <- 1
+	%cd <- 2
+	%com_g <- %foo < %bar
+	br %com_g :exchange
+  br :step_over
+
+	:exchange
+	%temp <- %foo
+	%foo <- %bar
+	%bar <- %temp
+
+	:step_over
+	%com_sqrt <- call :sqrt (%foo)
+	
+	:com_start
+	%div_foo <- call :divisible (%foo,%cd)
+	%div_bar <- call :divisible (%bar,%cd)
+	
+	%both <- %div_foo * %div_bar
+
+	br %both :com_cont
+  br :com_inc
+
+	:com_cont
+	%com_div <- %com_div * %cd
+	%foo <- call :customer_divide(%foo, %cd)
+	%bar <- call :customer_divide(%bar, %cd)
+
+	br :com_start	
+
+	:com_inc
+	%cd <- %cd + 1
+
+	%last_flag <- %cd > %com_sqrt
+	br %last_flag :com_ret
+  br :com_start_2
+
+	:com_start_2	
+
+	br :com_start
+
+	:com_ret
+
+	return %com_div	
+
+}
+
+
+
+
+
+
+

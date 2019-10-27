@@ -1,0 +1,16 @@
+(:go
+  (:go
+	0 0
+	rdi <- 3855
+	rdi &= 12480
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	
+	rdi <- 3855
+	rdi &= 3
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	
+	return))

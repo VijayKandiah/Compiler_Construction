@@ -1,0 +1,187 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %test_value <- 1234
+    %newVar1 <- 9
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- 9
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar3 <- 9
+    %newVar3 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar3
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 8
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %matrix <- rax
+    mem %matrix 8 <- 7
+    mem %matrix 16 <- 9
+    mem %matrix 24 <- 9
+    mem %matrix 32 <- 9
+    rdi <- %matrix
+    rsi <- %test_value
+    mem rsp -8 <- :call_label1
+    call :find 2
+    :call_label1
+    %result <- rax
+    rdi <- %result
+    call print 1
+    %newVar9 <- 0
+    %newVar11 <- mem %matrix 24 
+    %newVar14 <- mem %matrix 32 
+    %newVar16 <- 1
+    %newVar15 <- %newVar14
+    %newVar15 >>= 1
+    %newVar16 <- %newVar16
+    %newVar16 *= %newVar15
+    %newVar9 @ %newVar9 %newVar16 1
+    %newVar12 <- %newVar11
+    %newVar12 >>= 1
+    %newVar16 <- %newVar16
+    %newVar16 *= %newVar12
+    %newVar9 @ %newVar9 %newVar16 2
+    %newVar9 <- %newVar9
+    %newVar9 += 0
+    %newVar8 <- %newVar9
+    %newVar8 *= 8
+    %newVar8 <- %newVar8
+    %newVar8 += 40
+    %newVar19 <- %matrix
+    %newVar19 += %newVar8
+    mem %newVar19 0  <- %test_value
+    rdi <- %matrix
+    rsi <- %test_value
+    mem rsp -8 <- :call_label2
+    call :find 2
+    :call_label2
+    %result <- rax
+    rdi <- %result
+    call print 1
+    return
+  )
+  (:find
+    2 0
+    %A <- rdi
+    %v <- rsi
+    :call_label_ciao_3
+    %newVar0 <- 0
+    %newVar0 *= 8
+    %newVar1 <- %newVar0
+    %newVar1 += 16
+    %newVar2 <- %A
+    %newVar2 += %newVar1
+    %length1 <- mem %newVar2 0 
+    rdi <- %length1
+    call print 1
+    %length1 <- %length1
+    %length1 >>= 1
+    %newVar3 <- 1
+    %newVar3 *= 8
+    %newVar4 <- %newVar3
+    %newVar4 += 16
+    %newVar5 <- %A
+    %newVar5 += %newVar4
+    %length2 <- mem %newVar5 0 
+    rdi <- %length2
+    call print 1
+    %length2 <- %length2
+    %length2 >>= 1
+    %newVar6 <- 2
+    %newVar6 *= 8
+    %newVar7 <- %newVar6
+    %newVar7 += 16
+    %newVar8 <- %A
+    %newVar8 += %newVar7
+    %length3 <- mem %newVar8 0 
+    rdi <- %length3
+    call print 1
+    %length3 <- %length3
+    %length3 >>= 1
+    goto :call_label_ciao_4
+    :call_label_ciao_4
+    %found <- 1
+    %i <- 0
+    %j <- 0
+    %k <- 0
+    goto :call_label_ciao_13
+    :call_label_ciao_5
+    %i <- %i
+    %i += 1
+    goto :call_label_ciao_8
+    :call_label_ciao_6
+    %j <- %j
+    %j += 1
+    goto :call_label_ciao_9
+    :call_label_ciao_7
+    %k <- %k
+    %k += 1
+    goto :call_label_ciao_11
+    :call_label_ciao_8
+    %j <- 0
+    goto :call_label_ciao_13
+    :call_label_ciao_9
+    %k <- 0
+    goto :call_label_ciao_12
+    :call_label_ciao_10
+    %newVar10 <- 0
+    %newVar12 <- mem %A 24 
+    %newVar15 <- mem %A 32 
+    %newVar17 <- 1
+    %newVar16 <- %newVar15
+    %newVar16 >>= 1
+    %newVar17 <- %newVar17
+    %newVar17 *= %newVar16
+    %newVar18 <- %j
+    %newVar18 *= %newVar17
+    %newVar10 <- %newVar10
+    %newVar10 += %newVar18
+    %newVar13 <- %newVar12
+    %newVar13 >>= 1
+    %newVar17 <- %newVar17
+    %newVar17 *= %newVar13
+    %newVar19 <- %i
+    %newVar19 *= %newVar17
+    %newVar10 <- %newVar10
+    %newVar10 += %newVar19
+    %newVar10 <- %newVar10
+    %newVar10 += %k
+    %newVar9 <- %newVar10
+    %newVar9 *= 8
+    %newVar9 <- %newVar9
+    %newVar9 += 40
+    %newVar20 <- %A
+    %newVar20 += %newVar9
+    %check_value <- mem %newVar20 0 
+    %equal <- %check_value = %v
+    
+    cjump %equal = 1 :call_label_ciao_14 :call_label_ciao_7
+    :call_label_ciao_11
+    %check_index <- %k < %length3
+    
+    cjump %check_index = 1 :call_label_ciao_10 :call_label_ciao_6
+    :call_label_ciao_12
+    %check_index <- %j < %length2
+    
+    cjump %check_index = 1 :call_label_ciao_11 :call_label_ciao_5
+    :call_label_ciao_13
+    %check_index <- %i < %length1
+    
+    cjump %check_index = 1 :call_label_ciao_12 :call_label_ciao_15
+    :call_label_ciao_14
+    %found <- 3
+    goto :call_label_ciao_15
+    :call_label_ciao_15
+    rax <- %found
+    return
+  )
+)

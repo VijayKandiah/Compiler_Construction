@@ -1,0 +1,15 @@
+(:go
+    (:decode
+        1 0
+        rdi >>= 1
+        rax <- rdi
+        return)
+    (:go
+        0 0
+        rdi <- 11
+        mem rsp -8 <- :decode_ret
+        call :decode 1
+        :decode_ret
+        rdi <- rax
+        call print 1
+        return))

@@ -1,0 +1,23 @@
+//// prints out the size of an allocated array
+(:go
+    (:encode
+        1 0
+        rdi <<= 1
+        rdi += 1
+        rax <- rdi
+        return)
+
+    (:go
+        0 0
+        rdi <- 7
+        rsi <- 5
+        call allocate 2 //// allocates array
+
+        rdi <- mem rax 0
+        mem rsp -8 <- :encode_ret
+        call :encode 1 //// encodes array size
+        :encode_ret
+
+        rdi <- rax
+        call print 1 //// prints out array size
+        return))

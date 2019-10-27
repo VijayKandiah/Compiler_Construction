@@ -1,0 +1,68 @@
+(:go
+    (:go        
+        0 1
+        rdi <- 11
+        rsi <- 5
+        call allocate 2
+        mem rsp 0 <- rax
+        %pointer <- rax
+        %pointer += 8
+        mem %pointer 0 <- 3
+        %pointer += 8
+        mem %pointer 0 <- 5
+        %pointer += 8
+        mem %pointer 0 <- 7
+        %pointer += 8
+        mem %pointer 0 <- 9
+        %pointer += 8
+        mem %pointer 0 <- 11
+        rdi <- mem rsp 0
+
+        mem rsp -8 <- :f_ret
+        call :reverse_array 1
+        :f_ret
+
+        rdi <- rax
+        call print 1
+        return)
+
+    (:reverse_array
+        1 2
+        mem rsp 0 <- r12
+        mem rsp 8 <- r13
+        r12 <- mem rdi 0 //size of input array
+        r13 <- rdi
+
+        rdi <- r12
+        mem rsp -8 <- :encode_ret
+        call :encode 1
+        :encode_ret
+        rdi <- rax
+        rsi <- 0
+        call allocate 2 // allocate second array with same size and init with zero
+
+        rcx @ rax r12 8
+
+        %ptr <- r13
+        :loop
+        %ptr += 8
+        cjump r12 = 0 :finish :cont
+
+        :cont
+        rdi <- mem %ptr 0
+        mem rcx 0 <- rdi
+        r12 -= 1
+        rcx -= 8
+        goto :loop
+
+        :finish
+        r12 <- mem rsp 0 
+        r13 <- mem rsp 8 
+        return)
+
+    (:encode
+        1 0
+        rax <- rdi
+        rax <<= 1
+        rax += 1
+        return))

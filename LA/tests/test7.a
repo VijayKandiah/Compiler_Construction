@@ -1,0 +1,42 @@
+void main ( ){
+
+  tuple t
+  int64 v
+  t <-  createTuple(3)
+  v <-  myF(t, 4)
+   print(v)
+  return 
+
+}
+
+tuple createTuple (int64 p1){
+
+  int64 x2
+  tuple p
+  x2 <- 10
+  p <- new Tuple(4)
+  p[0] <- 0
+  p[1] <- 1
+  p[2] <- p1
+  p[3] <- x2
+  return p
+
+}
+
+int64  myF (tuple c, int64 p1){
+
+  int64 x1
+  int64 x2
+  x1 <- c[2]
+  x2 <- c[3]
+   print(x1)
+   print(x2)
+   print(p1)
+  int64 r1
+  int64 r2
+  r1 <- x1 + x2
+   print(r1)
+  r2 <- r1 + p1
+  return r2
+
+}

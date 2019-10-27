@@ -1,0 +1,74 @@
+define void :main ( ){
+
+  :entry
+  int64[][] %m
+  int64 %r
+  int64 %v
+  %v <- 21
+  %m <- new Array(21, 21)
+  %r <- call :checkMatrix(%m, %v)
+  call print(%r)
+  return
+
+}
+
+define int64 :checkMatrix (int64[][] %m, int64 %v){
+
+  :entry
+  int64 %l1
+  int64 %l2
+  int64 %l1encoded
+  int64 %l2encoded
+  %l1encoded <- length %m 0
+  %l2encoded <- length %m 1
+  call print(%l1encoded)
+  call print(%l2encoded)
+  %l1 <- %l1encoded >> 1
+  %l2 <- %l2encoded >> 1
+  br :init
+
+  :init
+  int64 %index
+  int64 %found
+  %found <- 1
+  %index <- 0
+  br :header
+
+  :header
+  int64 %check
+  %check <- %index < %l1
+  br %check :outerBody :leave
+
+  :outerBody
+  int64 %index2
+  %index2 <- 0
+  br :header2
+
+  :header2
+  int64 %check2
+  %check2 <- %index2 < %l2
+  br %check2 :innerBody :endOuterBody
+
+  :innerBody
+  int64 %e
+  int64 %sameE
+  %e <- %m[%index][%index2]
+  %sameE <- %e = %v
+  br %sameE :setAndLeave :endInnerBody
+
+  :endInnerBody
+  %index2 <- %index2 + 1
+  br :header2
+
+  :endOuterBody
+  %index <- %index + 1
+  br :header
+
+  :setAndLeave
+  %found <- 3
+  br :leave
+
+  :leave
+  return %found
+
+}

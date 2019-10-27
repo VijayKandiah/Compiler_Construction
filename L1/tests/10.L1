@@ -1,0 +1,13 @@
+(:main
+ (:main
+  0 0
+  r9 <- 13
+  cjump r9 < 3 :true :false
+  :true
+  rdi <- 1
+  goto :print
+  :false
+  rdi <- 3
+  :print
+  call print 1
+  return))

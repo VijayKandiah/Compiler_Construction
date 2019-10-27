@@ -1,0 +1,13 @@
+(:go
+  (:go
+    0 0
+
+    rdi <- 1
+    rsi <- 2
+
+    // CISC instruction = rdi + rsi*4
+    rax @ rdi rsi 4
+
+    return
+  )
+)

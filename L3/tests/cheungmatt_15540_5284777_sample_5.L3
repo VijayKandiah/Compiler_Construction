@@ -1,0 +1,103 @@
+define :main() {
+  %v1 <- call :createArray()
+  %v2 <- call :createArray()
+  %result <- call :dotProduct(%v1, %v2)
+  %result <- %result << 1
+  %result <- %result + 1
+  call print(%result)
+  return
+}
+
+define :createArray() {
+  %len <- 13
+  %arr <- call allocate(%len, 1)
+
+  %newVar0 <- 0 * 8
+  %newVar1 <- %newVar0 + 8
+  %newVar2 <- %arr + %newVar1
+  store %newVar2 <- 3 
+
+  %newVar3 <- 1 * 8
+  %newVar4 <- %newVar3 + 8
+  %newVar5 <- %arr + %newVar4
+  store %newVar5 <- 7 
+
+  %newVar6 <- 2 * 8
+  %newVar7 <- %newVar6 + 8
+  %newVar8 <- %arr + %newVar7
+  store %newVar8 <- 5 
+
+  %newVar9 <- 3 * 8
+  %newVar10 <- %newVar9 + 8
+  %newVar11 <- %arr + %newVar10
+  store %newVar11 <- 5 
+
+  %newVar12 <- 4 * 8
+  %newVar13 <- %newVar12 + 8
+  %newVar14 <- %arr + %newVar13
+  store %newVar14 <- 5 
+
+  %newVar15 <- 5 * 8
+  %newVar16 <- %newVar15 + 8
+  %newVar17 <- %arr + %newVar16
+  store %newVar17 <- 5 
+
+  return %arr
+}
+
+define :printArr (%arr) {
+  // get length of given %arr
+  %len <- load %arr
+
+  %count <- 0
+  %curr <- %arr
+  :loop
+  %curr <- %curr + 8
+  %currP <- load %curr
+  
+  %currP <- %currP << 1
+  %currP <- %currP + 1
+  call print(%currP)
+
+  %count <- %count + 1
+  %cont <- %count < %len 
+  br %cont :loop
+  br :stop
+  :stop
+
+  return
+}
+
+define :dotProduct(%v1, %v2) {
+  // check if length is equal
+  %len1 <- load %v1
+  %len2 <- load %v2
+  %comp <- %len1 = %len2
+  br %comp :succeed
+  br :fail
+  :fail
+  return
+
+  :succeed
+  %result <- 0
+  %count <- 0
+  
+  // loop and compute dot product
+  %curr1 <- %v1
+  %curr2 <- %v2
+  :loop
+  %curr1 <- %curr1 + 8
+  %curr2 <- %curr2 + 8
+  %temp1 <- load %curr1
+  %temp2 <- load %curr2
+  
+  %tempResult <- %temp1 * %temp2
+  %result <- %result + %tempResult 
+ 
+  %count <- %count + 1
+  %cont <- %count < %len1
+  br %cont :loop
+  br :stop
+  :stop
+  return %result
+}

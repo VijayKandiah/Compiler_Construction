@@ -1,0 +1,100 @@
+(:main
+(:main
+	0 3
+
+	rdi <- 5
+	rsi <- 3
+	call allocate 2
+	rdi <- rax
+
+	mem rsp 8 <- rdi
+	call print 1
+
+	rdi <- mem rsp 8
+	mem rsp -8 <- :call_label3
+	call :printArrayBackwards 1
+	:call_label3
+
+    return
+)
+
+(:isAddress
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi &= 1
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao_6 :call_label_ciao_7
+	:call_label_ciao_6
+	rax <- 1
+	return
+	:call_label_ciao_7
+	rax <- 0
+	return
+)
+
+(:increaseOne
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(:printArrayElementByIndex
+	2 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rsi <- rsi
+	rdi <- rsi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_9
+	call :increaseOne 1
+	:call_label_ciao__ciao__ciao_9
+	rsi <- rax
+	rdi <- mem rsp 0
+	rdi @ rdi rsi 8
+	rdi <- mem rdi 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(:printArrayBackwards
+	1 2
+
+	mem rsp 8 <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_15
+	call :isAddress 1
+	:call_label_ciao__ciao__ciao__ciao_15
+
+	rdi <- rax
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_10 :call_label_ciao__ciao__ciao__ciao_13
+
+	:call_label_ciao__ciao__ciao__ciao_10
+	rdi <- mem rsp 8
+	rdi <- mem rdi 0
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 1
+	mem rsp 0 <- rdi
+	:call_label_ciao__ciao__ciao__ciao_11
+	rdi <- mem rsp 0
+	rdi <- 0 <= rdi
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_12 :call_label_ciao__ciao__ciao__ciao_13
+	:call_label_ciao__ciao__ciao__ciao_12
+	rdi <- mem rsp 8
+	rsi <- mem rsp 0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_16
+	call :printArrayElementByIndex 2
+	:call_label_ciao__ciao__ciao__ciao_16
+	rdi <- mem rsp 0
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 1
+	mem rsp 0 <- rdi
+	goto :call_label_ciao__ciao__ciao__ciao_11
+	:call_label_ciao__ciao__ciao__ciao_13
+	return
+)
+)

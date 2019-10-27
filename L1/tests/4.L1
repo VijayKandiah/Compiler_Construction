@@ -1,0 +1,25 @@
+(:main
+ (:main
+  0 1
+  mem rsp 0 <- r12
+  rdi <- 22
+  mem rsp -8 <- :ret1
+  call :encode 1
+  :ret1
+  r12 <- rax
+  rdi <- rax
+  call print 1
+  rdi <- r12
+  mem rsp -8 <- :ret2
+  call :encode 1
+  :ret2
+  rdi <- rax
+  call print 1
+  r12 <- mem rsp 0
+  return)
+ (:encode
+  1 0
+  rdi <<= 1
+  rdi += 1
+  rax <- rdi
+  return))

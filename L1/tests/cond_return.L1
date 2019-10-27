@@ -1,0 +1,24 @@
+(:main
+	(:main
+		0 0
+		rdi <- 15
+
+		mem rsp -8 <- :orig_ret
+
+		cjump rdi = 15 :n :y
+		:y
+		mem rsp -8 <- :new_ret
+		:n
+		call :what 1
+		:orig_ret
+		:new_ret
+		rdi <- rax
+		call print 1
+		return)
+
+	(:what
+		1 0
+		rdi += 10
+		rax <- rdi
+		return))
+

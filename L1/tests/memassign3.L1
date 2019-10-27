@@ -1,0 +1,7 @@
+(:go
+(:go
+0 0
+mem rsp -8 <- 7
+rdi <- mem rsp -8
+call print 1
+return))

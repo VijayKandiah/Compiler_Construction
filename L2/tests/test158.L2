@@ -1,0 +1,93 @@
+(:main
+  (:main
+    0 0
+    %size <- 20
+    %ind <- %size
+    %ind <- %ind
+    %ind *= 8
+    rdi <- %size
+    mem rsp -8 <- :call_label0
+    call :fibSeq 1
+    :call_label0
+    %arr <- rax
+    %ptr <- %arr
+    %ptr += %ind
+    %fibVal <- mem %ptr 0 
+    rdi <- %fibVal
+    call print 1
+    return
+  )
+  (:fibSeq
+    1 0
+    %max <- rdi
+    %prev <- 1
+    %pprev <- 1
+    %max <- %max
+    %max <<= 1
+    %max <- %max
+    %max += 1
+    rdi <- %max
+    rsi <- 1
+    call allocate 2
+    %arr <- rax
+    %max <- %max
+    %max -= 1
+    %max <- %max
+    %max >>= 1
+    %ptr <- %arr
+    %ptr += 8
+    %pprev <- %pprev
+    %pprev <<= 1
+    %pprev <- %pprev
+    %pprev += 1
+    mem %ptr 0  <- %pprev
+    %pprev <- %pprev
+    %pprev -= 1
+    %pprev <- %pprev
+    %pprev >>= 1
+    %ptr <- %ptr
+    %ptr += 8
+    %prev <- %prev
+    %prev <<= 1
+    %prev <- %prev
+    %prev += 1
+    mem %ptr 0  <- %prev
+    %prev <- %prev
+    %prev -= 1
+    %prev <- %prev
+    %prev >>= 1
+    %ptr <- %ptr
+    %ptr += 8
+    %count <- 2
+    %tmpMax <- %max
+    %tmpMax -= 1
+    :call_label_ciao_1
+    %sum <- %pprev
+    %sum += %prev
+    %sum <- %sum
+    %sum <<= 1
+    %sum <- %sum
+    %sum += 1
+    mem %ptr 0  <- %sum
+    %sum <- %sum
+    %sum -= 1
+    %sum <- %sum
+    %sum >>= 1
+    %pprev <- %prev
+    %prev <- %sum
+    %checkCont <- %count < %tmpMax
+    
+    cjump %checkCont = 1 :call_label_ciao_2 :call_label_ciao_3
+    :call_label_ciao_2
+    %ptr <- %ptr
+    %ptr += 8
+    %count <- %count
+    %count += 1
+    goto :call_label_ciao_1
+    :call_label_ciao_3
+    rdi <- %arr
+    call print 1
+    rax <- %arr
+    return
+  )
+)

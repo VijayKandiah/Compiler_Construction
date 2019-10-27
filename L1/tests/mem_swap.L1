@@ -1,0 +1,13 @@
+(:mem_swap
+ (:mem_swap
+  0 0
+  rdi <- 15
+  rsi <- 7
+  mem rsp -8 <- rdi
+  mem rsp -16 <- rsi
+  rdi <- mem rsp -16
+  rsi <- mem rsp -8
+  call allocate 2
+  rdi <- rax
+  call print 1
+  return))

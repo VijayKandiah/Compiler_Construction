@@ -1,0 +1,51 @@
+(:go
+  (:go
+    0 1
+
+    // Save the callee save registers
+    mem rsp 0 <- r12
+
+    // Allocate the data
+    rdi <- 5
+    rsi <- 5
+    call allocate 2
+    r12 <- rax
+
+    // Print the data
+    rdi <- r12
+    mem rsp -8 <- :printData_ret
+    call :printData 1
+    :printData_ret
+
+    // Restore the callee save registers
+    r12 <- mem rsp 0
+
+    return
+  )
+
+  (:printData
+    1 2
+
+    // Save the callee save registers
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+
+    // Store the input
+    r12 <- rdi
+
+    // Fetch the length of the array
+    r13 <- mem r12 0
+
+    // Print the length of the array
+    rdi <- r13
+    rdi <<= 1
+    rdi += 1
+    call print 1
+
+    // Restore the callee save registers
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+ 
+    return
+  )
+)

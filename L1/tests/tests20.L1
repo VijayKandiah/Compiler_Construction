@@ -1,0 +1,12 @@
+(:go
+ (:go
+  0 0
+  rdi <- 5
+  rdi <<= 1
+  rdi += 7
+  rdi <<= 1
+  rdi += 7
+  rdi <<= 1
+  rdi += 7
+  call print 1
+  return))

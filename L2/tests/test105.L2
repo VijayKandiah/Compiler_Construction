@@ -1,0 +1,180 @@
+(:main
+  (:isPrime
+    1 0
+    %n <- rdi
+    %n <- %n
+    %n -= 1
+    %n <- %n
+    %n >>= 1
+    %isNLessThan2 <- %n < 2
+    
+    cjump %isNLessThan2 = 1 :call_label0 :call_label1
+    :call_label0
+    rax <- 1
+    return
+    :call_label1
+    %i <- 2
+    %end <- %n
+    %end -= 1
+    :call_label2
+    %isIteratorLessThanEnd <- %i < %end
+    
+    cjump %isIteratorLessThanEnd = 1 :call_label3 :call_label4
+    :call_label3
+    %encodedI <- %i
+    %encodedI <<= 1
+    %encodedI <- %encodedI
+    %encodedI += 1
+    %encodedN <- %n
+    %encodedN <<= 1
+    %encodedN <- %encodedN
+    %encodedN += 1
+    %i <- %i
+    %i += 1
+    rdi <- %encodedN
+    rsi <- %encodedI
+    mem rsp -8 <- :call_label5
+    call :modulo 2
+    :call_label5
+    %remainder <- rax
+    %isDivisible <- %remainder = 1
+    
+    cjump %isDivisible = 1 :call_label0 :call_label2
+    :call_label4
+    rax <- 3
+    return
+  )
+  (:modulo
+    2 0
+    %a <- rdi
+    %b <- rsi
+    %result <- %a
+    %isBLessThanZero <- %b <= 1
+    
+    cjump %isBLessThanZero = 1 :call_label_ciao_6 :call_label_ciao_7
+    :call_label_ciao_6
+    rax <- -1
+    return
+    :call_label_ciao_7
+    %isALessThanB <- %a < %b
+    
+    cjump %isALessThanB = 1 :call_label_ciao_8 :call_label_ciao_9
+    :call_label_ciao_8
+    rax <- %result
+    return
+    :call_label_ciao_9
+    %result <- %result
+    %result -= 1
+    %result <- %result
+    %result >>= 1
+    %b <- %b
+    %b -= 1
+    %b <- %b
+    %b >>= 1
+    %result <- %result
+    %result -= %b
+    %result <- %result
+    %result <<= 1
+    %result <- %result
+    %result += 1
+    %b <- %b
+    %b <<= 1
+    %b <- %b
+    %b += 1
+    %isResultLessThanB <- %result < %b
+    
+    cjump %isResultLessThanB = 1 :call_label_ciao_8 :call_label_ciao_9
+  )
+  (:main
+    0 0
+    %first <- 25
+    %second <- 11
+    rdi <- %first
+    rsi <- %second
+    mem rsp -8 <- :call_label_ciao__ciao_10
+    call :modulo 2
+    :call_label_ciao__ciao_10
+    %remainder <- rax
+    rdi <- %remainder
+    call print 1
+    %first <- 25
+    %second <- 9
+    rdi <- %first
+    rsi <- %second
+    mem rsp -8 <- :call_label_ciao__ciao_11
+    call :modulo 2
+    :call_label_ciao__ciao_11
+    %remainder <- rax
+    rdi <- %remainder
+    call print 1
+    %first <- 25
+    %second <- 1
+    rdi <- %first
+    rsi <- %second
+    mem rsp -8 <- :call_label_ciao__ciao_12
+    call :modulo 2
+    :call_label_ciao__ciao_12
+    %remainder <- rax
+    rdi <- %remainder
+    call print 1
+    %first <- 125
+    %second <- 35
+    rdi <- %first
+    rsi <- %second
+    mem rsp -8 <- :call_label_ciao__ciao_13
+    call :modulo 2
+    :call_label_ciao__ciao_13
+    %remainder <- rax
+    rdi <- %remainder
+    call print 1
+    %number <- 1
+    rdi <- %number
+    mem rsp -8 <- :call_label_ciao__ciao_14
+    call :isPrime 1
+    :call_label_ciao__ciao_14
+    %is_prime <- rax
+    rdi <- %is_prime
+    call print 1
+    %number <- 3
+    rdi <- %number
+    mem rsp -8 <- :call_label_ciao__ciao_15
+    call :isPrime 1
+    :call_label_ciao__ciao_15
+    %is_prime <- rax
+    rdi <- %is_prime
+    call print 1
+    %number <- 51
+    rdi <- %number
+    mem rsp -8 <- :call_label_ciao__ciao_16
+    call :isPrime 1
+    :call_label_ciao__ciao_16
+    %is_prime <- rax
+    rdi <- %is_prime
+    call print 1
+    %number <- 21
+    rdi <- %number
+    mem rsp -8 <- :call_label_ciao__ciao_17
+    call :isPrime 1
+    :call_label_ciao__ciao_17
+    %is_prime <- rax
+    rdi <- %is_prime
+    call print 1
+    %number <- 35
+    rdi <- %number
+    mem rsp -8 <- :call_label_ciao__ciao_18
+    call :isPrime 1
+    :call_label_ciao__ciao_18
+    %is_prime <- rax
+    rdi <- %is_prime
+    call print 1
+    %number <- 135
+    rdi <- %number
+    mem rsp -8 <- :call_label_ciao__ciao_19
+    call :isPrime 1
+    :call_label_ciao__ciao_19
+    %is_prime <- rax
+    rdi <- %is_prime
+    call print 1
+    return
+  )
+)

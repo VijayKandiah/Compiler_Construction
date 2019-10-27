@@ -1,0 +1,191 @@
+(:main
+  (:main
+    0 0
+    :call_label0
+    %v <- 21
+    %newVar1 <- 21
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- 21
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar3 <- 21
+    %newVar3 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar3
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 8
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %m <- rax
+    mem %m 8 <- 7
+    mem %m 16 <- 21
+    mem %m 24 <- 21
+    mem %m 32 <- 21
+    rdi <- %m
+    rsi <- %v
+    mem rsp -8 <- :call_label1
+    call :search 2
+    :call_label1
+    %r <- rax
+    rdi <- %r
+    call print 1
+    %newVar9 <- 0
+    %newVar11 <- mem %m 24 
+    %newVar14 <- mem %m 32 
+    %newVar16 <- 1
+    %newVar15 <- %newVar14
+    %newVar15 >>= 1
+    %newVar16 <- %newVar16
+    %newVar16 *= %newVar15
+    %newVar17 <- 0
+    %newVar17 *= %newVar16
+    %newVar9 <- %newVar9
+    %newVar9 += %newVar17
+    %newVar12 <- %newVar11
+    %newVar12 >>= 1
+    %newVar16 <- %newVar16
+    %newVar16 *= %newVar12
+    %newVar18 <- 0
+    %newVar18 *= %newVar16
+    %newVar9 <- %newVar9
+    %newVar9 += %newVar18
+    %newVar9 <- %newVar9
+    %newVar9 += 0
+    %newVar8 <- %newVar9
+    %newVar8 *= 8
+    %newVar8 <- %newVar8
+    %newVar8 += 40
+    %newVar19 <- %m
+    %newVar19 += %newVar8
+    mem %newVar19 0  <- %v
+    rdi <- %m
+    rsi <- %v
+    mem rsp -8 <- :call_label2
+    call :search 2
+    :call_label2
+    %r <- rax
+    rdi <- %r
+    call print 1
+    return
+  )
+  (:search
+    2 0
+    %m <- rdi
+    %v <- rsi
+    :call_label_ciao_3
+    %newVar0 <- 0
+    %newVar0 *= 8
+    %newVar1 <- %newVar0
+    %newVar1 += 16
+    %newVar2 <- %m
+    %newVar2 += %newVar1
+    %encLen <- mem %newVar2 0 
+    rdi <- %encLen
+    call print 1
+    %length1 <- %encLen
+    %length1 >>= 1
+    %newVar3 <- 1
+    %newVar3 *= 8
+    %newVar4 <- %newVar3
+    %newVar4 += 16
+    %newVar5 <- %m
+    %newVar5 += %newVar4
+    %encLen <- mem %newVar5 0 
+    rdi <- %encLen
+    call print 1
+    %length2 <- %encLen
+    %length2 >>= 1
+    %newVar6 <- 2
+    %newVar6 *= 8
+    %newVar7 <- %newVar6
+    %newVar7 += 16
+    %newVar8 <- %m
+    %newVar8 += %newVar7
+    %encLen <- mem %newVar8 0 
+    rdi <- %encLen
+    call print 1
+    %length3 <- %encLen
+    %length3 >>= 1
+    goto :call_label_ciao_4
+    :call_label_ciao_4
+    %found <- 1
+    %i <- 0
+    goto :call_label_ciao_5
+    :call_label_ciao_5
+    %checki <- %i < %length1
+    
+    cjump %checki = 1 :call_label_ciao_6 :call_label_ciao_15
+    :call_label_ciao_6
+    %j <- 0
+    goto :call_label_ciao_7
+    :call_label_ciao_7
+    %checkj <- %j < %length2
+    
+    cjump %checkj = 1 :call_label_ciao_8 :call_label_ciao_13
+    :call_label_ciao_8
+    %k <- 0
+    goto :call_label_ciao_9
+    :call_label_ciao_9
+    %checkk <- %k < %length3
+    
+    cjump %checkk = 1 :call_label_ciao_10 :call_label_ciao_12
+    :call_label_ciao_10
+    %newVar10 <- 0
+    %newVar12 <- mem %m 24 
+    %newVar15 <- mem %m 32 
+    %newVar17 <- 1
+    %newVar16 <- %newVar15
+    %newVar16 >>= 1
+    %newVar17 <- %newVar17
+    %newVar17 *= %newVar16
+    %newVar18 <- %j
+    %newVar18 *= %newVar17
+    %newVar10 <- %newVar10
+    %newVar10 += %newVar18
+    %newVar13 <- %newVar12
+    %newVar13 >>= 1
+    %newVar17 <- %newVar17
+    %newVar17 *= %newVar13
+    %newVar19 <- %i
+    %newVar19 *= %newVar17
+    %newVar10 <- %newVar10
+    %newVar10 += %newVar19
+    %newVar10 <- %newVar10
+    %newVar10 += %k
+    %newVar9 <- %newVar10
+    %newVar9 *= 8
+    %newVar9 <- %newVar9
+    %newVar9 += 40
+    %newVar20 <- %m
+    %newVar20 += %newVar9
+    %e <- mem %newVar20 0 
+    %same <- %e = %v
+    
+    cjump %same = 1 :call_label_ciao_14 :call_label_ciao_11
+    :call_label_ciao_11
+    %k <- %k
+    %k += 1
+    goto :call_label_ciao_9
+    :call_label_ciao_12
+    %j <- %j
+    %j += 1
+    goto :call_label_ciao_7
+    :call_label_ciao_13
+    %i <- %i
+    %i += 1
+    goto :call_label_ciao_5
+    :call_label_ciao_14
+    %found <- 3
+    goto :call_label_ciao_15
+    :call_label_ciao_15
+    rax <- %found
+    return
+  )
+)

@@ -1,0 +1,41 @@
+(:entry
+  (:entry
+    0 0
+    rdi <- 6 
+    rdi <<= 2
+    rdi -= 2
+    mem rsp -8 <- :dbf_ret
+    call :divisible_by_four 1
+    :dbf_ret
+    cjump 0 < rax :print_result :check_dbt
+    :check_dbt
+    mem rsp -8 <- :dbt_ret
+    call :divisible_by_two 1
+    :dbt_ret
+    :print_result
+    rdi <- rax
+    rdi <<= 1
+    rdi += 1
+    call print 1
+  )
+  (:divisible_by_four
+    1 0
+    rax <- 0
+    rdi &= 3
+    cjump rdi = 0 :is_dbf :not_dbf
+    :is_dbf
+    rax <- 4 
+    :not_dbf
+    return
+  )
+  (:divisible_by_two
+    1 0
+    rax <- 0
+    rdi &= 1 
+    cjump rdi = 0 :is_dbt :not_dbt
+    :is_dbt
+    rax <- 2 
+    :not_dbt
+    return
+  )
+)

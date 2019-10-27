@@ -1,0 +1,13 @@
+(:main
+(:main
+	0 0
+	rdx <- 1
+	rsi <- 2
+	goto :call_label0
+	rdi <- rdx < rsi
+	:call_label0
+	rax <- rdi
+	return
+)
+
+)

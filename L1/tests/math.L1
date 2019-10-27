@@ -1,0 +1,10 @@
+(:math
+ (:math
+  0 0
+  rdi <- 5
+  rdi *= 8
+  rdi -= 21
+  rdi *= 3
+  rdi -= 2
+  call print 1
+  return))

@@ -1,0 +1,18 @@
+(:main
+ (:main
+ 0 0
+ rdi <- 120
+ mem rsp -8 <- :f_ret
+ call :divide 1
+ :f_ret
+ rdi <- rax
+ rdi *= 2
+ rdi += 1
+ call print 1
+ return)
+
+ (:divide
+  1 0
+  rdi >>= 3
+  rax <- rdi
+  return))

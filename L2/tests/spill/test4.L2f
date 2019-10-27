@@ -1,0 +1,13 @@
+(:myF
+  0 0
+
+  %myPtr <- :myF2
+
+  call %myPtr 0
+
+  return
+)
+
+%myPtr
+
+%S

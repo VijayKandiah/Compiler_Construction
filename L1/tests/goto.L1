@@ -1,0 +1,9 @@
+(:main
+  (:main
+    0 0
+    rdi <- 3
+    goto :dest
+    rdi <- 5
+    :dest
+    call print 1
+    return))

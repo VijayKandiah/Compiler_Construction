@@ -1,0 +1,16 @@
+(:func2
+ (:func2 0 2
+  rdi <- 7
+  rsi <- 9
+  call allocate 2
+  rdi <- rax
+  mem rsp -8 <- :f_ret
+  call :f 2
+  :f_ret
+  rdi <- rax
+  call print 1
+  return)
+ (:f 2 0
+  rax <- rdi
+  return
+))

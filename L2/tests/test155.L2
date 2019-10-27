@@ -1,0 +1,101 @@
+(:main
+  (:fill_array
+    2 0
+    %a <- rdi
+    %m <- rsi
+    %counter <- %a
+    %index <- 0
+    %val <- 0
+    :call_label0
+    %val <- %val
+    %val <<= 1
+    %val <- %val
+    %val += 1
+    mem %counter 0  <- %val
+    %val <- %val
+    %val -= 1
+    %val <- %val
+    %val >>= 1
+    %val <- %val
+    %val += 2
+    %counter <- %counter
+    %counter += 8
+    %index <- %index
+    %index += 1
+    %check <- %index < %m
+    
+    cjump %check = 1 :call_label0 :call_label1
+    :call_label1
+    return
+  )
+  (:double_array
+    3 0
+    %p1 <- rdi
+    %p2 <- rsi
+    %m <- rdx
+    %c1 <- %p1
+    %c2 <- %p2
+    %index <- 0
+    :call_label_ciao_2
+    %val <- mem %c1 0 
+    %val <- %val
+    %val -= 1
+    %val <- %val
+    %val >>= 1
+    %val <- %val
+    %val *= 2
+    %val <- %val
+    %val <<= 1
+    %val <- %val
+    %val += 1
+    mem %c2 0  <- %val
+    %c1 <- %c1
+    %c1 += 8
+    %c2 <- %c2
+    %c2 += 8
+    %index <- %index
+    %index += 1
+    %check <- %index = %m
+    
+    cjump %check = 1 :call_label_ciao_3 :call_label_ciao_2
+    :call_label_ciao_3
+    return
+  )
+  (:main
+    0 0
+    %filler <- 0
+    %max <- 100
+    %max <- %max
+    %max <<= 1
+    %max <- %max
+    %max += 1
+    rdi <- %max
+    rsi <- %filler
+    call allocate 2
+    %arr <- rax
+    %ptr <- %arr
+    %ptr += 8
+    rdi <- %ptr
+    rsi <- %max
+    mem rsp -8 <- :call_label_ciao__ciao_4
+    call :fill_array 2
+    :call_label_ciao__ciao_4
+    rdi <- %max
+    rsi <- %filler
+    call allocate 2
+    %arr2 <- rax
+    %ptr2 <- %arr2
+    %ptr2 += 8
+    rdi <- %ptr
+    rsi <- %ptr2
+    rdx <- %max
+    mem rsp -8 <- :call_label_ciao__ciao_5
+    call :double_array 3
+    :call_label_ciao__ciao_5
+    rdi <- %arr
+    call print 1
+    rdi <- %arr2
+    call print 1
+    return
+  )
+)
