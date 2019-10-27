@@ -1,6 +1,9 @@
 # Compiler_Construction
 End-End Compiler for a subset of the C language
 
+## Prerequisites
+C++14
+
 ## Build
 To build all layers, run ```make``` from the root directory.
 To build a specific layer, for example, IR: ```cd IR; make```
@@ -34,20 +37,4 @@ To compile the provided performance test ```LB/test/competition2019.b```  and me
 
 ## Compiler Layers
 
-### L1
-Prints function name and body for every bitcode function in a program.
-
-### L2
-Prints CAT-API function name and number of instructions that invoke it for each bitcode function in a program.
-
-### L3 
-Computes and prints GEN and KILL sets (analyzed for only CAT variables) for every bitcode instruction of a program under the following assumptions:
-
-### IR
-Computes and prints IN and OUT sets (analyzed for only CAT variables) for every bitcode instruction of a program under previously stated assumptions.
-
-### LA
-Performs intra-procedural Constant Propagation, Constant Folding, and Dead Code Elimination for CAT variables under previously stated assumptions.
-
-### LB
-Performs intra-procedural Constant Propagation, Constant Folding, and Dead Code Elimination for CAT variables while removing all assumptions stated above.
+Will update soon.
