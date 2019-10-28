@@ -16,7 +16,7 @@ This is required because the output of the IR compiler is a .L3 file which is th
 Invoke your compiler, for example, IR compiler to compile a .IR program:
 
 ```
-./IR/IRc IR/tests/test0.IR
+cd IR; ./IRc IR/tests/test0.IR
 ```
 This script works in the following way: 
 1) Invokes your IR compiler (```IR/bin/IR```) to generate ```IR/prog.L3``` 
